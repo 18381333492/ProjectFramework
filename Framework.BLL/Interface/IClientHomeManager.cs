@@ -16,7 +16,7 @@ namespace Framework.BLL
         /// <summary>
         /// 获取首页数据
         /// </summary>
-        /// <returns></returns>
+        /// <returns></returns> 
         public abstract object QueryClietHomeData(Dictionary<string,object> param);
 
         /// <summary>
