@@ -1,0 +1,24 @@
+﻿@model Framework.DTO.EHECD_ClientDTO
+
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px;">
+    <div class="easyui-tabs" data-options="fit:true">
+        <div title="个人信息" style="padding:2px;display:none;">
+            <table class="styletable_table" style="height:283px">
+                <tr>
+                    <td rowspan="4" class="styletable_content" style="width:140px;vertical-align:top;padding:3px">
+                        <img src="@(string.IsNullOrEmpty(Model.sHeadPic) || string.IsNullOrWhiteSpace(Model.sHeadPic) ? "/Areas/Admin/Content/04481549.png":Model.sHeadPic)" style="width:134px;height:134px;" />
+                    </td>
+                    <td class="styletable_title" style="width:80px;">昵称</td>
+                    <td class="styletable_content">@Model.sNickName</td>
+                </tr>
+                <tr><td class="styletable_title" style="width:80px;">手机号</td><td class="styletable_content">@Model.sPhone</td></tr>
+                <tr><td class="styletable_title" style="width:80px;">状态</td><td class="styletable_content">@(Model.iState == 1 ? "正常" : "冻结")</td></tr>
+                <tr><td class="styletable_title" style="width:80px;">角色</td><td class="styletable_content">@(Model.iClientType == 0 ? "普通会员" : "分享客")</td></tr>
+            </table>
+        </div>
+        <div title="TA的订单" data-options="closable:false" style="overflow:auto;padding:2px;display:none;">
+            <table id="client_his_orders"></table>
+        </div>
+    </div>
+</div>

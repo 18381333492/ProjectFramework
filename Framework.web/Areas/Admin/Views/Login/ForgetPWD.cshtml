@@ -1,0 +1,85 @@
+﻿
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+
+<script>
+    $(function () {
+        void function () {
+
+            $("#get_m_msg_code").on("click", getVCode);
+            modules.get(enums.Modules.CACHE).setCache("_getmcode", null);
+            function getVCode() {
+                var f = modules.get(enums.Modules.FUNC);
+                var eui = modules.get(enums.Modules.JQUERY_EASYUI);
+                var sloginName = $("[name='sLoginName']").val();
+                if (sloginName === "") {
+                    eui.alertErr("请输入登录名");
+                    return;
+                }
+                f.post("/Admin/Login/SendMessage",
+                    {
+                        sloginName: sloginName
+                    }, function (r) {
+                        modules.get(enums.Modules.CACHE).setCache("_getmcode", true);
+                        $("#get_m_msg_code").off("click");
+                        $("#get_m_msg_code").linkbutton("disable");
+                        $("#sLoginName").textbox("disable");
+                        $("#sLoginName").textbox("disableValidation");
+                        countDown(120);
+                    }, function (r) {
+                        eui.alertErr(r.Msg);
+                    });
+            }
+
+            function countDown(ls) {
+                setTimeout(function () {
+                    if (ls > 0) {
+                        ls--;
+                        $("#get_m_msg_code").linkbutton({ text: "获取验证码({0})".format(ls) });
+                        countDown(ls);
+                    } else {
+                        $("#get_m_msg_code").linkbutton({ text: "获取验证码" });
+                        $("#get_m_msg_code").linkbutton("enable");
+                        $("#sLoginName").textbox("enable");
+                        $("#sLoginName").textbox("enableValidation");
+                        $("#get_m_msg_code").on("click", getVCode);
+                        modules.get(enums.Modules.CACHE).setCache("_getmcode", false);
+                    }
+                }, 1000);
+            }
+        }();
+    });
+</script>
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px">
+    <form style="width:100%;height:99%;" id="forget_pwd_form">
+        <table class="styletable" style="height:100%">
+            <tbody>
+                <tr>
+                    <td style="width:auto">登录名</td>
+                    <td>
+                        <input id="sLoginName" class="easyui-textbox" data-options="width:180,type:'text',missingMessage:'请输入登录名',required:true,validType:['chartLengthBetween[4,20,\'登录名\']','isHtmlValidate']" name="sLoginName" />
+                        &emsp; <a class="easyui-linkbutton" id="get_m_msg_code" data-options="plain:true">获取验证码</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:auto">短信验证码</td>
+                    <td>
+                        <input class="easyui-textbox" data-options="width:180,type:'text',missingMessage:'请输入验证码',required:true,validType:['maxLength[20]']" name="m_msg_code" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:auto">新密码</td>
+                    <td>
+                        <input class="easyui-textbox" data-options="width:180,type:'password',missingMessage:'请输入新密码',required:true,validType:['newPsdequals[\'#cnpsw\']']" name="npsw" id="npsw" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:auto">确认新密码</td>
+                    <td>
+                        <input class="easyui-textbox" data-options="width:180,type:'password',missingMessage:'请确认新密码',required:true,validType:['newPsdequals[\'#npsw\']']" name="cnpsw" id="cnpsw"/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>

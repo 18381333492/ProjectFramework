@@ -1,0 +1,87 @@
+﻿@model Framework.DTO.EHECD_SystemUserDTO
+
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+<link href="~/scripts/plug-in/address/city-picker/city-picker.css" rel="stylesheet" />
+<script src="~/scripts/plug-in/address/city-picker/city-picker.data.js"></script>
+<script src="~/scripts/plug-in/address/city-picker/city-picker.js"></script>
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    @if (Model != null)
+    {
+        var sAddressList = new List<string>();
+        if (!string.IsNullOrWhiteSpace(Model.sProvice)) { sAddressList.Add(Model.sProvice); }
+        if (!string.IsNullOrWhiteSpace(Model.sCity)) { sAddressList.Add(Model.sCity); }
+        if (!string.IsNullOrWhiteSpace(Model.sCounty)) { sAddressList.Add(Model.sCounty); }
+        var sAddress = string.Join("/", sAddressList);
+
+        <form style="width:99%;height:99%;" id="edit_systemuser_form">
+            <table class="styletable" style="height:100%">
+                <tbody>
+                    <tr>
+                        <td>用户登录名</td>
+                        <td>
+                            <input class="easyui-textbox" value="@Model.sLoginName" data-options="width:180,type:'text',editable:false,missingMessage:'请输入用户登录名',required:true,validType:['chartLengthBetween[4,20,\'用户登录名\']','isHtmlValidate']" name="sLoginName" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>所处地区</td>
+                        <td>
+                            <div style="position: relative;">
+                                <input style="width:180px" placeholder="@sAddress" readonly type="text" name="region" data-toggle="city-picker">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>联系地址</td>
+                        <td>
+                            <input class="easyui-textbox" value="@Model.sAddress" data-options="width:180,type:'text',required:false,validType:['maxLength[30]','isHtmlValidate']" name="sAddress" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>联系手机</td>
+                        <td>
+                            <div style="position: relative;">
+                                <input class="easyui-textbox" value="@Model.sMobileNum" data-options="width:180,type:'text',missingMessage:'请输入联系电话',required:true,validType:['isPhoneNum']" name="sMobileNum" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>用户名</td>
+                        <td>
+                            <input class="easyui-textbox" value="@Model.sUserName" data-options="width:180,type:'text',missingMessage:'请输入用户名',required:true,validType:['chartLengthBetween[3,15,\'用户名\']','isHtmlValidate']" name="sUserName" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>用户昵称</td>
+                        <td>
+                            <input class="easyui-textbox" value="@Model.sUserNickName" data-options="width:180,type:'text',missingMessage:'请输入用户昵称',required:true,validType:['chartLengthBetween[4,20,\'用户昵称\']','isHtmlValidate']" name="sUserNickName" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>用户性别</td>
+                        <td>
+                            <input type="radio" name="tSex" value="1" @(Model.tSex == 1 ? "checked" : "") />男&emsp;/&emsp;<input type="radio" name="tSex" value="0" @(Model.tSex == 0 ? "checked" : "") />女
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>用户类型</td>
+                        <td>
+                            <input class="easyui-combobox" data-options="valueField: 'id',
+                                                                   textField: 'text',
+                                                                   panelHeight:'auto',
+                                                                   data:[{'id':0,'text':'平台用户'@(Model.tUserType == 0 ? ",'selected':true" : "")},
+                                                                   {'id':1,'text':'店铺'@(Model.tUserType == 1 ? ",'selected':true" : "")},
+                                                                    {'id':2,'text':'合伙人'@(Model.tUserType == 2 ? ",'selected':true" : "")}]" name="tUserType" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    }
+    else
+    {
+        <div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px">
+            <div id="nodata">很抱歉，未找到对应的角色信息，请联系管理员</div>
+        </div>
+    }
+</div>

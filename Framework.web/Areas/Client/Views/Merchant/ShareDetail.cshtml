@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>分享客列表</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link href="~/Content/dropload.css" rel="stylesheet" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+</head>
+<body class="bg-f2f2f2">
+    <div id="share-all">
+        <div class="box bg-fff" id="share_people_div">
+            <script type="text/html" id="sharePeopleTemplate">
+            <span class="head"><img src="{{sHeadPic}}" /></span>
+            <p class="fs-16">{{sNickName}}</p>
+            <p class="fs-16">{{sPhone}}</p>
+            </script>
+        </div>
+        <div class="share">
+            <p class="fc-fe8285 text-center title">此分享客在本店分享的商品</p>
+            <div class="w-notDATA" style="display:none" id="havaNo_share_Goods"><b></b><h4 class="w-font14 w-colorccc w-textalignC">暂时没有数据</h4></div>
+            <!--1-->
+            <div id="share_goods_list">
+                <script type="text/html" id="sharegoodsTemplate">
+                    {{each list as item index}}
+                    <div class="order_center bg-fff padtb">
+
+                        <div class="order_pred flex_dom flex_item_stretch">
+                            <a href="javascript:;" class="pred_img wid16rem">
+                                <span>
+                                    <img src="{{item.sGoodsPictures.split(',')[0]}}">
+                                </span>
+                            </a>
+                            <div class="pred_con  p_relative flex_1">
+                                <h4 class="l-h-04rem fs-14 text-ellipsis-2line fc-333"><span>{{item.goodname}}</span></h4>
+                                <div class="l-h-03rem mt2r fc-fe8285 fs-16">&yen;{{item.dGoodsFisrtPrice}}</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    {{/each}}
+                </script>
+            </div>
+           
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+<script src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+<script src="~/Areas/Client/Content/lib/date-choice.js"></script>
+<script src="~/Areas/Client/Content/lib/judge.js"></script>
+<script src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+<script src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+<script src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+<script src="~/Areas/Client/Content/script/page.js"></script>
+<script src="~/Areas/Client/Content/script/malong.js"></script>
+<script src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+<script src="~/Areas/Client/Content/script/goujia.js"></script>
+<script src="~/Areas/Client/Content/script/qinliang.js"></script>
+<script src="~/Areas/Client/Content/script/wangqixin.js"></script>
+<script src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+<script src="~/scripts/lib/client.common.js"></script>
+<script src="~/scripts/lib/template.js"></script>
+<script>
+    $(function () {
+        shareDetail.init();
+    });
+    var shareDetail = (function (obj) { return obj; })(new function () {
+        function init() {
+            
+            var url = location.search.split('=')[1].split('&')[0];
+            var shopID = location.search.split('=')[2];
+            common.post("/Client/Merchant/GetShareClient", { ID: url }, function (res) {
+                var html = template("sharePeopleTemplate", res.Data);
+                $("#share_people_div").html(html);
+                window.common.page.initDropLoad(loadDataCallBack(shopID, url));
+            })
+        }
+        function loadDataCallBack(shopID, url) {
+            pageSize = window.common.page.pagerParam.pageSize = 10;
+            pageIndex = window.common.page.pagerParam.pageIndex = 1;
+              
+            window.common.post("/Client/Merchant/GetShareDetail", { pageSize: pageSize, pageIndex: pageIndex, shopID: shopID, sClientID: url },
+                function (r) {
+                    window.common.page.calculationPage(r.Data.MaxCount);//重新计算页码
+                    if (r.Data.Result.length != 0) {
+                        var json = r.Data.Result;
+
+                        var html = template("sharegoodsTemplate", { list: json });
+
+                        $("#share_goods_list").html(html);
+                    }
+                    else {
+                        $("#share_goods_list").empty();
+                        $("#havaNo_share_Goods").css('display', 'block');
+                    }
+
+
+                }, function (r) { });
+        }
+
+        return {
+            init:init
+        }
+    });
+
+</script>
+    

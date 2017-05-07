@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>个人信息</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+    <style>
+        .w-iphoneBox{
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 10px;
+            padding: 15px 0;
+            padding-top: 20px;
+            color:#666;
+        }
+    </style>
+</head>
+<body>
+    <div class="lzxheadicon">
+        <div class="iconcont" style="background-image:url(@(ViewBag.sHeadPic));"></div>
+    </div>
+    <section class="w-width100 w-overflowH">
+        <ul class="lzxregedit w-width100 w-overflowH pdlr10">
+            <li class="w-width100 w-flex">
+                <em>手机号</em>
+                <div class="w-iphoneBox">@(ViewBag.sPhone)</div>
+            </li>
+            <li class="w-width100  w-flex">
+                <em>昵称</em>
+                <input type="text" id="sNickName" placeholder="请填写您的昵称" class="font14 w-color999 w-flexitem1" value="@(ViewBag.sNickName)">
+            </li>
+
+        </ul>
+    </section>
+    <input id="sHeadPic" type="hidden" value="@(ViewBag.sHeadPic)"/>
+    <div class="lzxsure"><button id="keepInfo" type="button">保存</button></div>
+</body>
+</html>
+@using WeiXin.Base.JsApi;
+@model jsapi_config
+<script src="~/scripts/lib/wx.js"></script>
+<script src="~/scripts/lib/client.common.js"></script>
+<script type="text/javascript">
+    $(function () {
+        scope.InitWeiXin();
+        scope.bingEvent();
+    });
+
+    var scope = (function (obj) { return obj; })(new function () {
+
+        var serverId="";
+
+        /**
+        * 初始化调用微信JS的API的配置
+        */
+        function InitWeiXin() {
+            wx.config({
+                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId: '@Model.appId', // 必填，公众号的唯一标识
+                timestamp:@Model.timestamp , // 必填，生成签名的时间戳
+                nonceStr: '@Model.nonceStr', // 必填，生成签名的随机串
+                signature: '@Model.signature',// 必填，签名，见附录1
+                jsApiList:["chooseImage","uploadImage"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            });
+        }
+
+
+        /**
+         * 选择手机上图片
+        */
+        function chooseImage(){
+            wx.chooseImage({
+                count:1, // 默认5
+                sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+                sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+                success: function (res) {
+                    var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                    $('.iconcont').css("background-image",'url('+localIds+')');
+                    //上传图片
+                    uploadImage(localIds);
+                }
+            });
+        }
+
+        /**
+         * 上传图片到微信服务器
+         */
+        function uploadImage(localIds){
+            wx.uploadImage({
+                localId:localIds[0], // 需要上传的图片的本地ID，由chooseImage接口获得
+                isShowProgressTips: 1, // 默认为1，显示进度提示
+                success: function (res) {
+                    serverId= res.serverId; // 返回图片的服务器端ID
+                }
+            });
+        }
+
+      
+        //下载微信图片
+        function upload(){
+            var sHeadPic=$('#sHeadPic').val();
+            var sNickName=$('#sNickName').val();
+            if(sNickName.length==0){
+                alert("昵称不能为空!");
+                return ;
+            }
+            if(sNickName.length>6){
+                alert("昵称不能超过六个字!");
+                return ;
+            }
+            if(serverId.length>0)
+            {//有图片的上传图片到微信服务器
+                common.post("/Client/ClientCenter/LoadImageByWX",{serverId: serverId},
+                    function(r){
+                        //返回本地图片地址
+                        sHeadPic=r.Data;
+                        AlertInfo(sNickName,sHeadPic);
+                    });
+            }
+            else{
+                AlertInfo(sNickName,sHeadPic);
+            }
+        }
+
+
+        //修改个人信息
+        function AlertInfo(sNickName,sHeadPic){
+            common.post("/Client/ClientCenter/AlertInfo",{sNickName:sNickName,sHeadPic:sHeadPic },
+                function(r){
+                    location.href="/Client/ClientCenter/Index";
+                });
+        }
+        
+
+
+        //绑定事件
+        function bingEvent(){
+            //点击头像切换图片
+            $('.iconcont').on("click",chooseImage);
+            //修改个人信息
+            $('#keepInfo').on("click",upload);
+        }
+
+        return {
+            InitWeiXin:InitWeiXin,
+            bingEvent:bingEvent
+        }
+    });
+</script>

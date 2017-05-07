@@ -1,0 +1,127 @@
+﻿
+@model Framework.DTO.EHECD_BaseSettingDTO
+
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+<script src="~/Areas/Admin/Scripts/BaseSetting/Index.js"></script>
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px;">
+    <form id="baseSetting_index_form" style="width:100%;height:100%" ;>
+        <table class="styletable" style="height:100%">
+            <tbody>
+                <!--商城设置-->
+                <tr>
+                    <td colspan="2" style="text-align:center">商城设置</td>
+                </tr>
+                <tr>
+                    <td>平台电话：</td>
+                    <td><input class="easyui-textbox" name="sMallPhone" value="@Model.sMallPhone" missingMessage="请输入电话号码" data-options="required:true,validType:['isPhoneNum','isHtmlValidate']" style="width:300px"></td>
+                </tr>
+                <tr>
+                    <td>轮播图管理：<br/>规格(宽高比例17:11)</td>
+                    <td>
+                        <div id="baseSetting_index_carousel_images">
+                            <div id="baseSetting_index_upload" class="uploader">
+                                <div class="queueList" style="">
+                                    <div id="dndArea" class="placeholder">
+                                        <div id="filePicker"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="baseSetting_index_carousel_links">
+                                @*<span>链接：<input class="easyui-textbox" missingMessage="请输入链接地址" data-options="required:true" style="width:80px"></span>*@
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <!--客服设置-->
+                <tr style="display:none">
+                    <td colspan="2" style="text-align:center">客服设置</td>
+                </tr>
+                <tr style="display:none">
+                    <td>客服设置：</td>
+                    <td>
+                        <div id="baseSetting_index_customer_contenter_div">
+                            <ul>
+                                @foreach (var item in (ViewBag.CustomerList as IList<Framework.DTO.EHECD_CustomServiceDTO>))
+                                {
+                                    <li style='line-height:3'>
+                                        <span>客服：</span>
+                                        <span>QQ号：<input class="easyui-textbox" missingMessage="请输入QQ号" name="sQQ" value="@item.sQQ" data-options="required:true,validType:['isHtmlValidate','isNumber']" style="width:200px"></span>
+                                        &emsp;&emsp;&emsp;
+                                        <span>QQ昵称：<input class="easyui-textbox" missingMessage="请输入QQ昵称" name="sQQName" value="@item.sQQName" data-options="required:true,validType:['chartLengthBetween([1,6])','isHtmlValidate']" style="width:200px"></span>
+                                        <span><a data-id="baseSetting_index_customer_delete" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'">删除</a></span>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                        <div>
+                            <a id="baseSetting_index_btn_add_customer" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加</a>
+                        </div>
+                    </td>
+                </tr>
+
+                <!--订单设置-->
+                <tr>
+                    <td colspan="2" style="text-align:center">订单设置</td>
+                </tr>
+                <tr>
+                    <td>未付款订单：</td>
+                    <td>
+                        <input class="easyui-numberbox" name="iHours" value="@Model.iHours"  data-options="validType:['isNumber','minInt[0]'],min:0" style="width:100px">
+                        <span>小时内未付款自动取消订单(设置整数，设置为0就是不自动取消订单)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>佣金最高百分比限制:</td>
+                    <td>
+                        <input class="easyui-textbox" name="iHighestCommissionPrecent" value="@Model.iHighestCommissionPrecent" missingMessage="请输入数字" data-options="required:true,validType:['isNumber','maxInt[100]','minInt[0]']" style="width:100px">
+                        <span>%</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>佣金比例设置：</td>
+                    <td>
+                        <span>一级：</span>
+                        <input class="easyui-textbox" id="baseSetting_index_iLevelOneCommissionPrecent_id" name="iLevelOneCommissionPrecent" value="@Model.iLevelOneCommissionPrecent" missingMessage="请输入数字" data-options="required:true,validType:['isNumber','maxInt[100]','minInt[0]']" style="width:100px">
+                        <span>%</span><br /><br />
+                        <span>二级：</span>
+                        <input class="easyui-textbox" id="baseSetting_index_iLevelTwoCommissionPrecent_id" name="iLevelTwoCommissionPrecent" value="@Model.iLevelTwoCommissionPrecent" missingMessage="请输入数字" data-options="required:true,validType:['isNumber','maxInt[100]','minInt[0]']" style="width:100px">
+                        <span>%</span><br /><br />
+                        <span>三级：</span>
+                        <input class="easyui-textbox" id="baseSetting_index_iLevelThreeCommissionPrecent_id" name="iLevelThreeCommissionPrecent" value="@Model.iLevelThreeCommissionPrecent" missingMessage="请输入数字" data-options="required:true,validType:['isNumber','maxInt[100]','minInt[0]']" style="width:100px">
+                        <span>%</span><br /><br />
+                    </td>
+                </tr>
+                <tr>
+                    <td>服务费比例设置：</td>
+                    <td>
+                        <input class="easyui-textbox" name="iServicePrecent" value="@Model.iServicePrecent" missingMessage="请输入数字" data-options="required:true,validType:['isNumber','maxInt[100]','minInt[0]']" style="width:100px">
+                        <span>%</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>合伙人提成比例：</td>
+                    <td>
+                        <input class="easyui-textbox" name="iPartnerCommissionPrecent" value="@Model.iPartnerCommissionPrecent" missingMessage="请输入数字" data-options="required:true,validType:['isNumber','maxInt[100]','minInt[0]']" style="width:100px">
+                        <span>%</span>
+                    </td>
+                <tr>
+                    <td>返还优惠劵设置：</td>
+                    <td>
+                        <span>民宿填写分享客的推荐码成功申请入驻后，返还分享客</span>
+                        <input class="easyui-textbox" name="iReturnMoney" value="@Model.iReturnMoney" missingMessage="请输入数字" data-options="required:true,validType:['isNumber']" style="width:100px">
+                        <span>元的平台优惠券(填0为不返),满</span>
+                        <input class="easyui-textbox" name="iUserMoney" value="@Model.iUserMoney" missingMessage="请输入数字" data-options="required:true,validType:['isNumber','minInt[0]']" style="width:100px">
+                        <span>元可用（填0为无门槛）</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align:center">
+                        <a id="baseSetting_index_btn_save" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>

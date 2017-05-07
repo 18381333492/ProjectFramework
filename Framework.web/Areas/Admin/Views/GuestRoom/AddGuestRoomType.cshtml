@@ -1,0 +1,17 @@
+﻿
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:false" style="padding:1px;margin:1px">
+    <form style="width:100%;height:100%;" id="add_guestroom_type_form">
+        <table class="styletable" style="height:100%">
+            <tbody>
+                <tr>
+                    <td>客房种类名称</td>
+                    <td>
+                        <input class="easyui-textbox" data-options="width:180,type:'text',missingMessage:'请输入客房种类名称',required:true,validType:['chartLengthBetween[2,50,\'客房种类名称\']','isHtmlValidate']" name="sRoomTypeName" />
+                    </td>
+                </tr>                
+            </tbody>
+        </table>
+    </form>
+</div>

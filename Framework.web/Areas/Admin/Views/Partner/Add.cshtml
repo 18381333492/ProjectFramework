@@ -1,0 +1,58 @@
+﻿
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+<link href="~/scripts/plug-in/address/city-picker/city-picker.css" rel="stylesheet" />
+<script src="~/scripts/plug-in/address/city-picker/city-picker.data.js"></script>
+<script src="~/scripts/plug-in/address/city-picker/city-picker.js"></script>
+
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form id="add_partner_form" style="width:100%;height:100%">
+        <table class="styletable">
+            <tr>
+                <td>联系电话：</td>
+                <td><input class="easyui-textbox" data-options="width:180,type:'text',missingMessage:'请输入联系电话',required:true,validType:['isPhoneNum']" name="sMobileNum" /></td>
+            </tr>
+            <tr>
+                <td>真实姓名：</td>
+                <td>
+                    <input class="easyui-textbox" data-options="width:180,type:'text',missingMessage:'请输入店主姓名',required:true,validType:['chartLengthBetween[2,15,\'店主姓名\']','isHtmlValidate']" name="sUserName" />
+                </td>
+            </tr>
+            <tr>
+                <td>意向区域：</td>
+                <td><input style="width:180px" placeholder="四川省/成都市/锦江区" readonly type="text" name="region" data-toggle="city-picker" id="choose_address_add"></td>
+            </tr>
+            <tr>
+                <td>身份证：(正反面)<input type="hidden" id="partner_add_idCardImges" name="sImagePath" /></td>
+                <td>
+                    <div id="partner_add_idCardImges_upload" class="uploader">
+                        <div class="queueList">
+                            <div id="dndArea" class="placeholder">
+                                <div id="filePicker"></div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>个人描述：</td>
+                <td><input type="text" style="width:100%;height:150px" name="sMainBusiness" /></td>
+            </tr>
+            <tr>
+                <td>登录名：</td>
+                <td><input class="easyui-textbox" data-options="width:180,type:'text',missingMessage:'请输入登录名',required:true,validType:['chartLengthBetween[3,20,\'登录名\']','isHtmlValidate']" name="sLoginName" /></td>
+            </tr>
+            <tr>
+                <td>密码：</td>
+                <td>
+                    <input class="easyui-textbox" data-options="height:25,width:180,required:true,missingMessage:'请输入登录密码',iconCls:'icon-lock',iconAlign:'left',type:'password',validType:['chartLengthBetween[6,15,\'密码\']']" name="sPassWord" />
+                </td>
+            </tr>
+            <tr>
+                <td>确认密码：</td>
+                <td><input class="easyui-textbox" data-options="height:25,width:180,required:true,missingMessage:'请输再次入登录密码',iconCls:'icon-lock',iconAlign:'left',type:'password',validType:['chartLengthBetween[6,15,\'密码\']']" name="sPassWord2" /></td>
+            </tr>
+        </table>
+
+    </form>
+</div>

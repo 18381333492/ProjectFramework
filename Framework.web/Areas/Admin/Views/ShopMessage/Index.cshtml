@@ -1,0 +1,44 @@
+﻿@model Framework.DTO.EHECD_SystemUserDTO
+
+<script src="~/Areas/Admin/Scripts/ShopMessage/Index.js"></script>
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px;">
+    <form id="shopmessage_form" style="width:100%;height:100%;">
+        <table id="shopmessage_menu"></table>
+        <div id="shopmessage_tool" style="padding:15px;display:none;">
+            <input  type="hidden" value="@Model.sMessage" id="sql_sy_message"/>
+            <span id="shengyuMessage" style="color:red">剩余短信：<label id="shengyu_message"></label></span><br /><br />
+            <input type="text" class="easyui-textbox" data-options="prompt:'店铺名称',validType:['isHtmlValidate','maxLength[200]']" id="shop_message_name_search" />
+            @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
+        </div>
+    </form>
+</div>
+
+<div id="edit_message_dialog_container" style="display:none">
+    <form id="edit_message_dialog_form" style="width:100%;height:99%">
+        <table class="styletable" style="height:100%; width:100%">
+            <tr>
+                <td style="text-align:center">
+                    <input name="ID" id="edit_message_id" type="hidden"/ >
+                    <input  id="jilu_message_count" type="hidden"/>  
+                    <input name="sMessage" id="edit_message_count" />       
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+
+<div id="edit_TerraceCount_dialog_container" style="display:none">
+    <form id="edit_TerraceCount_dialog_form" style="width:100%;height:99%">
+        <table class="styletable" style="height:100%; width:100%">
+            <tr>
+                <td style="text-align:center">
+                    <input id="ex_float_message_count" type="hidden" />
+                    <input name="sMessage" id="edit_float_message_count" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>

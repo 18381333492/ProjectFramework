@@ -1,0 +1,53 @@
+﻿<!--时间组件 start-->
+<link href="~/scripts/plug-in/date/laydate-master/need/laydate.css" rel="stylesheet" />
+<link href="~/scripts/plug-in/date/laydate-master/skins/molv/laydate.css" rel="stylesheet" />
+<script src="~/scripts/plug-in/date/laydate-master/laydate.dev.js"></script>
+<!--时间组件 end-->
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+<script src="~/Areas/Admin/Scripts/FinancePartner/Index.js"></script>
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px;">
+    <form id="partner_index_form" style="width:100%;height:100%" ;>
+        <div id="partner_index_tool_div" style="padding:15px;">
+            <input type="hidden" name="ID" id="partner_index_ID" value="@ViewBag.ID" />
+            <div style="margin-bottom:10px">
+                <span>可提现金额：￥</span><span id="partner_index_span_withdrawMoney">@ViewBag.iPartnerAviliableMoney["iprice"]</span>
+                &emsp;&emsp;
+                <span>申请中金额：￥</span><span id="partner_index_span_applayMoney">@ViewBag.iPartnerAviliableMoney["applayMoney"]</span>
+                &emsp;&emsp;
+                <a href="#" class="easyui-linkbutton" id="partner_index_a_withdraw" data-options="iconCls:'icon-remove'">申请提现</a>
+            </div>
+            <div style="margin-bottom:10px">
+                <select name="sType_store" class="easyui-combobox" style="width:100px;" data-options="panelHeight:'auto'">
+                    <option value="-1">全部</option>
+                    <option value="4">收入</option>
+                    <option value="3">退款</option>
+                </select>
+            </div>
+            <div style="margin-bottom:10px">
+                <input type="hidden" id="partner_index_dValidDateStart" name="dValidDateStart_store" />
+                <input type="hidden" id="partner_index_dValidDateEnd" name="dValidDateEnd_store" />
+
+                <a href="#" class="easyui-linkbutton" id="partner_index_a_all" data-options="iconCls:'icon-sum'">全部</a>
+                <a href="#" class="easyui-linkbutton" id="partner_index_a_today" data-options="iconCls:'icon-sum'">今日</a>
+                <a href="#" class="easyui-linkbutton" id="partner_index_a_yesterday" data-options="iconCls:'icon-sum'">昨日</a>
+                <a href="#" class="easyui-linkbutton" id="partner_index_a_week" data-options="iconCls:'icon-sum'">最近一周</a>
+                <a href="#" class="easyui-linkbutton" id="partner_index_a_month" data-options="iconCls:'icon-sum'">最近一月</a>
+                &emsp;
+                <span>下单时间：<input id="partner_index_input_dValidDateStart" readonly="readonly" onclick="modules.get('cache').getCache('laydate').laydate({ istime: false, format: 'YYYY-MM-DD' })" class="textbox" style="height:20px;" /></span>
+                ---
+                <span><input id="partner_index_input_dValidDateEnd" readonly="readonly" onclick="modules.get('cache').getCache('laydate').laydate({ istime: false, format: 'YYYY-MM-DD' })" class="textbox" style="height:20px;" /></span>
+                &emsp;&emsp;
+                <input class="easyui-textbox" name="sShopName" data-options="iconCls:'icon-search',prompt:'店铺名称'" style="width:150px">
+                <a id="partner_index_btn_seach" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</a>
+            </div>
+            <div>
+                <span>金额总计：￥</span><span id="partner_index_span_amountMoney">0.00</span>
+                &emsp;&emsp;
+                <span>我的提成：￥</span><span id="partner_index_span_commissionMoney">0.00</span>
+            </div>
+        </div>
+
+        <table id="partner_index_datagrid"></table>
+    </form>
+</div>

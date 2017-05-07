@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E6602856-90BA-47B8-A1C2-3F330A2DE0D6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WeiXin.Base</RootNamespace>
+    <AssemblyName>WeiXin.Base</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Access_Token.cs" />
+    <Compile Include="Access_TokenList.cs" />
+    <Compile Include="BaseType.cs" />
+    <Compile Include="HttpMessageTool.cs" />
+    <Compile Include="JsApi\jsapi_config.cs" />
+    <Compile Include="JsApi\jsapi_ticket.cs" />
+    <Compile Include="Pay\EnterprisePay.cs" />
+    <Compile Include="Pay\Lib\WxPayApi.cs" />
+    <Compile Include="Pay\Lib\WxPayConfig.cs" />
+    <Compile Include="Pay\Lib\WxPayData.cs" />
+    <Compile Include="Pay\Lib\WxPayException.cs" />
+    <Compile Include="Pay\Lib\WxPayLog.cs" />
+    <Compile Include="Pay\Lib\WxPayNotify.cs" />
+    <Compile Include="Pay\Lib\WxPayService.cs" />
+    <Compile Include="Pay\ResultNotify.cs" />
+    <Compile Include="Pay\WxOpenModel.cs" />
+    <Compile Include="Receive\IAction.cs" />
+    <Compile Include="Menu\ChildMenu.cs" />
+    <Compile Include="Menu\HandleMenu.cs" />
+    <Compile Include="Menu\Menu.cs" />
+    <Compile Include="Menu\MenuInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Receive\BaseMessage.cs" />
+    <Compile Include="Receive\Event\ClickEvent.cs" />
+    <Compile Include="Receive\Event\LocationEvent.cs" />
+    <Compile Include="Receive\Event\ScanEvent.cs" />
+    <Compile Include="Receive\Event\SubscribeEvent.cs" />
+    <Compile Include="Receive\Event\UnSubscribeEvent.cs" />
+    <Compile Include="Receive\Event\ViewClick.cs" />
+    <Compile Include="Receive\HandleEvent.cs" />
+    <Compile Include="Receive\HandleMessage.cs" />
+    <Compile Include="Receive\Message\ImageMessage.cs" />
+    <Compile Include="Receive\Message\LinkMessage.cs" />
+    <Compile Include="Receive\Message\LocationMessage.cs" />
+    <Compile Include="Receive\Message\TextMessage.cs" />
+    <Compile Include="Receive\Message\VideoMessage.cs" />
+    <Compile Include="Receive\Message\VoiceMessage.cs" />
+    <Compile Include="Send\CustomerService\BaseMessage.cs" />
+    <Compile Include="Send\CustomerService\Message\ImageMessage.cs" />
+    <Compile Include="Send\CustomerService\Message\MusicMessage.cs" />
+    <Compile Include="Send\CustomerService\Message\NewsMessage.cs" />
+    <Compile Include="Send\CustomerService\Message\TextMessage.cs" />
+    <Compile Include="Send\CustomerService\Message\VideoMessage.cs" />
+    <Compile Include="Send\CustomerService\Message\VoiceMessage.cs" />
+    <Compile Include="Send\PassiveResponse\BaseMessage.cs" />
+    <Compile Include="Send\PassiveResponse\Message\ImageMessage.cs" />
+    <Compile Include="Send\PassiveResponse\Message\MusicMessage.cs" />
+    <Compile Include="Send\PassiveResponse\Message\NewsMessage.cs" />
+    <Compile Include="Send\PassiveResponse\Message\TextMessage.cs" />
+    <Compile Include="Send\PassiveResponse\Message\VideoMessage.cs" />
+    <Compile Include="Send\PassiveResponse\Message\VoiceMessage.cs" />
+    <Compile Include="Send\Template\BaseMessage.cs" />
+    <Compile Include="Send\Template\Message\TemplateMessageStatusEvent.cs" />
+    <Compile Include="UrlVerify.cs" />
+    <Compile Include="User\IAction.cs" />
+    <Compile Include="User\UserGroup\Group.cs" />
+    <Compile Include="User\UserGroup\GroupList.cs" />
+    <Compile Include="User\UserInfo\UserInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Lib\Newtonsoft.Json.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WeiXin.Tool\WeiXin.Tool.csproj">
+      <Project>{f264a3d6-25b0-4f4a-94c6-a7d219436a6f}</Project>
+      <Name>WeiXin.Tool</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

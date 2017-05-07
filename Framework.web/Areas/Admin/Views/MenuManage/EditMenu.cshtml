@@ -1,0 +1,48 @@
+﻿@model Framework.DTO.UserMenu
+@{
+    if (Model != null)
+    {
+        <form id="edit_menu_form">
+            <style>
+                .tablestype {
+                    width: 90%;
+                    height: 90%;
+                    margin-left: 10px;
+                    margin-top: 5px;
+                }
+
+                    .tablestype td {
+                        text-align: right;
+                        height: 30px;
+                    }
+            </style>
+            <div>
+                <input type="hidden" name="ID" value="@Model.ID"/>
+                <table class="gridtable tablestype">
+                    <tr>
+                        <td>菜单名称：</td>
+                        <td style="text-align:left;padding-left:15px">
+                            <input type="text" name="sMenuName" class="easyui-textbox" value="@Model.sMenuName" data-options="required:true,validType:['maxLength[20]','isHtmlValidate']" missingmessage="请输入菜单名称" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>链接地址：</td>
+                        <td style="text-align:left;padding-left:15px">
+                            <input type="text" name="sUrl" class="easyui-textbox" value="@Model.sUrl" data-options="required:false,validType:['maxLength[50]','isHtmlValidate']" missingmessage="请输入菜单连接地址" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>排序号：</td>
+                        <td style="text-align:left;padding-left:15px">
+                            <input type="text" name="iOrder" class="easyui-numberbox" value="@Model.iOrder" data-options="required:true,min:0,validType:['isNumber']" missingmessage="请输入菜单排序编号" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    }
+    else
+    {
+        <div id="nodata">抱歉，没有找到对应的菜单，请联系管理员</div>
+    }
+}

@@ -1,0 +1,33 @@
+﻿
+@model Framework.DTO.EHECD_WithdrawCashDTO
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form style="width:99%;height:99%;" id="withdrawCash_edit_form">
+        <input type="hidden" name="ID" id="withdrawCash_edit_ID" value="@Model.ID" />
+        <!--提现人类型(0-店铺 1-合伙人 2-分享客)-->
+        <input type="hidden"  id="sWithdrawMemberType" value="@Model.sWithdrawMemberType" />
+        <input type="hidden" name="sWithdrawMemberID" id="withdrawCash_edit_ID" value="@Model.sWithdrawMemberID" />
+        <table class="styletable" style="height:100%">
+            <tbody>
+                <tr>
+                    <td>提现编号：</td>
+                    <td><span>@Model.sWithdrawNumber</span></td>
+                </tr>
+                <tr>
+                    <td>状态：</td>
+                    <td>
+                        <select name="iState" id="withdrawCash_edit_select" class="easyui-combobox" style="width:100px;" data-options="panelHeight:'auto'">
+                            <option value="0">提现审核中</option>
+                            <option value="1">通过审核</option>
+                            <option value="2">提现成功</option>
+                        </select>
+                        <input id="withdrawCash_edit_iState" value="@Model.iState" type="hidden">
+                    </td>
+                </tr>
+                <tr>
+                    <td>备注：</td>
+                    <td><textarea id="withdrawCash_edit_sRemark" name="sRemark" rows="10" cols="30" >@Model.sRemark</textarea></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>

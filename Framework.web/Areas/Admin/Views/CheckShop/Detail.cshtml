@@ -1,0 +1,61 @@
+﻿
+
+@model Framework.DTO.EHECD_ApplyDTO
+
+
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form id="detail_unpass_shop" style="width:99%;height:99%">
+        <table class="styletable">
+            <tr>
+
+                <td>联系电话<input type="hidden" value="@Model.ID" /></td>
+                <td>
+                    <span>@Model.sMobileNum</span>
+
+                </td>
+            </tr>
+            <tr>
+                <td>店主姓名</td>
+                <td><span>@Model.sName</span></td>
+            </tr>
+            <tr>
+                <td>店铺名</td>
+                <td><span>@Model.sShopName</span></td>
+            </tr>
+            <tr>
+                <td>所在区域</td>
+                <td><span>@Model.sProvice@Model.sCity@Model.sCounty</span></td>
+            </tr>
+            <tr>
+                <td>店铺地址</td>
+                <td><span>@Model.sAddress</span></td>
+            </tr>
+            <tr>
+                <td>身份证<input type="hidden" value="@ViewBag.picture" /></td>
+                <td>
+                    @if ((ViewBag.picture as List<Framework.DTO.EHECD_ImagesDTO>) == null || (ViewBag.picture as List<Framework.DTO.EHECD_ImagesDTO>).Count == 0)
+                    {
+                        <span>暂无图片</span>
+                    }
+                    else
+                    {
+                        foreach (var item in (ViewBag.picture as List<Framework.DTO.EHECD_ImagesDTO>))
+                        {
+                            <img src="@item.sImagePath" style="width:60px;height:60px;float:left;margin-right:10px;" />
+                        }
+                    }
+
+                </td>
+            </tr>
+            <tr>
+                <td>主营业务</td>
+                <td>
+                    <span>@Model.sMainBusiness</span>
+                </td>
+            </tr>
+        </table>
+
+    </form>
+</div>
+

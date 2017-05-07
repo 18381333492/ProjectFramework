@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>注册</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+    <script src="~/scripts/lib/client.common.js"></script>
+</head>
+<body>
+    <section>
+        <h4 class="pdlr10 cored bgf2 hl30">为了您的账户安全，需绑定您的手机号！</h4>
+    </section>
+    <section class="w-width100 w-overflowH">
+        <ul class="lzxregedit w-width100 w-overflowH pdlr10">
+
+            <li class="w-width100 w-flex">
+
+                <span style="background-image:url(/Areas/Client/Content/images/slice/phone.png)"></span>
+                <input type="tel" placeholder="请输入手机号码" id="phoneNumber" class="font14 w-color999 w-flexitem1">
+            </li>
+            <li class="w-width100 w-flex">
+                <span style="background-size: 20px; background-image:url(/Areas/Client/Content/images/slice/verify.png)"></span>
+                <input type="text" placeholder="请输入验证码" class="font14 w-color999 w-flexitem1 w-inlineblock" id="code">
+                <input type="button" value="获取验证码" class="font12 w-inlineblock" onclick="clientRegister.getCheckCode()" id="m-btn">
+            </li>
+            <li class="w-width100  w-flex">
+                <span style="background-image:url(/Areas/Client/Content/images/slice/lock.png)"></span>
+                <input type="password" placeholder="请输入不低于6位密码" class="font14 w-color999 w-flexitem1" id="psd1">
+            </li>
+            <li class="w-width100  w-flex">
+                <span style="background-image:url(/Areas/Client/Content/images/slice/lock.png)"></span>
+                <input type="password" placeholder="请再次输入不低于6位密码" class="font14 w-color999 w-flexitem1" id="psd2">
+            </li>
+        </ul>
+    </section>
+    <label class="agress pdlr10"><input type="checkbox" id="cp"><i></i><span class="co333">我已阅读并同意<a href="javascript:;" class="cored" onclick="clientRegister.userProtocol()">《用户协议》</a></span></label>
+    <div class="lzxsure"><button type="button" onclick="clientRegister.register()" id="registerBtn">点击注册</button></div>
+</body>
+</html>
+
+
+<script>
+
+    /**
+    * 用户注册操作
+    */
+    function ClientRegisterDomain() { };
+
+    /**
+    * 用户注册原型
+    */
+    ClientRegisterDomain.prototype = new function () {
+
+        //#region 变量
+        var phoneNumber = $("#phoneNumber"),// 电话号码
+            registerBtn = $("#registerBtn"),// 注册按钮
+            isCount = false,                // 是否在倒计时
+            f = window.common,              // 操作工具
+            btnCode = $("#m-btn"),          // 获取验证码按钮
+            code = $("#code"),              // 验证码
+            psd1 = $("#psd1"),              // 密码1
+            psd2 = $("#psd2"),              // 密码2
+            cp = $("#cp");                  // 接受协议
+        //#endregion
+
+        /**
+        * 初始化页面元素
+        */
+        function init() {
+            return this;
+        }
+
+        /**
+        * 获取验证码
+        */
+        function getCheckCode() {
+            var pn = phoneNumber.val();
+            if (pn.length > 0 && common.isMobilePhone(pn)) {
+                f.post("/Client/ClientRegister/GetPhoneCheckNumber", { phoneNumber: pn }, function (r) {
+
+                    // 设置当前为正在倒计时：倒计时的时候可以注册
+                    isCount = true;
+                    btnCode.prop("disabled", true);
+                    phoneNumber.prop("disabled", true);
+
+                    //开始计时
+                    countDown(60);
+                }, function (r) {
+                    alert(r.Msg);
+                });
+            } else {
+                alert("请输入正确的电话号码", null, 500);
+            }
+        }
+
+        /**
+        * 验证码倒计时
+        */
+        function countDown(ls) {
+            setTimeout(function () {
+                if (ls > 0) {
+                    ls--;
+                    btnCode.val("获取验证码({0})".format(ls));
+                    countDown(ls);
+                } else {
+                    isCount = false;
+                    btnCode.val("获取验证码");
+                    btnCode.prop("disabled", false);
+                    phoneNumber.prop("disabled", false);
+                }
+            }, 1000);
+        }
+
+        /**
+        * 点击注册
+        */
+        function register() {
+            var rcode = code.val();
+            var phone = phoneNumber.val();
+            var pwd1 = psd1.val();
+            var pwd2 = psd2.val();
+            var agreeProtocol = cp.prop("checked");
+
+            if (phone.length === 0) return alert("请输入电话号码", null, 500);
+            if (!f.isMobilePhone(phone)) return alert("请输入正确电话号码", null, 500);
+        //    if (!isCount) return alert("验证码失效，请重新获取验证码", null, 500);
+            if (pwd1.length < 6 || pwd2.length < 6) return alert("密码不低于6位的字符", null, 500);
+            if (pwd1 !== pwd2) return alert("两次输入密码不一致，请重新输入", null, 500);
+            if (rcode.length === 0) return alert("请输入验证码", null, 500);
+            if (!agreeProtocol) return alert("您还没同意用户协议", null, 500);
+
+            f.post("/Client/ClientRegister/RegisteClient",
+                {
+                    phoneNumber: phone,
+                    psd: pwd1,
+                    rcode: rcode
+                },
+                function (r) {
+                    registerBtn.prop("disabled", true);
+                    alert("注册成功！友客感谢您的支持");
+                    setTimeout(function () {
+                        window.location.href = "/Client/ClientHome";
+                    }, 500);
+                }, function (r) {
+                    alert(r.Msg);
+                });
+        };
+        /**
+        * 跳转到用户协议
+        */
+        function userProtocol() {
+            window.location.href = "/Client/ClientRegister/UserProtocol";
+        };
+
+        return {
+            init: init,
+            register: register,
+            userProtocol: userProtocol,
+            getCheckCode: getCheckCode
+        };
+    };
+
+    var clientRegister;
+
+    !function (mmd) {
+        clientRegister = new ClientRegisterDomain().init();
+    }(window.jQuery);
+
+</script>

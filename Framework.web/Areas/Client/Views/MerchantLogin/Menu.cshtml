@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>管理员</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+</head>
+<body>
+    <section class="borbeee">
+        <div class="two_port_align ">
+            <a href="/Client/Merchant/Scanner">
+                <div class="input_text" id="scanner_id">
+                    扫码核销
+                </div>
+                <div class="righticon" style="width:.36rem;">
+                    <strong style="background-image:url(/Areas/Client/Content/images/slice/manage01.png);width: 100%;height: .4rem;background-size:100% .32rem;background-position:center center "></strong>
+                </div>
+            </a>
+        </div>
+        <!--0→扫描员  1→管理员-->
+        @if (ViewBag.sType == 1)
+        {
+            <div class="two_port_align ">
+                <a href="/Client/Merchant">
+                    <div class="input_text" id="orderList_id">
+                        订单列表
+                    </div>
+                    <div class="righticon" style="width:.36rem;">
+                        <strong style="background-image:url(/Areas/Client/Content/images/slice/manage02.png);width: 100%;height: .4rem;background-size: .32rem .38rem;background-position:left center "></strong>
+                    </div>
+                </a>
+            </div>
+            <div class="two_port_align ">
+                <a href="/Client/Merchant/ShareList">
+                    <div class="input_text" id="share_list_id">
+                        分享客列表
+                    </div>
+                    <div class="righticon" style="width:.36rem;">
+                        <strong style="background-image:url(/Areas/Client/Content/images/slice/manage03.png);width: 100%;height: .4rem;background-size: 100% .34rem;"></strong>
+                    </div>
+                </a>
+            </div>
+        }
+    </section>
+
+    <div class="lzxsure" style="margin-top:185px;"><button id="btn_signOut" type="button">退出登录</button></div>
+
+</body>
+
+</html>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+<script src="~/scripts/lib/client.common.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //绑定事件
+        $("#btn_signOut").on("click", function () {
+
+            confirm("退出登录吗？", {
+                "text": "确定",
+                fn: function () {
+                    //退出登录
+                    common.post("/Client/MerchantLogin/signOut", null, function (res) {
+
+                        window.location.href = "/Client/MerchantLogin/Index";
+
+                    }, function (res) { alert(res.Msg); });
+                }
+            },
+            {
+                "text": "取消", fn: function () {
+                    return;
+                }
+            });
+        });
+
+
+    });
+</script>

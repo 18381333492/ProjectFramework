@@ -1,0 +1,224 @@
+﻿<link href="~/scripts/plug-in/date/laydate-master/need/laydate.css" rel="stylesheet" />
+<link href="~/scripts/plug-in/date/laydate-master/skins/molv/laydate.css" rel="stylesheet" />
+<script src="~/scripts/plug-in/date/laydate-master/laydate.dev.js"></script>
+<!--退货统计-->
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px;">
+    <form id="return_domain_form" style="width:100%;height:100%" ;>
+        <div id="return_domain_grid_tool" style="padding:15px;">
+            <a time="-1" class="easyui-linkbutton  time" data-options="iconCls:'icon-sum'">全部</a>
+            <a time="0" class="easyui-linkbutton  time" data-options="iconCls:'icon-sum'">今日</a>
+            <a time="1" class="easyui-linkbutton  time" data-options="iconCls:'icon-sum'">昨日</a>
+            <a time="7" class="easyui-linkbutton  time" data-options="iconCls:'icon-sum'">最近一周</a>
+            <a time="30" class="easyui-linkbutton  time" data-options="iconCls:'icon-sum'">最近一月</a>
+            <span>其他时间</span>
+            <input id="RedStartTime" name="dStartTime" onclick="laydate({ istime: true })" class="textbox" style="height:25px;" readonly="readonly">--
+            <input id="RedEndTime" name="dEndTime" onclick="laydate({ istime: true })" class="textbox" style="height:25px;" readonly="readonly">
+            &nbsp;&nbsp;
+            <!--（0-退款审核中，1 -接受申请，2 - 退款成功，3 - 拒绝退款）-->
+            <span>状态</span>
+            <select class="easyui-combobox" name="iState" style="width:100px;" data-options="panelHeight:'auto'">
+                <option value="-1" selected>全部</option>
+                <option value="0">退款审核中</option>
+                <option value="1">接受申请</option>
+                <option value="2">退款成功</option>
+                <option value="3">拒绝退款</option>
+            </select>
+            &nbsp;&nbsp;
+            <span>模糊查询</span>
+            <input class="easyui-textbox" name="sKeyWord" data-options="iconCls:'icon-search',prompt:'退货单号/订单号'" style="width:150px">
+            <a id="search_return" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜 索</a>
+            <br /><br />
+            <span>退货单数:</span><span id="ReturnCount"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>退货商品数:</span><span id="ReturnGoodsCount"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>退货金额:￥</span><span id="ReturnMoney"></span>
+        </div>
+        <table id="return_datagrid"></table>
+    </form>
+</div>
+<!-- //用户类型 0：平台用户，1：店铺，2：合伙人-->
+<input type="hidden" id="tUserType" value="@ViewBag.tUserType" />
+<script type="text/javascript">
+    $(function () {
+        modules.get(enums.Modules.CACHE).setMenuDomain("退货统计", new function () {
+            var eui = modules.get(enums.Modules.JQUERY_EASYUI);
+            var f = modules.get(enums.Modules.FUNC);
+            var grid = $("#return_datagrid");
+            var tUserType = Number($('#tUserType').val());
+            var Returntime = null;
+
+            /**
+            * 退货数据的搜索
+            */
+            $('#search_return').click(function () {
+                Returntime = {
+                    "dStartTime": $('#RedStartTime').val(),
+                    "dEndTime": $('#RedEndTime').val()
+                }
+                grid.datagrid('getPager').pagination("select");
+            });
+
+
+            //时间段查询
+            $('#return_domain_form .time').click(function () {
+                var day = Number($(this).attr("time"));
+                var now = new Date();
+                if (day == 0) {//今天
+                    Returntime = {
+                        "dStartTime": new Date().toLocaleDateString() + " 00:00:00",
+                        "dEndTime": new Date().toLocaleDateString() + " 23:59:59"
+                    }
+                }
+                if (day == 1) {//昨天    
+                    Returntime = {
+                        "dStartTime": new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000).toLocaleDateString() + " 00:00:00",
+                        "dEndTime": new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000).toLocaleDateString() + " 23:59:59"
+                    }
+                }
+                if (day == 7) {//最近一周
+                    var week = now.getDay();//(星期为1234560)
+                    if (week != 0) {
+                        Returntime = {
+                            "dStartTime": new Date(now.getTime() - (week - 1) * 24 * 60 * 60 * 1000).toLocaleDateString() + " 00:00:00",
+                            "dEndTime": new Date(now.getTime() - (week - 7) * 24 * 60 * 60 * 1000).toLocaleDateString() + " 23:59:59",
+                        }
+                    }
+                    else {
+                        Returntime = {
+                            "dStartTime": new Date((now.getTime() - 6 * 24 * 60 * 60 * 1000)).toLocaleDateString() + " 00:00:00",
+                            "dEndTime": new Date().toLocaleDateString() + " 23:59:59",
+                        }
+                    }
+                }
+                if (day == 30) {//最近一个月
+                    var year = now.getFullYear();
+                    var month = now.getMonth();
+                    Returntime = {
+                        "dStartTime": new Date(year, month, 1).toLocaleDateString() + " 00:00:00",
+                        "dEndTime": new Date(year, month + 1, 0).toLocaleDateString() + " 23:59:59",
+                    }
+                }
+                if (day == -1) {//全部
+                    Returntime = {
+                        "dStartTime": "",
+                        "dEndTime": "",
+                    }
+                }
+                grid.datagrid('getPager').pagination("select");
+            });
+
+
+            /*
+            * 加载退货数量和金额
+            */
+            function LoadReturnNumAndPrices(data) {
+                var array = data.split(',');
+                $('#ReturnCount').text(array[0] || 0);
+                $('#ReturnGoodsCount').text(array[1] || 0);
+                $('#ReturnMoney').text(array[2] || 0);
+            }
+
+
+            /**
+             * 载入退货数据数据列表
+             * param {Number} pageNumber 页码
+             * param {Number} pageSize 每页显示条数
+             */
+            function LoadReturn(pageNumber, pageSize) {
+                try {
+                    var param = $("#return_domain_form").serializeObject();
+                    /**
+                    *默认取一个月的数据*
+                    **/
+                    var year = new Date().getFullYear();
+                    var month = new Date().getMonth();
+                    param.dStartTime = new Date(year, month, 1).toLocaleDateString() + " 00:00:00";
+                    param.dEndTime = new Date(year, month + 1, 0).toLocaleDateString() + " 23:59:59";
+                    if (Returntime) {
+                        param.dStartTime = Returntime.dStartTime;
+                        param.dEndTime = Returntime.dEndTime;
+                    }
+                    param.PageIndex/*当前页码*/ = pageNumber;
+                    param.pageSize/*每页显示条数*/ = pageSize;
+                    f.post("/Admin/CountAnalysis/ReturnList", param, function (r) {
+                        LoadReturnNumAndPrices(r.Msg);
+                        grid.datagrid("loadData", r.Data.Result);
+                        grid.datagrid("getPager").pagination({
+                            pageNumber: pageNumber,
+                            pageSize: pageSize,
+                            total: r.Data.MaxCount
+                        });
+                    }, function (r) {
+                        eui.alertErr(r.Msg);
+                    });
+                } catch (e) {
+                    eui.alertErr(e.message);
+                }
+            }
+
+            /**
+             * 初始化grid数据
+             */
+            function initData() {
+                columns = [
+                      //{ field: 'checkbox', checkbox: true },
+                      { field: 'sReturnNo', title: '退货单号', align: 'center', width: 180 },
+                      { field: 'sOrderNo', title: '订单号', align: 'center', width: 180, },
+                      { field: 'dInsertTime', title: '申请时间', align: 'center', width: 150 },
+                      {
+                          field: 'iState', title: '状态', align: 'center', width: 100, formatter: function (value) {
+                              //（0-退款审核中，1 - 接受申请，2 - 退款成功，3 - 拒绝退款）
+                              switch (value) {
+                                  case 0:
+                                      return "退款审核中";
+                                  case 1:
+                                      return "接受申请";
+                                  case 2:
+                                      return "退款成功";
+                                  case 3:
+                                      return "拒绝退款";
+                                  default:
+                                      break;
+                              }
+                          }
+                      },
+                      { field: 'sReceiver', title: '退货用户', align: 'center', width: 100 },
+                ];
+                if (tUserType != 1) { //总后台和合伙人后台
+                    columns.splice(3, 0, { field: 'sShopName', title: '店铺名称', align: 'center', width: 100 })
+                }
+                eui.bindPaginationEvent(grid, {
+                    idField: "ID",
+                    loadMsg: "正在加载...",
+                    toolbar: "#return_domain_grid_tool",
+                    fit: true,
+                    fitColumns: true,
+                    pagination: true,
+                    rownumbers: true,
+                    columns: [columns],
+                    onLoadSuccess: function () {
+                        $(".datagrid-header-check input[type=checkbox]").remove();
+                    },
+                }, LoadReturn).pagination("select");
+            }
+
+            //执行数据绑定
+            try {
+                initData();
+               // initEvent();
+            } catch (e) {
+                eui.alertErr(e.message);
+            }
+
+
+            /**
+             * 资源的释放
+             */
+            function destroy(){
+            }
+
+            return {
+                destroy: destroy
+            }
+        });
+    });
+</script>

@@ -1,0 +1,34 @@
+﻿<link href="~/scripts/plug-in/date/laydate-master/need/laydate.css" rel="stylesheet" />
+<link href="~/scripts/plug-in/date/laydate-master/skins/molv/laydate.css" rel="stylesheet" />
+<script src="~/scripts/plug-in/date/laydate-master/laydate.dev.js"></script>
+<script src="~/Areas/Admin/Scripts/OrderManager/Index.js"></script>
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px;">
+    <form id="order_manager_form" style="width:100%;height:100%;">
+        <input type="hidden" value="@ViewBag.RoleType" id="order_manager_input_RoleType"/>
+        
+        <table id="order_manager_grid"></table>
+        <div id="order_manager_grid_tool" style="padding:15px;display:none;">
+            <a href="#" class="easyui-linkbutton" id="order_manager_a_detail" data-options="iconCls:'icon-more'">详情</a>
+            &emsp;<!--0待付款 1待使用 2-已核销-->
+            状态：<input class="easyui-combobox" data-options="valueField: 'id',
+                                                                   textField: 'text',
+                                                                   panelHeight:'auto',
+                                                                   data:[{'id':-1,'text':'全部',selected:true},
+                                                                    {'id':0,'text':'待付款'},
+                                                                   {'id':1,'text':'待使用'},
+                                                                    {'id':2,'text':'已核销'}]" name="iState" />
+
+            &emsp;
+            下单时间：<input id="order_manager_input_startTime" onclick="modules.get('cache').getCache('laydate').laydate({ istime: true })" class="textbox" style="height:22px;" name="sTime">&emsp;至&emsp;
+            <input id="order_manager_input_endTime" onclick="modules.get('cache').getCache('laydate').laydate({ istime: true })" class="textbox" style="height:22px;" name="eTime">
+            &emsp;
+            <span id="order_manager_input_where_background"><input class="easyui-textbox" name="sName" data-options="width:160,validType:['maxLength[30]'],prompt:'订单号/购买人/店铺'" /></span>
+            <span id="order_manager_input_where_store"><input class="easyui-textbox" name="sStoreWhere" data-options="width:160,validType:['maxLength[30]'],prompt:'订单号/手机号'" /></span>
+            &emsp;
+            <a id="order_manager_btn_seach" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</a>
+
+        </div>
+    </form>
+</div>
+

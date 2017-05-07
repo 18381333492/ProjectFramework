@@ -1,0 +1,60 @@
+﻿
+@model Framework.DTO.EHECD_CommentDTO
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form style="width:99%;height:99%;" id="comment_edit_form">
+        <input type="hidden" name="bIsReplay" id="comment_edit_bIsReplay" value='@(Model.bIsReplay == null ? "false" : ((bool)Model.bIsReplay)?"true":"false")' />
+        <input type="hidden" name="ID" id="comment_edit_ID" value="@Model.ID" />
+        <table class="styletable" style="height:100%">
+            <tbody>
+                <tr>
+                    <td>商品名称：</td>
+                    <td><span>@Model.sGoodsName</span></td>
+                </tr>
+                <tr>
+                    <td>评价会员：</td>
+                    <td><span>@Model.sCommenterName</span></td>
+                </tr>
+                <tr>
+                    <td>评价时间：</td>
+                    <td><span>@Model.dCommentTime</span></td>
+                </tr>
+                <tr>
+                    <td>评价内容：</td>
+                    <td><span>@Model.sCommentContent</span></td>
+                </tr>
+                <tr>
+                    <td>附加图片：</td>
+                    <td>
+                        <div id="comment_edit_imges_div">
+                            @if (Model.sCommentImgPath==null)
+                            {
+                                <span>暂无图片</span>
+                            }
+                            else
+                            {
+                                foreach (var item in Model.sCommentImgPath.Split(','))
+                                {
+                                    <img src="@item" name="comment_edit_imges" style="width:60px;height:60px;float:left;margin-right:10px;" />
+                                }
+                            }
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>回复：</td>
+                    <td>
+                        @if (Model.bIsReplay!=null&&Model.bIsReplay == true)
+                        {
+                            <span>@Model.sReplayContent</span>
+                        }
+                        else
+                        {
+                            <textarea id="comment_edit_sReplayContent" name="sReplayContent" rows="10" cols="30"></textarea>
+                        }
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+

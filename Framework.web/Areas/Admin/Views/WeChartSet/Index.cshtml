@@ -1,0 +1,67 @@
+﻿@model Framework.DTO.EHECD_WeChatSetDTO
+<script src="~/Areas/Admin/Scripts/WeChart/Index.js"></script>
+
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form id="wechart_set_index_form" style="width:600px;height:100%">
+        <table class="styletable">
+            <tr>
+                <td>公众号名称：</td>
+                <td>
+                    <input class="easyui-textbox" style="width:300px" missingMessage="请输入公众号名称"  data-options="required:true,validType:['isHtmlValidate','maxLength[50]']"  name="sWeChatName" value="@Model.sWeChatName" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    原始ID:
+                </td>
+                <td>
+                    <input id="orignal_wechart_id" class="easyui-textbox" style="width:300px" missingMessage="请输入原始ID" data-options="required:true,validType:['isHtmlValidate','maxLength[100]']" name="sOriginalID" value="@Model.sOriginalID" />
+                </td>
+            </tr>
+            <tr>
+                <td>微信号：</td>
+                <td>
+                    <input class="easyui-textbox" style="width:300px" missingMessage="请输入微信号" data-options="required:true,validType:['isHtmlValidate','maxLength[100]']" name="sWeChatNo" value="@Model.sWeChatNo"/>
+                </td>
+            </tr>
+            <tr>
+                <td>微信Token：</td>
+                <td>
+                    <input class="easyui-textbox" style="width:300px" missingMessage="请输入微信Token" data-options="required:true,validType:['isHtmlValidate','maxLength[100]']" name="sToken" value="@Model.sToken" />
+                </td>
+            </tr>
+            <tr>
+                <td>微信绑定url：</td>
+                <td>
+                    <input id="wechart_url" class="easyui-textbox" style="width:300px"  missingMessage="请输入微信绑定url" data-options="required:true,validType:['isHtmlValidate','maxLength[100]']" name="sUrl" value="@Model.sUrl"/>
+                </td>
+            </tr>
+            <tr>
+                <td>AppID：</td>
+                <td>
+                    <input id="wechart_appid" class="easyui-textbox" style="width:300px" missingMessage="请输入AppID" data-options="required:true,validType:['isHtmlValidate','maxLength[100]']" name="sAppId" value="@Model.sAppId"/>
+                </td>
+            </tr>
+            <tr>
+                <td>AppSecret：</td>
+                <td>
+                    <input class="easyui-textbox" style="width:300px" missingMessage="请输入AppSecret" data-options="required:true,validType:['isHtmlValidate','maxLength[100]']" name="sAppSecret" value="@Model.sAppSecret"/>
+                </td>
+            </tr>
+            <tr>
+                <td>API密钥：</td>
+                <td>
+                    <input class="easyui-textbox" style="width:300px" missingMessage="请输入API密钥：" data-options="required:true,validType:['isHtmlValidate','maxLength[100]']" name="sPaySignKey" value="@Model.sPaySignKey" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align:center">
+                <a id="wechar_set_save_button" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a></td>
+            </tr>
+        </table>
+
+    </form>
+</div>
+

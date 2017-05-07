@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{128012BA-AA90-4E30-ACA8-36C6E36FD204}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Framework.BLL</RootNamespace>
+    <AssemblyName>Framework.BLL</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CustomerCodeFile.cs" />
+    <Compile Include="Implement\PayManager.cs" />
+    <Compile Include="Implement\OrderConfirmManagerQuery.cs" />
+    <Compile Include="Implement\ShareCenterManagerExcute.cs" />
+    <Compile Include="Implement\ClientCenterManagerExcute.cs" />
+    <Compile Include="Implement\ShareCenterManagerQuery.cs" />
+    <Compile Include="Implement\ClientLoginManagerExcute.cs" />
+    <Compile Include="Implement\ClientLoginManagerQuery.cs" />
+    <Compile Include="Implement\ClientRegisterManagerExcute.cs" />
+    <Compile Include="Implement\ClientRegisterManagerQuery.cs" />
+    <Compile Include="Implement\ClientCenterManagerQuery.cs" />
+    <Compile Include="Implement\ArticleManage.cs" />
+    <Compile Include="Implement\ClientHomeManager.cs" />
+    <Compile Include="Implement\CouponClientManager.cs" />
+    <Compile Include="Implement\FinanceManager.cs" />
+    <Compile Include="Implement\BaseSettingManager.cs" />
+    <Compile Include="Implement\ClientManagerExcute.cs" />
+    <Compile Include="Implement\ClientManagerQuery.cs" />
+    <Compile Include="Implement\CommentManager.cs" />
+    <Compile Include="Implement\GoodsPreviewViewManagerExcute.cs" />
+    <Compile Include="Implement\HomePictureManager.cs" />
+    <Compile Include="Implement\MerchantLoginManager.cs" />
+    <Compile Include="Implement\MerchantManager.cs" />
+    <Compile Include="Implement\OrderManagerExcute.cs" />
+    <Compile Include="Implement\OrderManagerQuery.cs" />
+    <Compile Include="Implement\PartnerManager.cs" />
+    <Compile Include="Implement\CountAnalysisManager.cs" />
+    <Compile Include="Implement\PasswordManager.cs" />
+    <Compile Include="Implement\ReturnOrderManager.cs" />
+    <Compile Include="Implement\RoomManageManager.cs" />
+    <Compile Include="Implement\GoodsPreviewViewManagerQuery.cs" />
+    <Compile Include="Implement\GuestRoomTypeManagerExcute.cs" />
+    <Compile Include="Implement\GuestRoomTypeManagerQuery.cs" />
+    <Compile Include="Implement\OperateLogManager.cs" />
+    <Compile Include="Implement\SharePosterManager.cs" />
+    <Compile Include="Implement\ShopDetailManager.cs" />
+    <Compile Include="Implement\ShopDetailManagerChecker.cs" />
+    <Compile Include="Implement\ShopManager.cs" />
+    <Compile Include="Implement\ShopSetManager.cs" />
+    <Compile Include="Implement\TravelNoteManager.cs" />
+    <Compile Include="Implement\SendMessage.cs" />
+    <Compile Include="Implement\WechartManager.cs" />
+    <Compile Include="Implement\WechartManagerYYK.cs" />
+    <Compile Include="Implement\WithdrawCashManager.cs" />
+    <Compile Include="Implement\CouponManager.cs" />
+    <Compile Include="Implement\GoodsManagerQuery.cs" />
+    <Compile Include="Implement\GoodsManagerExcute.cs" />
+    <Compile Include="Implement\GoodsCategoriesManagerExcute.cs" />
+    <Compile Include="Implement\GoodsCategoriesManagerQuery.cs" />
+    <Compile Include="Implement\MailManager.cs" />
+    <Compile Include="Implement\MenuManagerExcute.cs" />
+    <Compile Include="Implement\MenuManagerQuery.cs" />
+    <Compile Include="Implement\RoleManagerExcute.cs" />
+    <Compile Include="Implement\RoleManagerQuery.cs" />
+    <Compile Include="Implement\SystemLogManager.cs" />
+    <Compile Include="Implement\SystemUserManagerExcute.cs" />
+    <Compile Include="Implement\SystemUserManagerQuery.cs" />
+    <Compile Include="Implement\UserLogin.cs" />
+    <Compile Include="Interface\BaseBll.cs" />
+    <Compile Include="Interface\IPayManager.cs" />
+    <Compile Include="Interface\IOrderConfirmManager.cs" />
+    <Compile Include="Interface\IShareCenterManager.cs" />
+    <Compile Include="Interface\IClientLoginManager.cs" />
+    <Compile Include="Interface\IClientRegisterManager.cs" />
+    <Compile Include="Interface\IClientCenterManager.cs" />
+    <Compile Include="Interface\IClientHomeManager.cs" />
+    <Compile Include="Interface\IMerchantLoginManager.cs" />
+    <Compile Include="Interface\IMerchantManager.cs" />
+    <Compile Include="Interface\IOrderManager.cs" />
+    <Compile Include="Interface\IFinanceManager.cs" />
+    <Compile Include="Interface\IBaseSettingManager.cs" />
+    <Compile Include="Interface\IHomePictureManager.cs" />
+    <Compile Include="Interface\IPartnerManager.cs" />
+    <Compile Include="Interface\ICountAnalysisManager.cs" />
+    <Compile Include="Interface\IPasswordManager.cs" />
+    <Compile Include="Interface\IReturnOrderManager.cs" />
+    <Compile Include="Interface\IRoomManageManager.cs" />
+    <Compile Include="Interface\IOperateLogManager.cs" />
+    <Compile Include="Interface\IGoodsPreviewViewManager.cs" />
+    <Compile Include="Interface\IGuestRoomTypeManager.cs" />
+    <Compile Include="Interface\IArticle.cs" />
+    <Compile Include="Interface\IClientManager.cs" />
+    <Compile Include="Interface\ICommentManager.cs" />
+    <Compile Include="Interface\ISharePosterManager.cs" />
+    <Compile Include="Interface\IShopDetailManager.cs" />
+    <Compile Include="Interface\IShopManager.cs" />
+    <Compile Include="Interface\IShopSetManager.cs" />
+    <Compile Include="Interface\ITravelNoteManager.cs" />
+    <Compile Include="Interface\IWechartManager.cs" />
+    <Compile Include="Interface\IWithCashManager.cs" />
+    <Compile Include="Interface\ICouponManager.cs" />
+    <Compile Include="Interface\IGoodsManager.cs" />
+    <Compile Include="Interface\IGoodsCategoriesManager.cs" />
+    <Compile Include="Interface\ILogin.cs" />
+    <Compile Include="Interface\IMailManager.cs" />
+    <Compile Include="Interface\IMenuManager.cs" />
+    <Compile Include="Interface\IRoleManager.cs" />
+    <Compile Include="Interface\ISendMessage.cs" />
+    <Compile Include="Interface\ISystemLogManager.cs" />
+    <Compile Include="Interface\ISystemUserManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Framework.DI\Framework.DI.csproj">
+      <Project>{21e20c6e-7ff5-4e35-b4ab-b7ce4b8e65a2}</Project>
+      <Name>Framework.DI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Entity\Framework.DTO.csproj">
+      <Project>{17FD7AD8-A20D-4F3B-B441-A9F2D2732A93}</Project>
+      <Name>Framework.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Helper\Framework.Helper\Framework.Helper.csproj">
+      <Project>{4bb5f221-3226-4ba9-9eb0-27377c2cb196}</Project>
+      <Name>Framework.Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.ORM\Framework.Dapper.csproj">
+      <Project>{c7c3d0e2-c9b8-43fd-99e6-f8a3c12a8814}</Project>
+      <Name>Framework.Dapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Validate\Framework.Validate.csproj">
+      <Project>{760b93c4-51f9-4755-8d48-a56a3c16bdd9}</Project>
+      <Name>Framework.Validate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.web.config\Framework.web.config.csproj">
+      <Project>{7f29fbc4-3e7d-46b4-99b3-a02fd3eef2b3}</Project>
+      <Name>Framework.web.config</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.MapperConfig\Framework.MapperConfig.csproj">
+      <Project>{B925EA38-965D-4899-8886-1EBC86A648E6}</Project>
+      <Name>Framework.MapperConfig</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WeiXin.Base\WeiXin.Base.csproj">
+      <Project>{e6602856-90ba-47b8-a1c2-3f330a2de0d6}</Project>
+      <Name>WeiXin.Base</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

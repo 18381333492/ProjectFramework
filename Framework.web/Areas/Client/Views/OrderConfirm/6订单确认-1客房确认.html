@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>商城模板</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="../css/global.css">
+    <link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="../css/template.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="../css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="../css/wangqixin.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/qinliang.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/malong.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/maoyuhao.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/luzhongxiang.css"/>
+
+    <script type="text/javascript" src="../lib/jquery.1.11.3.min.js"></script>
+    <script type="text/javascript" src="../lib/con_js.6.23.js"></script>
+    <script type="text/javascript" src="../lib/date-choice.js"></script>
+    <script type="text/javascript" src="../lib/judge.js"></script>
+    <script type="text/javascript" src="../lib/pinchzoom.min.js"></script>
+    <script type="text/javascript" src="../lib/swiper.min.js"></script>
+    <script type="text/javascript" src="../lib/uploadPreview.js"></script>
+    <script type="text/javascript" src="../script/page.js"></script>
+    <script type="text/javascript" src="../script/malong.js"></script>
+    <script type="text/javascript" src="../script/maoyuhao.js"></script>
+    <script type="text/javascript" src="../script/goujia.js"></script>
+    <script type="text/javascript" src="../script/qinliang.js"></script>
+    <script type="text/javascript" src="../script/wangqixin.js"></script>
+    <script type="text/javascript" src="../script/luzhongxiang.js"></script>
+    <script src="../../../../scripts/lib/client.common.js"></script>
+</head>
+<body style="background-color: #f2f2f2">
+<!--sureRoom-->
+<div class="sureRoom">
+    <div class="sureRoom-tittle" id="order_goods_title"></div>
+
+    <div class="sureRoom-tittle margintop10">03/03入住，05/21退房，共9晚</div>
+    <div class="sureRoom-doble">
+        <div class="sureRoom-doble-left">数量</div>
+        <div class="sureRoom-dobleright">
+            <div class="addAnd">
+                <div class="reduce">-</div>
+                <input type="text" class="showNo" value="1" id="goods_count">
+                <div class="add">+</div>
+            </div>
+        </div>
+    </div>
+    <div class="sureRoom-doble">
+        <div class="sureRoom-doble-left">姓名</div>
+        <div class="sureRoom-dobleright">
+            <input type="text" class="writeName" placeholder="只需填写一人名字" id="client_name">
+        </div>
+    </div>
+    <div class="sureRoom-doble">
+        <div class="sureRoom-doble-left">手机号</div>
+        <div class="sureRoom-dobleright">
+            <input type="text" class="writeName" placeholder="请填写手机号" id="client_mobile_number">
+        </div>
+    </div>
+
+    <div class="sureRoom-doble margintop10">
+        <div class="sureRoom-doble-left">费用总计</div>
+        <div class="sureRoom-dobleright redcolorwords">
+            &yen;18222.00
+        </div>
+    </div>
+    <div class="sureRoom-doble">
+        <div class="sureRoom-doble-left">优惠券</div>
+        <div class="sureRoom-dobleright colorwords" id="coupon_selected">
+           不使用优惠券
+            <img src="../images/slice/rightLogogray.png" class="rightLogosss"/>
+        </div>
+    </div>
+    <div class="sureRoom-doble">
+        <div class="sureRoom-doble-left">实际应付</div>
+        <div class="sureRoom-dobleright redcolorwords">
+            &yen;18222.00
+        </div>
+    </div>
+
+    <div class="orderBuff margintop10">
+        <div class="orderBuff-left">订单备注</div>
+        <textarea name="" id="" cols="30" rows="10" placeholder="请输入备注"></textarea>
+    </div>
+    <a href="javascript:void (0)" class="payNowBtn">立即支付</a>
+</div>
+</body>
+
+</html>
+
+<script>
+    /**
+    * 用户操作
+    */
+    function OrderConfirmDomain() { };
+
+    /**
+    * 用户操作原型
+    */
+    OrderConfirmDomain.prototype = new function () {
+
+        var f = window.common,                      //操作对象
+        room_name = $("#order_goods_title"),        //标题商品名字
+        goods_count = $("#goods_count"),            //商品数量
+        client_name = $("#client_name"),            //客户名字
+        client_mobile_number =
+                $("#client_mobile_number");        //客户手机号
+
+        /**
+        * 初始化页面元素
+        */
+        function init() {
+            // 初始化数据的代码
+            return this;
+        };
+
+        return {
+            init: init
+        };
+    };
+  
+    !function (mmd) {
+        window.orderConfirm = new OrderConfirmDomain().init();
+    }(window.jQuery);
+</script>

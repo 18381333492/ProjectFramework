@@ -1,0 +1,46 @@
+﻿
+@model Framework.DTO.EHECD_WithdrawCashDTO
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form style="width:99%;height:99%;" id="store_apply_form">
+        <input type="hidden" value="@ViewBag.iMinimumMoney" id="store_apply_iMinimumMoney" />
+        <table class="styletable" style="height:100%">
+            <tbody>
+                <tr>
+                    <td>可提现金额（元）￥：</td>
+                    <td><span id="store_apply_span_valiableMoney">@ViewBag.iStoreAviliableMoney</span></td>
+                </tr>
+                <tr>
+                    <td>手机号:</td>
+                    <td>
+                        <span id="store_apply_span_phone">@ViewBag.Phone</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>验证码：</td>
+                    <td>
+                        <input class="easyui-textbox" name="storeSMS" id="store_apply_input_validateCode" missingMessage="不能为空" data-options="required:true">
+                        <a href="#" id="store_apply_a_getCode" class="easyui-linkbutton" data-options="iconCls:'icon-search'">获取验证码</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>提现金额(元)：</td>
+                    <td>
+                        <input class="easyui-numberbox" name="iWithdrawMoney" id="store_apply_input_iWithdrawMoney" value="@Model.iWithdrawMoney" missingMessage="不能为空" data-options="required:true,min:0.01,precision:2,validType:['isNumber','minInt[0.01]']">
+                    </td>
+                </tr>
+                <tr>
+                    <td>提现银行卡号：</td>
+                    <td><input class="easyui-textbox" name="sBankCardNo" value="@Model.sBankCardNo" missingMessage="不能为空" data-options="required:true,validType:['isNumber']"></td>
+                </tr>
+                <tr>
+                    <td>开户行：</td>
+                    <td><input class="easyui-textbox" name="sBankName" value="@Model.sBankName" missingMessage="不能为空" data-options="required:true,validType:['isHtmlValidate']"></td>
+                </tr>
+                <tr>
+                    <td>持卡人姓名：</td>
+                    <td><input class="easyui-textbox" name="sBankCardUserName" value="@Model.sBankCardUserName" missingMessage="不能为空" data-options="required:true,validType:['isHtmlValidate']"></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>

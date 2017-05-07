@@ -1,0 +1,12 @@
+﻿
+<script src="~/Areas/Admin/Scripts/PartnerShop/Index.js"></script>
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px;">
+    <form id="partner_self_shop_form" style="width:100%;height:100%;">
+        <table id="partner_self_shop_menu"></table>
+        <div id="partner_self_shop_tool" style="padding:15px;display:none;">
+            <input type="text" class="easyui-textbox" data-options="prompt:'店铺名',validType:['isHtmlValidate','maxLength[200]']" id="partner_self_shop_search" />
+            @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
+        </div>
+    </form>
+</div>

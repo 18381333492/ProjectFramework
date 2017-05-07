@@ -1,0 +1,1034 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>友客分享</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <style>
+        #SeckillDiv_id .swiper-slide {
+            margin-right: 4px;
+        }
+
+        #SpecailDiv_id .swiper-slide {
+            margin-right: 0.25rem;
+        }
+
+        .turnArea {
+            margin-top: .1rem;
+        }
+
+        .houmeIndex .headerBox .left > span {
+            display: inline-block;
+            width: 28px;
+            overflow: hidden;
+            white-space: nowrap;
+            vertical-align: top;
+            margin-right: 3px;
+        }
+
+        .w-dogImg {
+            overflow: hidden;
+            float: right;
+            width: 2.5rem;
+            height: 2.6rem;
+            background-image: url(../images/turnImgTest.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center center;
+        }
+
+        .houmeIndex .killArea .content-each-right .imgageBox {
+            overflow: hidden;
+        }
+
+            .houmeIndex .killArea .content-each-right .imgageBox img {
+                height: auto;
+            }
+
+        .houmeIndex .headerNav .headerNav-box {
+            width: 25%;
+            white-space: nowrap;
+        }
+
+            .houmeIndex .headerNav .headerNav-box:nth-child(n+2) {
+                margin-left: 0;
+            }
+
+        .houmeIndex .killArea .killArea-top {
+            height: .3rem;
+            line-height: .3rem;
+        }
+
+            .houmeIndex .killArea .killArea-top .killMore {
+                height: .3rem;
+                line-height: .3rem;
+            }
+
+                .houmeIndex .killArea .killArea-top .killMore img {
+                    width: 16px;
+                    height: 16px;
+                    display: inline-block;
+                    border:1px solid #666;
+                    border-radius:50%;
+                }
+
+        .houmeIndex .headerNav {
+            padding: .14rem 0;
+            height: auto;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .houmeIndex .killArea .turnArea .seckillArea-eachBox .seckillArea-eachBox-left .left-floor1 {
+            min-height: .76rem !important;
+            line-height: .38rem !important;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            font-size:14px;
+        }
+
+        .houmeIndex .killArea .content-each-right {
+            padding-right: 0;
+        }
+
+        #SpecailDiv_id .swiper-slide {
+            margin-right: 4px;
+        }
+
+        .houmeIndex .killArea {
+            overflow-x: hidden;
+        }
+
+            .houmeIndex .killArea .killArea-top .killMore img {
+                position: static;
+                vertical-align: top;
+            }
+
+        .houmeIndex .headerBox .left {
+            width: calc(31px + .45rem);
+            white-space: nowrap;
+        }
+
+        /*.houmeIndex .killArea .content-each-right .shopName {
+            font-size: 12px;
+        }*/
+        html {
+            overflow:hidden;
+        }
+        body,html{height:100%}
+        .houmeIndex .flex_1{overflow:auto}
+        .houmeIndex .headerBox .other_link{display:inline-block;float:right;height:0.87rem; line-height:0.87rem;width:calc(100% - 1.08rem - 4.68rem);width:-webkit-calc(100% - 1.08rem - 4.68rem);text-align:center;}
+            .houmeIndex .headerBox .other_link img {
+                vertical-align:middle;
+                display:inline-block
+            }
+            .houmeIndex .headerBox .other_link{width:.7rem;}
+            .houmeIndex .headerBox .headerSearch{width:calc(100% - (31px + 1.3rem));}
+    </style>
+    <link href="~/Content/home.css" rel="stylesheet" />
+</head>
+<body>
+    <!--index-->
+    <div class="houmeIndex flex_column">
+
+        <!--顶部搜索-->
+        <div class="headerBox">
+            <a href="javascript:void (0)" class="left" id="btn_change_address"><span></span><img src="/Areas/Client/Content/images/slice/headerlogo.png" alt="" style="display:inline-block;vertical-align:middle;position:relative;top:-1px;width:0.17rem;"></a>
+            <span class="other_link"><img src="/Areas/Client/Content/images/slice/headerright.png" class="headerright" alt=""></span>
+            <div class="headerSearch"><input type="text"><div class="tips"><img src="/Areas/Client/Content/images/slice/headerSearchLogo.png" alt="">民宿、票务、周边</div></div>
+            
+            <!--搜索列表-->
+            <div class="searchBox">
+                <div class="lzxheader">
+                    <!-- <div class="headleft fa fa-angle-left"></div> -->
+                    <div class="headcenter">
+                        <div class="headsearch">
+                            <span id="search_home_span"></span>
+                            <input type="text" placeholder="" vaule="北京">
+                        </div>
+                    </div>
+                    <div class="headright cored textr">取消</div>
+                </div>
+
+                <div id="searchBox_types_id">
+                    <ul class="lzxresult pdlr10 borbeee bgfff">
+                        <li>搜索关于<span style="color:red">“</span><span data-href="/Client/ClientHome/GetSelectView?id=0&sGoodsName=" class="cored"></span><span style="color:red">”</span>的民宿</li>
+                        <li>搜索关于<span style="color:red">“</span><span data-href="/Client/ClientHome/GetSelectView?id=1&sGoodsName=" class="cored"></span><span style="color:red">”</span>的票务</li>
+                        <li>搜索关于<span style="color:red">“</span><span data-href="/Client/ClientHome/GetSelectView?id=2&sGoodsName=" class="cored"></span><span style="color:red">”</span>的周边</li>
+                    </ul>
+                </div>
+
+                <div id="searchBox_content_id">
+
+                </div>
+                <!--搜索商品结果模板-->
+                <script type="text/html" id="searchBox_content_script">
+                    <ul class="lzxresult pdlr10 borbeee bgfff">
+                        {{each list as item index}}
+                        <li>{{item.sGoodsCategory | formatType}}-<span data-href="/Client/ShopHome/RoomDetail?ID={{item.ID}}" class="cored">{{item.sGoodsName}}</span>@*{{item.sShopName}}*@</li>
+                        {{/each}}
+                    </ul>
+                </script>
+            </div>
+
+
+
+        </div>
+
+
+        <div class="flex_1">
+
+            <!--轮播图-->
+            <div class="turnImg">
+                <div class="swiper-container swiper-container-horizontal">
+                    <div class="swiper-wrapper" style="transition-duration: 0ms;" id="Carouse_imges_div">
+
+                        <!--轮播图模板-->
+                        <script type="text/html" id="Carouse_imges_script">
+                            {{each list as item index}}
+                            <div class="swiper-slide" style="width: 500px; margin-right: 30px;"><a href="{{item.sLink}}"><img class="wq_index" src="{{item.sImagePath}}" alt=""></a></div>
+                            {{/each}}
+                        </script>
+
+                    </div>
+                    <!-- Add Pagination -->
+                    <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets"><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet swiper-pagination-bullet-active"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span></div>
+                </div>
+            </div>
+
+            <div class="grayBorder"></div>
+
+                <!--分类入口-->
+                <div class="headerNav">
+                    <a href="javascript:void (0)" class="headerNav-box" data-id="0">
+                        <span class="imgbox"></span>
+                        <span class="navName">民宿</span>
+                    </a>
+                    <a href="javascript:void (0)" class="headerNav-box" data-id="1">
+                        <span class="imgbox imgbox2"></span>
+                        <span class="navName">票务</span>
+                    </a>
+                    <a href="javascript:void (0)" class="headerNav-box" data-id="2">
+                        <span class="imgbox imgbox3"></span>
+                        <span class="navName">周边</span>
+                    </a>
+                    <a href="javascript:void (0)" class="headerNav-box" data-id="3">
+                        <span class="imgbox imgbox4"></span>
+                        <span class="navName">附近</span>
+                    </a>
+                </div>
+
+                <div class="grayBorder"></div>
+
+                <!--秒杀专场-->
+                <div class="killArea" id="SeckillDiv_id">
+                    <div class="killArea-top" id="killMore_id">
+                        <div class="blackLine"></div>
+                        <span class="tittles">秒杀专场</span>
+                        <a href="javascript:void (0)" class="killMore">更多 <img src="/Areas/Client/Content/images/slice/killMore.png" alt=""></a>
+                    </div>
+                    <div class="turnArea">
+                        <div class="swiper-container2 swiper-container-horizontal">
+                            <div class="swiper-wrapper" style="transition-duration: 0ms;" id="Seckill_div">
+
+                                <!--秒杀的模板-->
+                                <script type="text/html" id="Seckill_script">
+                                    {{each list as item index}}
+                                    <div class="swiper-slide" data-name="seckillNames" data-detailID="{{item.ID}}" style="width: 500px; margin-right: 30px;">
+                                        <div class="seckillArea-eachBox">
+                                            <div class="seckillArea-eachBox-left">
+                                                <div class="left-floor1">{{item.sGoodsName}}</div>
+                                                <p class="piceBox">秒杀价:¥{{item.dSeckillPrices.toFixed(2)}}</p>
+                                                <div class="redBoxPice" data-name="seckillItem" data-sSeckillTime="{{item.sSeckillTime}}">{{item.sSeckillTime | getTimes}}</div>
+                                                {{if item.sGoodsCategory ===1}}<!--店铺-->
+                                                <div class="someTime">{{item.sActivityUseTime | formatRoomTime }}</div>
+                                                {{/if}}
+                                                {{if item.sGoodsCategory ===2}}<!--票务-->
+                                                <div class="someTime">{{item.sActivityUseTime | formatTekitTime }}</div>
+                                                {{/if}}
+                                            </div>
+                                            <div class="w-dogImg" style="background-image:url('{{item.sGoodsPictures | formatPic}}')"></div>
+                                        </div>
+                                    </div>
+                                    {{/each}}
+                                </script>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="grayBorder"></div>
+
+                <!--特卖专场-->
+                <div class="killArea" id="SpecailDiv_id">
+                    <div class="killArea-top" id="specialMore_id">
+                        <div class="blackLine"></div>
+                        <span class="tittles">特卖专场</span>
+                        <a href="javascript:void (0)" class="killMore">更多 <img src="/Areas/Client/Content/images/slice/killMore.png" alt=""></a>
+                    </div>
+                    <div class="turnArea">
+                        <div class="turnImg">
+                            <div class="swiper-container3 swiper-container-horizontal">
+                                <div class="swiper-wrapper" style="transition-duration: 0ms;" id="SpecialSale_div">
+
+                                    <!--特卖专区模板-->
+                                    <script type="text/html" id="SpecialSale_script">
+                                        {{each list as item index}}
+                                        <div class="swiper-slide" style="width: 500px; margin-right: 30px;">
+                                            <div class="content-each-right" data-id="{{item.ID}}">
+                                                <div class="imgageBox">
+                                                    <img src="{{item.sGoodsPictures | formatPic}}" alt="">
+                                                </div>
+                                                <div class="shopName pad11">{{item.sGoodsName}}</div>
+                                                {{if item.sGoodsCategory ===1}}<!--店铺-->
+                                                <div class="someTime" style="font-size:12px;">{{item.sActivityUseTime | formatRoomTime }}</div>
+                                                {{/if}}
+                                                {{if item.sGoodsCategory ===2}}<!--票务-->
+                                                <div class="someTime" style="font-size:12px;">{{item.sActivityUseTime | formatTekitTime }}</div>
+                                                {{/if}}
+                                                <div class="shopName" style="color: #fe8285;font-size: 16px">¥{{item.dSpecialSalePrices.toFixed(2)}} <span class="oldPrice">&yen;{{item.dGoodsFisrtPrice.toFixed(2)}}</span></div>
+                                            </div>
+                                        </div>
+                                        {{/each}}
+                                    </script>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!--首页展示页-->
+                <div class="imgArea" id="showbanner_div">
+
+                    <!--首页展示页-->
+                    <script type="text/html" id="showbanner_script">
+                        {{each list as item index}}
+                        <a href="/Client/ClientHome/GetHomeShowBannerDetailView?ID={{item.ID}}"><img src="{{item.sImagePath}}" alt=""></a>
+                        {{/each}}
+                    </script>
+
+                </div>
+
+                <!--推荐民宿-->
+                <div class="killArea padDele" id="homeRecommentStore_id">
+                    <div class="killArea-top">
+                        <div class="blackLine"></div>
+                        <span class="tittles">推荐民宿</span>
+                        @*<a href="javascript:void (0)" class="killMore">更多 <img src="/Areas/Client/Content/images/slice/killMore.png" alt=""></a>*@
+                    </div>
+                    <div class="area" id="homeRecommentStore_div">
+
+                        <!--推荐民宿模板-->
+                        <script type="text/html" id="homeRecommentStore_script">
+                            {{each list as item index}}
+                            <div class="content-each-right content-each-right2" style="width:100%;" data-id="{{item.sStoreID}}">
+                                <div class="imgageBox">
+                                    <img src="{{item.sImagePath | formatPic}}" alt="" >
+                                    <div class="noMoney">¥{{item.dGoodsPrice}}起</div>
+                                </div>
+                                <div class="shopName">{{item.sShopName}}</div>
+                                <div class="topStarBox">
+                                    {{item.iCommentScore | generateScore}}分
+                                    {{item.iCommentScore | generateStar}}
+                                </div>
+                                <div class="placeBox"><img src="/Areas/Client/Content/images/slice/greenCap.png" alt=""> {{item.sAddress}}</div>
+                            </div>
+                            {{/each}}
+                        </script>
+
+                    </div>
+                </div>
+
+                <!--底部logo-->
+                <div class="shareBottom">
+                    <div class="bottomContent">
+                        <img src="/Areas/Client/Content/images/shareBottom.png" alt="">
+                        <span class="xian"></span>
+                        友客分享
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+</body>
+
+</html>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+<script src="~/scripts/lib/wx.js"></script>
+<script src="~/scripts/plug-in/address/baiduaddress/scripts/baidu.map.js"></script>
+<script src="~/scripts/lib/client.common.js"></script>
+<script src="~/scripts/lib/template.js"></script>
+@using WeiXin.Base.JsApi;
+@model jsapi_config
+<script>
+    //文档加载完成
+    $(function () {
+        if(gp){
+            gp.history.clear();
+        }
+        var obj = new clientHomeDomain();
+        obj.InitWeiXin();
+        obj.init();//前端JS
+        obj.bindEvent();//绑定事件
+        // ready函数中调用来确保正确执行
+        wx.ready(function(){
+
+            // 检测jsApi
+            wx.checkJsApi({
+                jsApiList: [
+                    'getLocation'
+                ],
+                success: function (res) {
+                    if (res.checkResult.getLocation == false) {
+                        alert('你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！');
+                        return;
+                    }else{
+
+                        // 绑定数据
+                        obj.getIndexHomeData();
+                    }
+                }
+            });
+        });
+    });
+    //定义构造函数
+    function clientHomeDomain() { };
+
+    //定义对象原型
+    clientHomeDomain.prototype = {
+
+        /**
+        * 初始化调用微信JS的API的配置
+        */
+        InitWeiXin :function () {
+            wx.config({
+                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId: '@Model.appId', // 必填，公众号的唯一标识
+                timestamp:@Model.timestamp , // 必填，生成签名的时间戳
+                nonceStr: '@Model.nonceStr', // 必填，生成签名的随机串
+                signature: '@Model.signature',// 必填，签名，见附录1
+                jsApiList:["getLocation","onMenuShareTimeline","onMenuShareAppMessage"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            });
+
+            wx.ready(function(){
+                //判断是够是分销客
+                var imgUrl=$("img[class=wq_index]").prop("src");//图片地址
+                //获取当前域名
+                var realmName=window.location.href.split('/')[0]+"//"+window.location.href.split('/')[2];
+                var link=realmName+"/Client/ClientHome";//链接 ?ID="+res.Data.ID
+                common.post("/Client/ClientHome/IsShareClient",null,function(res){
+                    if(res.Data.iClientType==1){
+                        // 如果是分享客
+                        link=link+"?sUserID="+res.Data.ID;
+                    }
+
+                    new clientHomeDomain().shareGoods(link,imgUrl);
+                },function(res){});
+            });
+        },
+
+        shareGoods:function(link,imgUrl){
+            // 分享到朋友圈
+            wx.onMenuShareTimeline({
+                title: "首页", // 分享标题
+                link: link, // 分享链接
+                imgUrl: imgUrl, // 分享图标
+                success: function () {
+
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+
+                }
+            });
+
+            // 分享给朋友
+            wx.onMenuShareAppMessage({
+                title: "首页", // 分享标题
+                desc: '友客分享微信商城', // 分享描述
+                link: link, // 分享链接
+                imgUrl: imgUrl, // 分享图标
+                type: 'link', // 分享类型,music、video或link，不填默认为link
+
+                success: function () {
+
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+
+                }
+            });
+        },
+
+        //绑定事件
+        bindEvent: function () {
+            //点击首页图标进去（民宿 票务 周边 附近）
+            $(".headerNav .headerNav-box").on("click", function () {
+                var id = $(this).attr("data-id");//获取data-id
+                window.location.href = "/Client/ClientHome/GetOtherView?id="+id;
+            });
+
+            //个人中心
+            $("img[class='headerright']").on("click", function () {
+                window.location.href = "/Client/ClientCenter/Index";
+            });
+
+            //切换地区
+            $("#btn_change_address").on("click", function () {
+                window.location.href = "/Client/ClientHome/ChangeLocalAddressView";
+            });
+
+            //秒杀 【更多】
+            $("#killMore_id").on("click", function () {
+                window.location.href = "/Client/ClientHome/GetSeckillView";
+            });
+
+            //特卖 【更多】
+            $("#specialMore_id").on("click", function () {
+                window.location.href = "/Client/ClientHome/GetSpecailView";
+            });
+        },
+
+        //初始化时间计时器
+        initTimeCount: function () {
+            var _this = this;
+
+            var seckillGoods = $("div[data-name=seckillNames]");//秒杀商品的div[]
+            var seckillItems = $("div[data-name=seckillItem]");//秒杀商品的秒杀时间div[]
+
+            //保存时间计时器
+            function Dictionary(){
+                this.data = new Array();
+                this.put = function (key, value) { this.data[key] = value; };
+                this.get = function (key) { return this.data[key]; };
+            };
+            var intervalsDictionary = new Dictionary();
+
+            $.each(seckillItems, function (index,item) {
+                var jqItem = $(item);
+                var seckillTime = jqItem.attr("data-sSeckillTime");
+
+                //绑定商品详情的点击事件
+                $(seckillGoods[index]).bind("click", function () {
+                    var id = $(this).attr("data-detailID");
+                    window.location.href = "/Client/ShopHome/RoomDetail?ID=" + id;
+                });
+
+                //设置计时器间隔调用的方法
+                var interval = function (seckillTime, jqItem,detailID, _this) {
+                    var endTime = seckillTime.split(",")[1];
+                    //如果秒杀活动结束  取消绑定的事件并提示
+                    if (new Date(endTime).Format("yyyy-MM-dd hh:mm:ss") == new Date().Format("yyyy-MM-dd hh:mm:ss")) {
+                        $(seckillGoods[index]).unbind();//取消事件
+                        clearInterval(intervalsDictionary.get(detailID));//取消计时器
+
+                        //提示用户活动已经结束
+                        $(seckillGoods[index]).bind("click", function () {
+                            alert("活动已结束！");
+                        });
+                    };
+                    _this.changeSeckillTime(seckillTime, jqItem, _this);
+                };
+                //启动计时器
+                var detailID=$(seckillGoods[index]).attr("data-detailID");
+                var flag=setInterval(interval, 1000, seckillTime, jqItem,detailID,_this);
+                intervalsDictionary.put(detailID, flag);
+            });
+        },
+
+        //设置改变的时间
+        changeSeckillTime: function (timeStr, jqItem,_this) {
+            jqItem.text(_this.timeCountdown(timeStr));
+        },
+
+        //获取首页的数据
+        getIndexHomeData: function () {
+
+            var _this = this;
+
+            //获取当前定位城市
+            var sLocationInfo= window.localStorage.getItem("_locationInfo");
+
+            if (sLocationInfo == null || sLocationInfo == "") {
+                // 如果当前【未选择过定位城市】，则定位当前城市 调用微信接口获取经纬度
+                wx.getLocation({
+
+                    type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+
+                    success: function (res) {
+
+                        var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+
+                        var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+
+                        var speed = res.speed; // 速度，以米/每秒计
+
+                        var accuracy = res.accuracy; // 位置精度
+
+                        // #region 调用百度地图获取具体地址
+                        _this.locationPositionByPoint(longitude,latitude);
+                        // #endregion
+                    },
+                    cancel:function(res){
+
+                        // 用户拒绝用户拒绝授权获取地理位置
+
+                        // 使用IP获取定位信息
+                        var geolocation=new BMap.Geolocation();
+                        geolocation.getCurrentPosition(function(r){
+
+                            if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                                //alert('您的位置：'+r.point.lng+','+r.point.lat);
+
+                                // #region 调用百度地图获取具体地址
+                                _this.locationPositionByPoint(r.point.lng,r.point.lat);
+                                // #endregion
+                            }
+                            else {
+                                alert('failed'+this.getStatus());
+                            }
+
+                        },{enableHighAccuracy: true});
+                    }
+                });
+            }else{
+
+                // 加载数据
+                _this.loadHomeData(sLocationInfo);
+
+            }
+        },
+
+        // 调用百度地图获取具体地址,并缓存置LocalStore
+        locationPositionByPoint:function(longitude,latitude){
+
+            var _this=this;
+
+            //var map = new BMap("allmap");//map对象
+            var point = new BMap.Point(longitude, latitude);//根据经纬度获取坐标点
+
+            var gc = new BMap.Geocoder();//获取地理编码
+
+            //获取具体地理位置
+            gc.getLocation(point, function (rs) {
+
+                var addressCom = rs.addressComponents;//获取地理组件
+
+                //具体信息
+                //alert(addressCom.province + ", " + addressCom.city + ", " + addressCom.district + ", " + addressCom.street + ", " + addressCom.streetNumber);
+
+                //将获取的地理信息存入LocalStore
+                window.localStorage.setItem("_locationInfo",
+                    JSON.stringify({
+                        city:addressCom.city,
+                        district:addressCom.district,
+                        longitude:longitude,
+                        latitude:latitude
+                    }));
+
+                sLocationInfo = window.localStorage.getItem("_locationInfo");//重新赋值
+
+                // 加载数据
+                _this.loadHomeData(sLocationInfo);
+
+            });
+
+        },
+
+        // 获取剪切后的轮播图地址
+        getCutPicure:function(pic){
+
+            if(pic==null||pic=="")return "";
+
+            return pic.substring(0,(pic.lastIndexOf(".")))+"-391-253"+pic.substring((pic.lastIndexOf(".")),pic.length);
+
+        },
+
+        // 加载数据
+        loadHomeData:function(sLocationInfo){
+
+            var _this=this;
+
+            //设置首页显示当前定位城市
+            $("#btn_change_address span").text(JSON.parse(sLocationInfo).city.split("市")[0]);
+
+            //当前城市
+            var sCity=JSON.parse(sLocationInfo).city;
+
+            //定位
+            common.post("/Client/ClientHome/GetClientHomeData", { sCity:sCity  }, function (res) {
+
+                template.config("escape", false);
+
+                //1.设置轮播图
+
+                template.helper("getCutPiicure",_this.getCutPicure);
+
+                var carouseHtml = template("Carouse_imges_script", { list: res.Data.homeCarouselImages });
+                $("#Carouse_imges_div").html(carouseHtml);
+
+                //1.1【前端】定义的滑动
+                var mySwiper = new Swiper('.swiper-container', {
+                    autoplay: 4000,//可选选项，自动滑动
+                    loop: true,
+                    autoplayDisableOnInteraction: false,
+                    //paginationType: 'fraction',
+                    pagination: '.swiper-pagination',
+                    paginationClickable: true
+                });
+
+                //2.设置秒杀 homeSeckillList
+                if (res.Data.homeSeckillList == null || res.Data.homeSeckillList == "") {
+                    $("#SeckillDiv_id").css({ "display": "none" });//隐藏秒杀区
+                } else {
+                    $("#SeckillDiv_id").css({ "display": "block" });//显示秒杀区
+
+                    //渲染模板
+                    template.helper("getTimes", _this.timeCountdown);//倒计时时间
+                    template.helper("formatPic", _this.formatPic);//格式化图片的方法
+                    template.helper("formatRoomTime", _this.formatRoomTime);//入駐時間
+                    template.helper("formatTekitTime",_this.formatTekitTime);//票务使用时间
+                    var SeckillHtml = template("Seckill_script", { list: res.Data.homeSeckillList });
+                    $("#Seckill_div").html(SeckillHtml);
+
+                    //2.1【前端】定义的滑动
+                    var mySwiper2 = new Swiper('.swiper-container2', {
+                        slidesPerView: 1.13,
+                        spaceBetween:16
+                    });
+                }
+
+                //3.设置特卖 homeSpecialSaleList
+                if (res.Data.homeSpecialSaleList == null || res.Data.homeSpecialSaleList == "") {
+                    $("#SpecailDiv_id").css({ "display": "none" });//隐藏特卖区
+                } else {
+                    $("#SpecailDiv_id").css({ "display": "block" });//显示特卖区
+
+                    //渲染模板
+                    template.helper("formatPic", _this.formatPic);//格式化图片的方法
+                    template.helper("formatRoomTime", _this.formatRoomTime);//入駐時間
+                    template.helper("formatTekitTime",_this.formatTekitTime);//票务使用时间
+                    var SpecialSaleHtml = template("SpecialSale_script", { list: res.Data.homeSpecialSaleList });
+                    $("#SpecialSale_div").html(SpecialSaleHtml);
+                    var mySwiper3 = new Swiper('.swiper-container3', {
+                        slidesPerView: 1.13,
+                        spaceBetween:16
+                    });
+                    //3.1绑定特卖商品点击事件
+                    $("#SpecialSale_div .content-each-right").on("click", function () {
+
+                        //进入详情
+                        var id = $(this).attr("data-id");
+                        window.location.href = "/Client/ShopHome/RoomDetail?ID="+id;
+                    });
+                }
+
+                //设置展示 homeShowBannerList
+                var showbannerHtml = template("showbanner_script", { list: res.Data.homeShowBannerList });
+                $("#showbanner_div").html(showbannerHtml);
+               
+                //设置推荐名宿 homeRecommentStore generateStar
+                if(res.Data.homeRecommentStore == null || res.Data.homeRecommentStore == ""){
+
+
+                    $("#homeRecommentStore_id").css({ "display": "none" });//隐藏特推荐名宿
+
+                }else{
+
+                    template.helper("generateStar", _this.generateStar);//评论星星的方法
+                    template.helper("formatPic", _this.formatPic);//格式化图片的方法
+
+                    //生成分数
+                    template.helper("generateScore",
+                        function(score){
+                            if(score==null||score==""||Number(score)<=0){
+                                return 5;
+                            }else{
+                                return score;
+                            }
+                        });
+                    var homeRecommentStoreHtml = template("homeRecommentStore_script", { list: res.Data.homeRecommentStore });
+                    $("#homeRecommentStore_div").html(homeRecommentStoreHtml);
+                    //绑定推荐名宿事件
+                    $("#homeRecommentStore_div .content-each-right").on("click", function () {
+                        //进入详情
+                        var id = $(this).attr("data-id");
+                        window.location.href = "/Client/ShopHome/Index?ID=" + id;
+                    });
+
+                }
+
+                //初始化倒计时
+                _this.initTimeCount();
+            }, function (res) {
+                alert(res.Msg);
+            });
+        },
+
+        //设置倒计时显示的时间格式（template.helper）
+        timeCountdown: function (time) {
+            //设置计时时间
+            var endTime = time.split(",")[1]+" 23:59:59";//获取结束时间
+          //  var endTime = time.split(",")[1];
+
+            //秒杀倒计时（毫秒值）
+            var times = new Date(endTime.replace(/-/g,"/")).getTime() - new Date().getTime();
+
+            var hours = Math.floor(times / 1000 / 60 / 60);//小时
+            var minutesTemp = Math.floor((times - (hours * 1000 * 60 * 60)) / 1000 / 60);//分钟
+            var minutes = parseInt(minutesTemp) < 10 ? "0" + minutesTemp : minutesTemp;
+            var secondsTemp = Math.floor((times - (hours * 1000 * 60 * 60) - minutesTemp * 1000 * 60) / 1000);//秒
+            var seconds = parseInt(secondsTemp) < 10 ? "0" + secondsTemp : secondsTemp;
+
+            //返回
+            return "{0}时{1}分{2}秒".format(hours, minutes, seconds);
+        },
+        
+        //格式化入驻时间（template.helper）
+        formatRoomTime:function(times){
+            if(times==null||times=="")return "";
+            var timeArr=times.split(",");
+            return "入住时间：{0}至{1}".format(new Date(timeArr[0].replace(/-/g, "/")).Format("MM-dd"),new Date(timeArr[1].replace(/-/g, "/")).Format("MM-dd"));
+        },
+
+        //票务使用时间
+        formatTekitTime:function(times){
+
+            if(times==null||times=="")return "";
+            var timeArr=times.split(",");
+            return "使用时间：{0}至{1}".format(new Date(timeArr[0].replace(/-/g, "/")).Format("MM-dd"),new Date(timeArr[1].replace(/-/g, "/")).Format("MM-dd"));
+
+        },
+
+        //格式化图片字段（template.helper）
+        formatPic: function (pics) {
+            if(pics==null||pics=="")return '/Areas/Client/Content/images/noimg.png';
+            return pics.split(",")[0];
+        },
+
+        //生成评论的星星(template.helper)
+        generateStar: function (score) {
+            if (score == null || score == "") { score = "5" };
+            //生成评论星星
+            var str = "";
+            var newScore = parseInt(score);
+            for (var i = 0; i < newScore; i++) {//hurfStar
+                str += '<img src="/Areas/Client/Content/images/slice/fillStar.png">';
+            }
+            for (var i = 0; i < 5-newScore; i++) {
+                str += '<img src="/Areas/Client/Content/images/slice/hurfStar.png">';
+            }
+            return str;
+        },
+
+        //格式化店铺类型 （template.helper)
+        formatType:function(type){
+
+            //1：民宿  2：票务  3：周边
+            var value="";
+
+            switch (type) {
+                case 1:
+
+                    value="民宿";
+
+                    break;
+                case 2:
+
+                    value="票务";
+
+                    break;
+                case 3:
+
+                    value="周边";
+
+                    break;
+            }
+
+            return value;
+        },
+
+        //初始化【前端】方法
+        init: function () {
+
+            var _this=this;
+
+            // 首页搜索框提示的 显示和隐藏事件
+            function check(){
+
+                if($(".headerSearch input").val()===""){
+
+                    $(".tips").show();//显示提示
+
+                }else{
+
+                    $(".tips").hide();//隐藏提示
+
+                }
+            }
+
+            // 首页搜索框点击事件
+            $('.headerSearch').bind("click",function(){
+
+                // 显示搜索列表
+                $(".searchBox").show();
+
+                // 聚焦输入框
+                $(".headsearch input").focus();
+
+                // 隐藏分类搜索列表搜索
+                //$("#searchBox_types_id").css({"display":"none"});
+                $("#searchBox_types_id").hide();
+                //var top=$(".houmeIndex .flex_1").scrollTop();
+            
+                //$(".houmeIndex .flex_1").find(">*:first-child").css("margin-top","-"+top+"px");
+                //$(".houmeIndex .flex_1,body").css("overflow","hidden").css("position","fixed");
+                
+
+            });
+
+            function setSearchValue(){
+                var val = $(".searchBox input").val();
+                if($.trim(val)==''){
+                    $("#searchBox_types_id").hide();
+                }else{
+                    $("#searchBox_types_id").find("span.cored").html($.trim(val));                    
+                    $("#searchBox_types_id").show();
+                }
+            };
+            var Timer=null;
+
+            $(".searchBox input").on("blur",function(){
+                if(null!=Timer)
+                    clearInterval(Timer);
+            });
+
+            // 绑定文本框输入事件
+            $(".searchBox input").on("input",function(){
+
+                // 获取输入的值
+                var value=$(this).val();
+
+                if(value!==""){
+
+                    // 显示分类搜索列表
+                    $("#searchBox_types_id").css({"display":"block"});
+                    $("#searchBox_content_id").empty();
+                    Timer=setInterval(setSearchValue,50);
+                    debugger
+                    //setTimeout(function(){
+                    //    $("#searchBox_types_id").find("span.cored").html(value);
+                    //},200);
+                    // 改变搜索结果和【民宿、票务、周边】分类的文本显示
+                    //$($(".searchBox ul")[0]).find("a[class=cored]").text(value);
+
+                    // 绑定大分类点击事件
+                    $($(".searchBox ul")[0]).find("li").unbind("click");
+                    $($(".searchBox ul")[0]).find("li").bind("click",function(){
+
+                        window.location.href=$(this).find("span.cored").attr("data-href")+$(this).find("span.cored").html();
+
+                    });
+                    $("#search_home_span").bind("click",function(){
+                        window.location.href="/Client/ClientHome/GetSelectView?id=0&sGoodsName="+value;
+                    
+                    });
+                    // 查询结果
+                    common.post("/Client/ClientHome/QueryGoodsByWhere",{sGoodsName:value,sCity:JSON.parse(window.localStorage.getItem("_locationInfo")).city},function(res){
+                        if(res.Data!="" && res.Data !=null && res.Data.length>0){
+
+                            // 添加辅助方法 格式化 商品类型
+                            template.helper("formatType",_this.formatType);
+
+                            // 获取html
+                            var html=template("searchBox_content_script",{list:res.Data});
+
+                            // 替换模板
+                            $("#searchBox_content_id").html(html);
+
+                            // 绑定搜索结果事件
+                            $("#searchBox_content_id ul li").unbind("click");
+                            $("#searchBox_content_id ul li").bind("click",function(){
+
+                                window.location.href=$(this).find("span").attr("data-href");
+
+                            });
+                        }
+
+                    },function(res){
+
+                        alert(res.Msg);
+
+                    },false);
+
+                }else{
+
+                    // 隐藏分类搜索列表搜索
+                    // $("#searchBox_types_id").css({"display":"none"});
+
+                }
+                $("#searchBox_types_id").show();
+            });
+
+            // 取消事件
+            $(".cored").bind("click",function(){
+                $(".searchBox").hide();
+                check();
+                //var top=$(".houmeIndex .flex_1").find(">*;first-child").css("margin-top").replace(/-|px/g,"");
+                //$(".houmeIndex .flex_1").find(">*:first-child").css("margin-top","0");
+                //$(".houmeIndex .flex_1").css("overflow","auto").scrollTop(top);
+                //$("body").css("overflow","auto");
+            })
+
+            // 首页搜索框失去焦点事件
+            $(".headerSearch input").bind("blur",function(){
+
+                //显示提示
+                check();
+            });
+        }
+    };
+</script>

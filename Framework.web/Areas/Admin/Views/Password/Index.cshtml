@@ -1,0 +1,12 @@
+﻿<script src="~/Areas/Admin/Scripts/Passrord/Index.js"></script>
+
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px;">
+    <form id="password_manage_form" style="width:100%;height:100%;">
+        <table id="password_manage_menu"></table>
+        <div id="password_manage_tool" style="padding:15px;display:none;">
+            模糊查询:<input type="text" class="easyui-textbox" data-options="prompt:'登录名 / 真实姓名',validType:['isHtmlValidate','maxLength[200]']" id="search_password_user">
+            @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
+        </div>
+    </form>
+</div>

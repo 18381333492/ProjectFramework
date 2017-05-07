@@ -1,0 +1,14 @@
+﻿@*@Html.Partial("~/Areas/Admin/Views/Shared/_BaiduAddressChoose.cshtml")*@
+
+<script src="~/Areas/Admin/Scripts/GoodsCategory/Index.js"></script>
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px;">
+    <div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:true,fit:true">
+        <div class="easyui-panel datagrid-toolbar" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:false,height:60" style="padding:15px;">
+            <form id="goods_category_form" style="width:100%;height:100%" ;>
+                @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
+            </form>
+        </div>
+        <ul id="goods_category_tree"></ul>
+    </div>
+</div>

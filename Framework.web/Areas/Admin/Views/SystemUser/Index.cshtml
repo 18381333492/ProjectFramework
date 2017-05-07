@@ -1,0 +1,26 @@
+﻿<link href="~/scripts/plug-in/date/laydate-master/need/laydate.css" rel="stylesheet" />
+<link href="~/scripts/plug-in/date/laydate-master/skins/molv/laydate.css" rel="stylesheet" />
+<script src="~/scripts/plug-in/date/laydate-master/laydate.dev.js"></script>
+<script src="~/Areas/Admin/Scripts/SystemUser/Index.js"></script>
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px;">
+
+    <form id="systemuser_form" style="width:100%;height:100%;">
+        <table id="systemuser_grid"></table>
+        <div id="systemuser_grid_tool" style="padding:15px;display:none;">
+            用户登录名或名字：<input class="easyui-textbox" name="sLoginName" data-options="width:160,validType:['maxLength[20]']" />
+            &emsp;
+            注册时间：
+            <input name="sStartTime" onclick="modules.get('cache').getCache('laydate').laydate({ istime: true })" class="textbox" style="height:20px;">&emsp;至&emsp;
+            <input name="sEndTime" onclick="modules.get('cache').getCache('laydate').laydate({ istime: true })" class="textbox" style="height:20px;">
+            <br />
+            <br />
+            <script type="text/javascript">
+                debugger;
+            </script>
+            @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
+
+
+        </div>
+    </form>
+</div>

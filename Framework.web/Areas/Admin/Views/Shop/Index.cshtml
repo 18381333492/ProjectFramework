@@ -1,0 +1,22 @@
+﻿<script src="~/Areas/Admin/Scripts/Shop/Index.js"></script>
+<link href="~/scripts/plug-in/address/city-picker/city-picker.css" rel="stylesheet" />
+<script src="~/scripts/plug-in/address/city-picker/city-picker.data.js"></script>
+<script src="~/scripts/plug-in/address/city-picker/city-picker.js"></script>
+
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px;">
+    <form id="shop_index_form" style="width:100%;height:100%;">
+        <table id="shop_menu"></table>
+        <div id="shop_tool" style="padding:15px;display:none;">
+            <table>
+            <tr>
+                <td>状态：<input class="easyui-combobox" id="shaop_pass_State"></td>
+                <td>&nbsp;&nbsp;所在区域:&nbsp;&nbsp;&nbsp;</td><td><input style="width:180px" placeholder="选择区域" readonly type="text" name="region" data-toggle="city-picker"></td>
+                <td>&nbsp;&nbsp;模糊查询：<input type="text" class="easyui-textbox" data-options="prompt:'店铺名称',validType:['isHtmlValidate','maxLength[200]']" id="search_pass_shop"></td>
+                <td>@Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")</td>
+            </tr>
+            </table>
+            
+        </div>
+    </form>
+</div>

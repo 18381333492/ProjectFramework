@@ -1,0 +1,5 @@
+﻿该程序集提供一些通用工具操作。
+
+GuidHelper提供两个静态方法以生成序列式GUID。
+
+JSONHelper提供两个静态方法以生成JSON对象和从对象生成JSON字符串。

@@ -1,0 +1,229 @@
+* {
+  padding: 0px;
+  margin: 0px;
+}
+ul,
+ol {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+}
+input[type=password] {
+  border: none;
+  outline: none;
+  font-size: inherit;
+}
+button {
+  border: none;
+  background: none;
+  outline: none;
+}
+/***user-select:none**/
+.GuserSelect {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+/**fontSize*/
+.Gfontsize-12 {
+  font-size: 12px;
+}
+.Gfontsize-14 {
+  font-size: 14px;
+}
+.Gfontsize-16 {
+  font-size: 16px;
+}
+.Gfontsize-18 {
+  font-size: 18px;
+}
+.Gfontsize-20 {
+  font-size: 20px;
+}
+.Gfontsize-30 {
+  font-size: 30px;
+}
+/*****display*/
+.Gdisplay-block {
+  display: block;
+}
+.Gdisplay-inline {
+  display: inline-block;
+}
+.Gdisplay-none {
+  display: none;
+}
+.Gdisplay-flex {
+  display: flex;
+  display: -webkit-flex;
+}
+/**position***/
+.Gposition-re {
+  position: relative;
+}
+.Gposition-re-100 {
+  position: relative;
+  z-index: 100;
+}
+.Gposition-re-50 {
+  position: relative;
+  z-index: 50;
+}
+.Gposition-re-30 {
+  position: relative;
+  z-index: 30;
+}
+.Gposition-fix-bottom-300 {
+  position: fixed;
+  bottom: 0;
+  z-index: 300;
+}
+.Gposition-fix-top-300 {
+  position: fixed;
+  top: 0;
+  z-index: 300;
+}
+.Gposition-ab-bottom-30 {
+  position: absolute;
+  bottom: 0;
+  z-index: 30;
+}
+/**show and hide****/
+.Gshow {
+  display: block;
+}
+.Ghide {
+  display: none;
+}
+/**outline***/
+.Goutline-no {
+  outline: none;
+}
+.Goutline-1 {
+  outline: 1px solid;
+}
+.Goutline-2 {
+  outline: 2px solid;
+}
+/**border*/
+.Gborder-no {
+  border: none;
+}
+.Gborder-1 {
+  border: 1px solid;
+}
+.Gborder-2 {
+  border: 2px solid;
+}
+/**border-radius***/
+.GborderRadius-1 {
+  border-radius: 1px;
+}
+.GborderRadius-2 {
+  border-radius: 2px;
+}
+.GborderRadius-3 {
+  border-radius: 3px;
+}
+.GborderRadius-4 {
+  border-radius: 4px;
+}
+.GborderRadius-5 {
+  border-radius: 5px;
+}
+.GborderRadius-6 {
+  border-radius: 6px;
+}
+.GborderRadius-50 {
+  border-radius: 50%;
+}
+.GborderRadius-50px {
+  border-radius: 50px;
+}
+.GborderRadius-100 {
+  border-radius: 100%;
+}
+/*background-color*/
+.Gbgcolor-blue {
+  background-color: #445fcf;
+}
+.Gbgcolor-black {
+  background-color: #212121;
+}
+.Gbgcolor-gray {
+  background-color: #f2f2f2;
+}
+.Gbgcolor-white {
+  background-color: #fff;
+}
+/*text-align**/
+.Gtext-align-l {
+  text-align: left;
+}
+.Gtext-align-c {
+  text-align: center;
+}
+.Gtext-align-r {
+  text-align: right;
+}
+/*2���ı�����ʡ��**/
+.Gtext-ellipsis-line1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.Gtext-ellipsis-line2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+/*border-box**/
+.Gboxsizing-border {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+/*content-box**/
+.Gboxsizing-content {
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  -o-box-sizing: content-box;
+  -ms-box-sizing: content-box;
+  box-sizing: content-box;
+}
+/**��ֱ����*****/
+.Gmiddle-y {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.Gmiddle-x {
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+/***checkBox ȥ��Ĭ��ѡ��**/
+.Gappearance {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+/**Gfunction     this is my less functions ,**/
+/**����**/
+/**footer*/
+/**ҳ�ŷָ���*/

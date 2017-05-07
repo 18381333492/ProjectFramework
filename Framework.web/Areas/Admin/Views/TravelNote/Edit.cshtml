@@ -1,0 +1,58 @@
+﻿
+@using Framework.DTO
+@model EHECD_TravelsNotesDTO
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form style="width:99%;height:99%;" id="travelNote_edit_form">
+        <input type="hidden" name="ID" value="@Model.ID" />
+        <input type="hidden" id="sHeadImges" value="@Model.sHeadImges" />
+        <input id="sTravelImges" type="hidden" value="@ViewBag.Img"/>
+        <input type="hidden" id="sContent" value="@Model.sContent" />
+        <table class="styletable" style="height:100%">
+            <tbody>
+                <tr>
+                    <td>标题：</td>
+                    <td><input name="sTitle" value="@Model.sTitle" class="easyui-textbox" missingMessage="不能为空" data-options="required:true,validType:['chartLengthBetween[3,20,\'标题\']','isHtmlValidate']"></td>
+                </tr>
+                <tr>
+                    <td>作者:</td>
+                    <td>
+                        <input name="sAuthor" value="@Model.sAuthor" class="easyui-textbox"  missingMessage="不能为空" data-options="required:true,validType:['isHtmlValidate']">
+                    </td>
+                </tr>
+                <tr>
+                    <td>作者头像：<input type="hidden" name="sHeadImges" id="travelNote_add_sHeadImages" /></td>
+                    <td>
+                        <div id="travelNote_add_sHeadImages_upload" class="uploader">
+                            <div class="queueList">
+                                <div id="dndArea" class="placeholder">
+                                    <div id="filePicker"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>游记图片：<input type="hidden" name="sTravelImges" id="travelNote_add_sTravelImges" /></td>
+                    <td>
+                        <div id="travelNote_add_sTravelImges_upload" class="uploader">
+                            <div class="queueList">
+                                <div id="dndArea" class="placeholder">
+                                    <div id="filePicker"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>游记内容：</td>
+                    <td>
+                        <input type="hidden" name="sContent" id="travelNote_add_sContent" />
+                        <script type="text/plain" id="travelNote_add_sContent_script" style="height:400px;width:700px">
+                        </script>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </form>
+</div>

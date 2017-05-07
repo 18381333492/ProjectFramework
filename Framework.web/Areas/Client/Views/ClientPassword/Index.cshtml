@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>找回密码</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+    <script src="~/scripts/lib/client.common.js"></script>
+</head>
+<body>
+    <section>
+        <h4 class="pdlr10 co666 bgf2 hl30">通过手机找回密码</h4>
+    </section>
+    <section class="w-width100 w-overflowH">
+        <ul class="lzxregedit w-width100 w-overflowH pdlr10">
+            <li class="w-width100 w-flex">
+                <span style="background-image:url(/Areas/Client/Content/images/slice/phone.png)"></span>
+                <input type="tel" placeholder="请输入手机号码" id="phone_number" class="font14 w-color999 w-flexitem1">
+            </li>
+            <li class="w-width100 w-flex">
+                <span style="background-size: 20px; background-image:url(/Areas/Client/Content/images/slice/verify.png)"></span>
+                <input type="text" placeholder="请输入验证码" class="font14 w-color999 w-flexitem1 w-inlineblock" id="code">
+                <input type="button" value="获取验证码" class="font12 w-inlineblock" onclick="cpdpc.getPhoneCheckNumber()" id="m-btn">
+            </li>
+
+        </ul>
+    </section>
+
+    <div class="lzxsure"><button type="button" onclick="cpdpc.nextStep()">下一步</button></div>
+</body>
+</html>
+<script>
+
+    /**
+    * 用户通过手机验证操作
+    */
+    function ClientCPWPhoneCheckDomain() { };
+
+    var f = window.common;              //操作对象
+    var c = false;                      //是否正在倒计时
+    /**
+    * 用户操作原型
+    */
+    ClientCPWPhoneCheckDomain.prototype = {
+        /**
+        * 初始化页面元素
+        */
+        init: function () {
+            $("#phone_number").val(window.common.getStorageItemNoResident("_fp_p_n"));
+            //window.common.history.setBackURL("/Client/ClientLogin");
+        },
+
+        // 获取验证码
+        getPhoneCheckNumber: function () {
+            
+            var phoneNumber = $("#phone_number").val();
+            if (phoneNumber.length > 0 && window.common.isMobilePhone(phoneNumber)) {
+
+                f.post("/Client/ClientPassword/GetPhoneCheckNumber", { phoneNumber: phoneNumber }, function (r) {
+                    // 设置当前为正在倒计时：倒计时的时候可以到下一步，不然就直接直接打回去让其重新回去验证码
+                    c = true;
+                    $("#m-btn").prop("disabled", true);
+                    $("#phone_number").prop("disabled", true);
+                    //开始计时
+                    cpdpc.countDown(60);
+                }, function (r) {
+                    alert(r.Msg);
+                });
+            } else {
+                alert("请输入正确的手机号码", null, 500);
+            }
+        },
+
+        // 获取验证码倒计时
+        countDown: function (ls) {
+            setTimeout(function () {
+                if (ls > 0) {
+                    ls--;
+                    $("#m-btn").val("获取验证码({0})".format(ls));
+                    cpdpc.countDown(ls);
+                } else {
+                    c = false;
+                    $("#m-btn").val("获取验证码");
+                    $("#m-btn").prop("disabled", false);
+                    $("#phone_number").prop("disabled", false);
+                }
+            }, 1000);
+        },
+
+        // 下一步
+        nextStep: function () {
+            var code = $("#code").val();                // 短信验证码
+            var phoneNumber =
+                $("#phone_number").val();               //手机号
+
+            if (code.length === 0) return alert("请输入短信验证码", null, 500);
+        //    if (!c) return alert("验证码已失效，请重新获取验证码");
+
+            f.post("/Client/ClientPassword/ToResetPassword", { code: code, phoneNumber: phoneNumber }, function (r) {
+                window.common.setStorageItem("rs_phone_number", phoneNumber);
+                window.location.href = "/Client/ClientPassword/ResetPassword";
+            }, function (r) {
+                alert(r.Msg);
+            });
+        }
+    };
+
+    var cpdpc;
+
+    !function (mmd) {
+        cpdpc = new ClientCPWPhoneCheckDomain();
+        cpdpc.init();
+    }(window.jQuery);
+
+</script>

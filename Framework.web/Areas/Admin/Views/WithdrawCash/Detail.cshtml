@@ -1,0 +1,39 @@
+﻿
+@model Framework.DTO.EHECD_WithdrawCashDTO
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form style="width:99%;height:99%;" id="withdrawCash_detail_form">
+        <input type="hidden" name="ID" id="withdrawCash_detail_ID" value="@Model.ID" />
+        <table class="styletable" style="height:100%">
+            <tbody>
+                <tr>
+                    <td>状态：</td>
+                    <td><span id="withdrawCash_detail_iState">@Model.iState</span></td>
+                </tr>
+                <tr>
+                    <td>提现编号：</td>
+                    <td><span>@Model.sWithdrawNumber</span></td>
+                </tr>
+                <tr>
+                    <td>提现会员：</td>
+                    <td><span>@Model.sWithdrawMemberName</span></td>
+                </tr>
+                <tr>
+                    <td>提现金额：</td>
+                    <td><span>￥@Model.iWithdrawMoney</span></td>
+                </tr>
+                <tr>
+                    <td>银行卡号：</td>
+                    <td><span>@Model.sBankCardNo</span></td>
+                </tr>
+                <tr>
+                    <td>开户行：</td>
+                    <td><span>@Model.sBankName</span></td>
+                </tr>
+                <tr>
+                    <td>真实姓名：</td>
+                    <td><span>@Model.sBankCardUserName</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>

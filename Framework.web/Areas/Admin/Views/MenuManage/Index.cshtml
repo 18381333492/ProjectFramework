@@ -1,0 +1,12 @@
+﻿<script src="~/Areas/Admin/Scripts/MenuManage/Index.js"></script>
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px;">
+    <div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:true,fit:true">
+        <div class="easyui-panel datagrid-toolbar" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:false,height:60" style="padding:15px;">
+            <form id="menu_manager_form" style="width:100%;height:100%" ;>
+                @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
+            </form>
+        </div>
+        <ul id="all_menu"></ul>
+    </div>
+</div>

@@ -1,0 +1,192 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>切换定位</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="lzxheader">
+        <!-- <div class="headleft fa fa-angle-left"></div> -->
+        <div class="headcenter">
+            <div class="headsearch">
+                <span></span>
+                <input type="text" id="input_select_where" placeholder="">
+            </div>
+        </div>
+        <div class="headright cored textr" id="btn_search">搜索</div>
+    </div>  
+    <div class="currentcity pd10 co333">当前定位城市<a href="javascript:;" class="lzxfr"></a></div>
+
+    <div id="content_div">
+
+        <!--模板-->
+        <script type="text/html" id="content_script">
+            {{each list as item index}}
+            <h4 class="hl30 bgf2 pdlr10 co999">{{item.latter}}</h4>
+            <ul class="lzxarea pdlr10 nid">
+                {{item.sCity | fomatCity}}
+            </ul>
+            {{/each}}
+        </script>
+
+    </div>
+
+</body>
+</html>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+<script src="~/scripts/lib/client.common.js"></script>
+<script src="~/scripts/lib/template.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+        ChangeLocalDomain.init();
+        ChangeLocalDomain.bindEvent();
+    });
+
+    /**
+    * 页面操作对象
+    */
+    var ChangeLocalDomain = (function (obj) { return obj; })(new function () {
+
+        /**
+        * 初始化
+        */
+        function init() {
+            //从Locastore中获取当前定位城市  sCity
+            var locationCity = window.localStorage.getItem("_locationInfo");
+
+            //设置显示当前定位的城市
+            $(".lzxfr").text(JSON.parse(locationCity).city.split("市")[0]);
+
+            //加载数据
+            doSelect({ sCity: "" });
+
+        }
+
+        /**
+        * 查询操作
+        */
+        function doSelect(param) {
+
+            //查询平台所有店铺的所在城市
+            common.post("/Client/ClientHome/ChangeLocalAddress", param, function (res) {
+
+                if (res.Data == null || res.Data == "") {
+
+                    //显示【查询无结果】的图片
+                    $("#content_div").html('<div class="w-notDATA"><b></b><h4 class="w-font14 w-colorccc w-textalignC">暂时没有数据</h4></div>');
+
+                } else {
+
+                    //设置可以输出html
+                    template.config("escape", false);
+
+                    //为模板添加辅助方法【解析城市数据】
+                    template.helper("fomatCity", fomatCity);
+
+                    //获取html
+                    var html = template("content_script", { list: res.Data });
+
+                    //设置html
+                    $("#content_div").html(html);
+
+                    $("#content_div ul li").unbind("click");
+                    //绑定事件【选择定位城市】
+                    $("#content_div ul li").bind("click", function (res) {
+
+                        //当前选择的定位城市
+                        var sMyCity = $(this).text();
+                        
+                        //将选择的定位地理信息保存至LocalStore
+                        window.localStorage.setItem("_locationInfo",
+                               JSON.stringify({
+                                   city: sMyCity,
+                                   district: JSON.parse(window.localStorage.getItem("_locationInfo")).district,
+                                   longitude: JSON.parse(window.localStorage.getItem("_locationInfo")).longitude,
+                                   latitude: JSON.parse(window.localStorage.getItem("_locationInfo")).latitude
+                               }));
+
+                        //返回首页
+                        window.location.href = "/Client/ClientHome";
+
+                    });
+                }
+
+            }, function (res) {
+                alert(res.Msg);
+            });
+        }
+
+        /**
+        * 绑定事件
+        */
+        function bindEvent() {
+
+            //搜索框事件
+            $("#btn_search").on("click", function () {
+               
+                //获取搜索框的输入内容
+                var param = $("#input_select_where").val();
+
+                //加载数据
+                doSelect({sCity:param});
+                
+            });
+        }
+
+        /**
+        * 格式化城市数据（template.helper）
+        */
+        function fomatCity(sCityArr) {
+            var strHtml = "";
+            for (var i = 0; i < sCityArr.split(",").length; i++) {
+                strHtml += "<li>" + sCityArr.split(",") [i]+ "</li>"
+            }
+            return strHtml;
+        }
+
+        //提供给外部使用的方法
+        return {
+            init: init,
+            bindEvent: bindEvent
+        }
+
+    });
+
+</script>

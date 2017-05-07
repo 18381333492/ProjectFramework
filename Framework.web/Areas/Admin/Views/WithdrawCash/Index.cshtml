@@ -1,0 +1,32 @@
+﻿<!--时间组件 start-->
+<link href="~/scripts/plug-in/date/laydate-master/need/laydate.css" rel="stylesheet" />
+<link href="~/scripts/plug-in/date/laydate-master/skins/molv/laydate.css" rel="stylesheet" />
+<script src="~/scripts/plug-in/date/laydate-master/laydate.dev.js"></script>
+<!--时间组件 end-->
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+@*<script src="~/scripts/lib/template.js"></script>*@
+<script src="~/Areas/Admin/Scripts/WithdrawCash/Index.js"></script>
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px;">
+    <form id="withdrawCash_index_form" style="width:100%;height:100%" ;>
+        <div id="withdrawCash_index_tool_div" style="padding:15px;">
+            <!--状态(0-提现审核中 1-通过审核 2-提现成功)-->
+            <select name="iState" class="easyui-combobox" style="width:100px;" data-options="panelHeight:'auto'">
+                <option value="-1">全部</option>
+                <option value="0">提现审核中</option>
+                <option value="1">通过审核</option>
+                <option value="2">提现成功</option>
+            </select>
+            &emsp;&emsp;
+            <span>申请时间：<input id="withdrawCash_index_dApplyTimeStart" readonly="readonly" name="dApplyTimeStart" onclick="modules.get('cache').getCache('laydate').laydate({ istime :true})" class="textbox" style="height:20px;" /></span>
+            ---
+            <span><input id="withdrawCash_index_dApplyTimeEnd" readonly="readonly" name="dApplyTimeEnd" onclick="modules.get('cache').getCache('laydate').laydate({ istime :true})" class="textbox" style="height:20px;" /></span>
+            &emsp;&emsp;
+            <a id="withdrawCash_index_btn_seach" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</a>
+            <br /><br />
+            @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
+        </div>
+
+        <table id="withdrawCash_index_datagrid"></table>
+    </form>
+</div>

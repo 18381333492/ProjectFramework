@@ -1,0 +1,571 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>预订</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+    <script src="~/scripts/lib/template.js"></script>
+    <script src="~/scripts/lib/client.common.js"></script>
+    <style>
+        .ml_del{bottom:-.8rem;}
+    </style>
+</head>
+@model Framework.DTO.EHECD_ClientDTO
+<body style="background-color: #f2f2f2">
+    <!--sureRoom-->
+    <div class="sureRoom">
+        <div class="sureRoom-tittle" id="order_goods_title"></div>
+
+        <div class="sureRoom-tittle time" style="margin-top:5px"><span class="w-adddd">选择日期</span>&nbsp;
+        <span id="data"><i>03/03</i>入住，<b>05/21</b>退房，共<em>9</em>晚</span><input type="text" date-choice  readonly="readonly" class="w-click"/>
+        <img src="/Areas/Client/Content/images/slice/rightLogogray.png"  style="width:0.14rem;height:0.26rem;position:absolute;right:7px;top:50%;margin-top:-0.13rem" class="fr">
+        </div>
+        <div class="sureRoom-doble count">
+            <div class="sureRoom-doble-left">数量</div>
+            <div class="sureRoom-dobleright">
+                <div class="addAnd">
+                    <div class="reduce">-</div>
+                    <input type="text" class="showNo" value="1" id="goods_count" readonly="readonly">
+                    <div class="add">+</div>
+                </div>
+            </div>
+        </div>
+        <div class="sureRoom-doble">
+            <div class="sureRoom-doble-left">姓名</div>
+            <div class="sureRoom-dobleright">
+                <input type="text" class="writeName" placeholder="只需填写一人名字" id="client_name" style="color:#666 !important;" value="@Model.sNickName">
+            </div>
+        </div>
+        <div class="sureRoom-doble">
+            <div class="sureRoom-doble-left">手机号</div>
+            <div class="sureRoom-dobleright">
+                <input type="text" class="writeName" placeholder="请填写手机号" id="client_mobile_number" value="@Model.sPhone" style="color:#333">
+            </div>
+        </div>
+
+        <div class="sureRoom-doble margintop10">
+            <div class="sureRoom-doble-left">费用总计</div>
+            <div class="sureRoom-dobleright redcolorwords">
+                &yen;<i id="total_price">0.00</i>
+            </div>
+        </div>
+        <div class="sureRoom-doble">
+            <div class="sureRoom-doble-left">优惠券</div>
+            <div class="sureRoom-dobleright colorwords" id="coupon_selected">
+                <i>不使用优惠券</i>
+                <img src="~/Areas/Client/Content/images/slice/rightLogogray.png" class="rightLogosss" />
+            </div>
+        </div>
+        <div class="sureRoom-doble">
+            <div class="sureRoom-doble-left">实际应付</div>
+            <div class="sureRoom-dobleright redcolorwords">
+                &yen;<i id="shold_to_pay">0.00</i>
+            </div>
+        </div>
+        <div class="orderBuff margintop10">
+            <div class="orderBuff-left">订单备注</div>
+            <textarea name="" id="order_remark" maxlength="200" cols="30" rows="10" placeholder="请输入备注"></textarea>
+        </div>
+        <a href="javascript:void (0)" class="payNowBtn">立即支付</a>
+        <div class="coupon_choice" style="display: none;">
+            <div class="coupon_list">
+                <ul>
+                    <script type="text/html" id="coupon_template">
+                        {{each list as cp}}
+                        <li>
+                            <label>
+                                <input name="coupon";"
+                                       data-id="{{cp.id}}"
+                                       data-uid="{{cp.uid}}"
+                                       data-p="{{cp.p}}"
+                                       data-top="{{cp.top}}"
+                                       data-title="满{{cp.top}}抵{{cp.p}}">
+                                <div class="flex_dom">
+                                    <div class="money">
+                                        {{if cp.top!=0}}
+                                        <h4>满{{cp.top}}可用</h4>
+                                        {{/if}}
+                                        {{if cp.top==0}}
+                                        <h4>无使用门槛</h4>
+                                        {{/if}}
+                                        <p><span><em>¥</em>{{cp.p}}</span></p>
+                                    </div>
+                                    <div class="detail_con flex_1">
+                                        <h4>有效期</h4>
+                                        <p>{{cp.ts}}</p>
+                                    </div>
+                                </div>
+                            </label>
+                        </li>
+                        {{/each}}
+                    </script>
+                </ul>
+                <div class="close">
+                    <span>不使用优惠券</span>
+                    <div class="ml_del"></div>
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>
+<script src="~/Areas/Client/Content/lib/date-choice.js"></script>
+<script src="~/scripts/lib/client.common.js"></script>
+<script type="text/javascript">
+    //选择时间的全局变量
+    window.timeSelect = [];
+
+    window.CountAndPrice = {
+        count: 0,//购买数量
+        price: 0,//商品价格
+        coupon: 0,//优惠卷价格
+        top: 0,//优惠卷的使用条件
+        couponid:null//优惠卷ID
+    }
+
+    window.Allprices = 0;//价格的缓存
+
+    window.timeData = {
+        stime: "",
+        etime: "",
+    }//选择的时间数据
+    $(function () { 
+        // 测试数据
+        //window.common.setStorageItem("order_info", {
+        //    //stime: '2016-11-15',
+        //    //etime: '2016-11-16',
+        //    price: 80.01,
+        //    gid: '558979D0-6B9A-C08E-006B-08D4248DC642',
+        //    gname: '演唱会',
+        //    gtype: 1,
+        //    gstate:'normal'
+        //});
+
+        scope.initDom();
+        scope.bingEvent();
+        scope.InitOrderData();
+    });
+
+    var scope = (function (obj) { return obj; }(new function () {
+
+        //商品测试数据
+        var order_info = common.getStorageItem("order_info");
+        //选择的优惠卷
+        var coupon = {
+            couponid:null,
+            price:0
+        };
+        var min_room_count = 3;
+        var nowtime = null;
+        var state = true;
+        var stime = order_info.stime;//选择的开始时间
+        var etime =order_info.etime;//选择的结束时间
+
+
+        //初始化客房时间信息
+        function InitRoomDetail(nowtime) {
+            common.post("/Client/OrderConfirm/LoadOrderInfo", {
+                gtype: order_info.gtype,
+                gid: order_info.gid,
+                nowtime: nowtime
+            }, function (r) {
+                var choice_style = "checkbox";
+                if (order_info.gtype == 2) choice_style = "radio";
+                //初始化时间选择控件
+                $.timeChoice({
+                    "normal_price": r.Data.normal_price,
+                    "special_offer": r.Data.special_offer,
+                    "no_choice": r.Data.no_choice,
+                    "choice_style": choice_style,
+                    gtype: order_info.gtype,//商品类型
+                    gid:order_info.gid,
+                    initCoupon: initCoupon
+                })
+            });
+        }
+
+        //初始化页面信息
+        function initDom() {
+
+            initCoupon();//初始化优惠卷
+
+            //初始化商品数量
+            window.CountAndPrice.count = parseInt($('#goods_count').val());
+            window.CountAndPrice.price = order_info.price;//初始化商品价格
+
+            //初始化数据
+            if (order_info.stime && order_info.etime) {
+                //时间显示的初始化
+                var start = new Date(stime);
+                var end = new Date(new Date(etime).getTime());
+                var date3 = end.getTime() - start.getTime();
+                if (date3 > 0) {
+                    var index = Math.floor(date3 / (24 * 3600 * 1000))
+                    $(".sureRoom-tittle span i").text((start.getMonth() + 1) + "/" + start.getDate())
+                    $(".sureRoom-tittle span b").text((end.getMonth() + 1) + "/" + end.getDate())
+                    $(".sureRoom-tittle span em").text(index);
+
+                    window.timeData.stime = order_info.stime + " 00:00:00";
+                    window.timeData.etime = order_info.etime + " 23:59:59";
+                }
+                else {
+                    alert("选择的时间不合理!",null,1000);
+                }
+            }
+            else {
+                $('#data').hide();
+            }
+
+            //只有客房和票务会有数量选择
+            if (order_info.gtype <= 2) {
+                InitRoomDetail(nowtime);
+                $("div.addAnd").on('click', ".reduce", function () {
+                    //减少商品数量
+                    var count = parseInt($('#goods_count').val());
+                    if (count == 1) {
+                        return alert('请至少选择一件商品', null, 200);
+                    }
+                    else
+                    {
+                        if (order_info.gtype == 1) {
+                            //为客房的时候
+                            count--;
+                            window.CountAndPrice.count = count;
+                            $('#goods_count').val(count);
+                            $('#total_price').text((window.CountAndPrice.price * count ).toFixed(2));
+                            $('#shold_to_pay').text(((window.CountAndPrice.price * count) -window.CountAndPrice.coupon).toFixed(2));
+                        }
+                        else {
+                            count--;
+                            window.CountAndPrice.count = count;
+                            $('#goods_count').val(count);
+                            $('#total_price').text((window.CountAndPrice.price * count).toFixed(2));
+                            $('#shold_to_pay').text(((window.CountAndPrice.price * count) - window.CountAndPrice.coupon).toFixed(2));
+                        }
+
+                        //判断优惠卷满不满足使用条件
+                        var totalprice = window.CountAndPrice.price * window.CountAndPrice.count;//付款的额总价
+                        if ((totalprice - window.CountAndPrice.top) >= 0 && totalprice > window.CountAndPrice.coupon) {
+                            ////重新计算价格
+                            $('#total_price').text((window.CountAndPrice.price * window.CountAndPrice.count).toFixed(2));
+                            $('#shold_to_pay').text(((window.CountAndPrice.price * window.CountAndPrice.count) - window.CountAndPrice.coupon).toFixed(2));
+
+                        }
+                        else {
+                            //不满足适用条件 不使用优惠卷
+                            $('#total_price').text((window.CountAndPrice.price * window.CountAndPrice.count).toFixed(2));
+                            $('#shold_to_pay').text((window.CountAndPrice.price * window.CountAndPrice.count).toFixed(2));
+
+                            //清空优惠卷信息
+                            window.CountAndPrice.coupon = 0,//优惠卷价格
+                            window.CountAndPrice.top = 0,//优惠卷的使用条件
+                            window.CountAndPrice.couponid = null//优惠卷ID
+
+                            //清除文本信息
+                            $('#coupon_selected i').text('不使用优惠券');
+                        }
+                    }
+
+                })
+                .on('click', ".add", AddCount);
+            }
+            else {
+                $(".time").remove();
+                $('.count').remove();
+            }
+        }
+
+        //增加库存
+        function AddCount() {
+            if (order_info.gtype <= 2) {
+                //客房和票务才检查库存
+                if (window.timeData.stime == "" || window.timeData.etime == "") {
+                    alert("请选择时间!", null, 1000);
+                    return;
+                }
+                //商品数量
+                var count = parseInt($('#goods_count').val());
+                //检查库存
+                common.post("/Client/OrderConfirm/checkCount", {
+                    stime: window.timeData.stime,
+                    etime: window.timeData.etime,
+                    count: count + 1,
+                    gid: order_info.gid,
+                    gtype: order_info.gtype//商品分类
+                }, function (r) {
+                    //类型是客房
+                    if (order_info.gtype === 1) {
+                        count++;
+                        window.CountAndPrice.count = count;
+                        $('#goods_count').val(count);
+                        $('#total_price').text((window.CountAndPrice.price * count).toFixed(2));
+                        $('#shold_to_pay').text(((window.CountAndPrice.price * count) - window.CountAndPrice.coupon).toFixed(2));
+                    }
+                        //类型是票务
+                    else {
+                        count++;
+                        window.CountAndPrice.count = count;
+                        $('#goods_count').val(count);
+                        $('#total_price').text((window.CountAndPrice.price * count).toFixed(2));
+                        $('#shold_to_pay').text(((window.CountAndPrice.price * count) - window.CountAndPrice.coupon).toFixed(2));
+                    }
+                }, function (r) {
+                    if (order_info.gtype == 1) {
+                        alert('剩余房间不足', null, 500);
+                    }
+                    else {
+                        alert('剩余票务不足', null, 500);
+                    }
+                },false);
+            }
+            else {
+                // 周边不需要检查库存
+                //商品数量
+                var count = parseInt($('#goods_count').val());
+                count++;
+                $('#goods_count').val(count);
+                $('#total_price').text((order_info.price * count).toFixed(2));
+                $('#shold_to_pay').text(((order_info.price * count) - coupon.price).toFixed(2));
+            }
+        }
+
+
+        //初始化订单商品信息
+        function InitOrderData() {
+            //alert(order_info.price.toFixed(2));
+            $('#order_goods_title').text(order_info.gname);
+            $('#total_price').text(order_info.price);
+            $('#shold_to_pay').text(order_info.price);
+        }
+
+        /**
+        * 初始化优惠券信息
+        */
+        function initCoupon() {
+            common.post("/Client/OrderConfirm/LoadCoupons", {
+                gid: order_info.gid,
+            },
+                function (r) {
+                    var htm = template("coupon_template", { list: r.Data });
+                    $(".coupon_list ul").html(htm);
+                    //绑定选择优惠券事件
+                    $('.coupon_list ul li input').on("click", chouseCoupon);
+                }, function (r) {
+                    alert(r.Msg);
+                });
+        }
+        
+          
+        /**
+        * 选择优惠券
+        */
+        function chouseCoupon(obj) {
+            obj = $(obj.target);
+            $(".coupon_choice").hide();
+            //使用优惠券的条件价格
+            var top = parseFloat($(obj).attr("data-top"));
+            //优惠券的价格
+            var p = parseFloat($(obj).attr("data-p"));
+            //订单的总价
+            var yfp = parseFloat($('#total_price').text());
+
+            if (yfp >= top) {
+                if (yfp > p) {//满足条件
+                    $('#coupon_selected i').text($(obj).attr("data-title"));//设置优惠券标题
+                    $('#shold_to_pay').text((yfp - p).toFixed(2));//设置优惠后价格
+                
+                    window.CountAndPrice.couponid = $(obj).attr("data-id");//优惠卷ID 
+                    window.CountAndPrice.coupon = p;//优惠卷的价格
+                    window.CountAndPrice.top = top;//优惠卷的使用条件
+                }
+                else {//不满足条件
+                    alert('优惠卷的价格不能超过支付价格!', null, 500);
+                }
+            }
+            else {
+                alert('该优惠券不满足使用条件!', null, 500);
+            }
+        }
+
+
+        /*******/
+        /*生成订单数据
+        /*******/
+        function MakeOrder() {
+            if (Valiate()) {
+                state = false;//防止重复点击
+                //生成订单
+                common.post("/Client/OrderConfirm/MakeOrder",
+                    {
+                        sReceiver: $('#client_name').val(),
+                        sReceiverPhone: $('#client_mobile_number').val(),
+                        iOriginalTotalPrice: $('#total_price').text(),//订单总金额
+                        iTotalPrice: $('#shold_to_pay').text(),//实际支付金额
+                        stime: window.timeData.stime,//选择的开始时间
+                        etime: window.timeData.etime,//选择的结束时间
+                        gid: order_info.gid,//商品ID
+                        gtype:order_info.gtype,//商品类型
+                        count: $('#goods_count').val()||1,//商品数量
+                        sCouponID: window.CountAndPrice.couponid,//选择的优惠券
+                        sDescribe: $('#order_remark').val()//订单备注
+                    },
+                    function (r)//返回成功的处理
+                    {
+                        //缓存订单支付所需要的数据
+                        common.setStorageItem("_PayData",
+                            {
+                                sOrderId: r.Data.sOrderId,//订单ID
+                                sOrderNo: r.Data.sOrderNo,//订单编号
+                                iTotalPrice: $('#shold_to_pay').text(),//实际支付金额,
+                                sGoodsName:order_info.gname//商品名称
+                            });
+                        alert("正在跳转支付....",null,10000);
+                        location.href = "/Client/Pay/Index";//跳转支付页面
+                    },
+                    function (r) {//返回失败的处理
+                        alert(r.Msg, null, 1000);
+                        state = true;//恢复点击
+                    });
+            }
+        }
+
+        //验证数据
+        function Valiate() {
+            //数据的格式验证
+            var sReceiver = $('#client_name').val();
+            if (sReceiver.length == 0) {
+                alert("请填写姓名", null, 500);
+                return false;
+            }
+            if (sReceiver.length>6) {
+                alert("姓名不能超过6个字!", null, 500);
+                return false;
+            }
+            var sReceiverPhone = $('#client_mobile_number').val();
+            if (sReceiverPhone.length == 0) {
+                alert("请填写手机号码", null, 500);
+                return false;
+            }
+            if (!common.isMobilePhone(sReceiverPhone)) {
+                alert("手机格式错误!", null, 500);
+                return false;
+            }
+            //数据逻辑验证
+            if (order_info.gtype <= 2) {
+                if (order_info.gtype == 1)
+                {//商品类型为客房
+                    if (window.timeData.stime == "" || window.timeData.etime == "") {
+                        alert("请选择住房时间!", null, 1000);
+                        return false;
+                    }
+                }
+                else
+                {//商品类型为票务
+                    if (window.timeData.stime == "" || window.timeData.etime == "") {
+                        alert("请选择票务的时间!", null, 1000);
+                        return false;
+                    }
+                }
+            }
+            var money=parseFloat($('#shold_to_pay').text());
+            if(money<=0){
+                alert("支付金额错误!", null, 1000);
+                return false;
+            }
+            return true;
+        }
+
+
+        //绑定事件
+        function bingEvent() {
+            //弹出优惠券选择框
+            $('#coupon_selected').on("click", function () {
+                $('.coupon_choice').show();
+                $('body').css({ 'position': 'relative', 'width': '100%', 'height': '100%', 'top': '0', 'left': '0' });
+            });
+            //关闭优惠券选择框
+            $(".ml_del").click(function () {
+                $(".coupon_choice").hide();
+                $('body').css({ 'position': 'static', 'width': '100%', 'height': 'auto', 'top': '0', 'left': '0' });
+            });
+
+            //不使用优惠券按钮绑定事件
+            $(".coupon_list .close span").click(function () {
+
+                //清空优惠卷信息
+                window.CountAndPrice.coupon = 0,//优惠卷价格
+                window.CountAndPrice.top = 0,//优惠卷的使用条件
+                window.CountAndPrice.couponid = null//优惠卷ID
+                //重新计算价格
+                $('#total_price').text((window.CountAndPrice.price * window.CountAndPrice.count).toFixed(2));
+                $('#shold_to_pay').text((window.CountAndPrice.price * window.CountAndPrice.count).toFixed(2));
+
+                $(this).parents(".coupon_choice").hide();
+                $('#coupon_selected i').text('不使用优惠券');
+            });
+
+        
+            //绑定支付单击事件
+            $('.payNowBtn').on("click", function () {
+                if (state) {
+                    MakeOrder();
+                }
+            });
+
+        }
+
+        return {
+            InitOrderData: InitOrderData,
+            initCoupon: initCoupon,
+            bingEvent: bingEvent,
+            initDom: initDom
+        }
+
+    }));
+
+    $('.w-click').click(function () {
+        if ($('#data').css('display') == 'line') {
+            $('.w-adddd').html('');
+        } else if ($('#data').css('display') == 'none') {
+            $('.w-adddd').html('选择日期');
+        }
+    });
+</script>

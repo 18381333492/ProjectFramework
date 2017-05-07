@@ -1,0 +1,31 @@
+﻿
+<script src="~/Areas/Admin/Scripts/SharePoster/Index.js"></script>
+<form id="share_poster_form">
+    <table style="text-align:center">
+        <tr>
+            <td>
+                海报模板:
+               
+                <input type="hidden" id="share_poster_idCardImges" name="sImagePath" />
+            </td>
+            <td>
+                <div id="share_poster_Imges_upload" class="uploader">
+                    <div class="queueList">
+                        <div id="dndArea" class="placeholder">
+                            <div id="filePicker"></div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="button" value="保存" id="sava_share_poster" /></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                注：文件不超过1M,<br />
+                尺寸不得小于530x918，否则将导致无法生成海报
+            </td>
+        </tr>
+    </table>
+</form>

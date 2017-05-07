@@ -1,0 +1,204 @@
+﻿<link href="~/scripts/plug-in/date/laydate-master/need/laydate.css" rel="stylesheet" />
+<link href="~/scripts/plug-in/date/laydate-master/skins/molv/laydate.css" rel="stylesheet" />
+<script src="~/scripts/plug-in/date/laydate-master/laydate.dev.js"></script>
+<!--销售金额统计-->
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px;">
+    <form id="sales_domain_form" style="width:100%;height:100%" ;>
+        <div id="sales_domain_grid_tool" style="padding:15px;">
+            <a time="-1" class="easyui-linkbutton  time" data-options="iconCls:'icon-sum'">全部</a>
+            <a time="0" class="easyui-linkbutton  time" data-options="iconCls:'icon-sum'">今日</a>
+            <a time="1" class="easyui-linkbutton  time" data-options="iconCls:'icon-sum'">昨日</a>
+            <a time="7" class="easyui-linkbutton  time" data-options="iconCls:'icon-sum'">最近一周</a>
+            <a time="30" class="easyui-linkbutton  time" data-options="iconCls:'icon-sum'">最近一月</a>
+            <span>其他时间</span>
+            <input id="SedStartTime" name="dStartTime" onclick="laydate({ istime: true })" class="textbox" style="height:25px;" readonly="readonly">--
+            <input  id="SedEndTime" name="dEndTime" onclick="laydate({ istime: true })" class="textbox" style="height:25px;" readonly="readonly">
+            &nbsp;&nbsp;
+            <input class="easyui-textbox" name="sKeyWord" data-options="iconCls:'icon-search',prompt:'商品名称'" style="width:150px">
+            <a id="search_sales" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜 索</a>
+            <br /><br />
+            <span>总销量:</span><span id="SalesCount"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>总销售金额:￥</span><span id="SalesMoney"></span>
+        </div>
+        <table id="sales_datagrid"></table>
+    </form>
+</div>
+<!-- //用户类型 0：平台用户，1：店铺，2：合伙人-->
+<input type="hidden" id="tUserType" value="@ViewBag.tUserType" />
+<script type="text/javascript">
+    $(function () {
+        modules.get(enums.Modules.CACHE).setMenuDomain("销售金额统计", new function () {
+            var eui = modules.get(enums.Modules.JQUERY_EASYUI);
+            var f = modules.get(enums.Modules.FUNC);
+            var grid = $("#sales_datagrid");
+            var tUserType = Number($('#tUserType').val());
+            var time = null;
+
+            /**
+            * 销售金额数据的搜索
+            */
+            $('#search_sales').click(function () {
+                time = {
+                    "dStartTime": $('#SedStartTime').val(),
+                    "dEndTime": $('#SedEndTime').val()
+                }
+                grid.datagrid('getPager').pagination("select");
+            });
+
+            //时间段查询
+            $('#sales_domain_form .time').click(function () {
+                var day = Number($(this).attr("time"));
+                var now = new Date();
+                if (day == 0) {//今天
+                    time = {
+                        "dStartTime": new Date().toLocaleDateString() + " 00:00:00",
+                        "dEndTime": new Date().toLocaleDateString() + " 23:59:59"
+                    }
+                }
+                if (day == 1) {//昨天    
+                    time = {
+                        "dStartTime": new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000).toLocaleDateString() + " 00:00:00",
+                        "dEndTime": new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000).toLocaleDateString() + " 23:59:59"
+                    }
+                }
+                if (day == 7) {//最近一周
+                    var week = now.getDay();//(星期为1234560)
+                    if (week != 0) {
+                        time = {
+                            "dStartTime": new Date(now.getTime() - (week - 1) * 24 * 60 * 60 * 1000).toLocaleDateString() + " 00:00:00",
+                            "dEndTime": new Date(now.getTime() - (week - 7) * 24 * 60 * 60 * 1000).toLocaleDateString() + " 23:59:59",
+                        }
+                    }
+                    else {
+                        time = {
+                            "dStartTime": new Date((now.getTime() - 6 * 24 * 60 * 60 * 1000)).toLocaleDateString() + " 00:00:00",
+                            "dEndTime": new Date().toLocaleDateString() + " 23:59:59",
+                        }
+                    }
+                }
+                if (day == 30) {//最近一个月
+                    var year = now.getFullYear();
+                    var month = now.getMonth();
+                    time = {
+                        "dStartTime": new Date(year, month, 1).toLocaleDateString() + " 00:00:00",
+                        "dEndTime": new Date(year, month + 1, 0).toLocaleDateString() + " 23:59:59",
+                    }
+                }
+                if (day == -1) {//全部
+                    time = {
+                        "dStartTime": "",
+                        "dEndTime": "",
+                    }
+                }
+                grid.datagrid('getPager').pagination("select");
+            });
+
+            /*
+             * 加载销售单数和金额
+             */
+            function LoadSalesNumAndPrices(data) {
+                var array = data.split(',');
+                $('#SalesCount').text(array[0]||0);
+                $('#SalesMoney').text(array[1]||0);
+            }
+
+            /**
+             * 载入销售金额数据数据列表
+             * param {Number} pageNumber 页码
+             * param {Number} pageSize 每页显示条数
+             */
+            function LoadSales(pageNumber, pageSize) {
+                try {
+                    var param = $("#sales_domain_form").serializeObject();
+                    /**
+                     *默认取一个月的数据*
+                    **/
+                    var year = new Date().getFullYear();
+                    var month = new Date().getMonth();
+                    param.dStartTime = new Date(year, month, 1).toLocaleDateString() + " 00:00:00";
+                    param.dEndTime = new Date(year, month + 1, 0).toLocaleDateString() + " 23:59:59";
+                    if (time) {
+                        param.dStartTime = time.dStartTime;
+                        param.dEndTime = time.dEndTime;
+                    }
+                    param.PageIndex/*当前页码*/ = pageNumber;
+                    param.pageSize/*每页显示条数*/ = pageSize;
+                    f.post("/Admin/CountAnalysis/SalesList", param, function (r) {
+                        LoadSalesNumAndPrices(r.Msg);
+                        grid.datagrid("loadData", r.Data.Result);
+                        grid.datagrid("getPager").pagination({
+                            pageNumber: pageNumber,
+                            pageSize: pageSize,
+                            total: r.Data.MaxCount
+                        });
+                    }, function (r) {
+                        eui.alertErr(r.Msg);
+                    });
+                } catch (e) {
+                    eui.alertErr(e.message);
+                }
+            }
+
+            /**
+             * 初始化grid数据
+             */
+            function initData() {
+                columns = [
+                      //{ field: 'checkbox', checkbox: true },
+                      { field: 'sGoodsName', title: '商品名称', align: 'center', width: 180 },
+                      {
+                          field: 'sGoodsCategory', title: '商品分类', align: 'center', width: 150, formatter: function (value) {
+                              switch (value) {
+                                  case 1:
+                                      return "客房";
+                                  case 2:
+                                      return "票务";
+                                  case 3:
+                                      return "周边";
+                                  default:
+                                      break;
+                              }
+                          }
+                      },
+                      { field: 'iAmount', title: '已售数量', align: 'center', width: 150 },
+                      { field: 'iTotalPrice', title: '累计金额', align: 'center', width: 100 },
+                ];
+                if (tUserType != 1) { //总后台和合伙人后台
+                    columns.splice(2, 0, { field: 'sShopName', title: '店铺名称', align: 'center', width: 100 })
+                }
+                eui.bindPaginationEvent(grid, {
+                    idField: "ID",
+                    loadMsg: "正在加载...",
+                    toolbar: "#sales_domain_grid_tool",
+                    fit: true,
+                    fitColumns: true,
+                    pagination: true,
+                    rownumbers: true,
+                    columns: [columns],
+                    onLoadSuccess: function () {
+                        $(".datagrid-header-check input[type=checkbox]").remove();
+                    },
+                }, LoadSales).pagination("select");
+            }
+
+            //执行数据绑定
+            try {
+                initData();
+               // initEvent();
+            } catch (e) {
+                eui.alertErr(e.message);
+            }
+
+
+            /**
+             * 资源的释放
+             */
+            function destroy(){
+            }
+
+            return {
+                destroy: destroy
+            }
+        });
+    });
+</script>

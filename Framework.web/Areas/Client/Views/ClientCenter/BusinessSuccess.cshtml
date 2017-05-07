@@ -1,0 +1,134 @@
+﻿
+@{
+    string title = string.Empty;
+    if (Model == null)
+    {
+        title = "申请成功";
+    }
+    if (Model == 0) {
+        title = "申请审核中";
+    }
+    if (Model == 1) {
+        title = "已是商家";
+    }
+    if (Model == 2) { title = "申请审核失败"; }
+
+            }
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>@title</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+
+</head>
+<body>
+    <div class="paysuccess">
+       
+        <!--0 - 未通过 1 - 已通过 2 - 拒绝-->
+        @if (Model == null)
+            {
+            <img src="~/Areas/Client/Content/images/slice/ok.png" alt="商户入驻成功" />
+            <p>申请成功！</p>
+            <div class="turnperson  co333 fz13" style="max-width:180px;">
+                请等待审核<br />【友客分享】期待与您的合作<br />
+                <span id="time">3</span>S后跳转至<a href="/Client/ClientCenter/Index">个人中心</a>
+            </div>
+        }
+        @if (Model == 0)
+        {
+            <img src="~/Areas/Client/Content/images/slice/ok.png" alt="商户入驻成功" />
+            <p>申请审核中！</p>
+            <div class="turnperson  co333 fz13" style="max-width:180px;">
+                请等待审核<br />【友客分享】期待与您的合作<br />
+                <span id="time">3</span>S后跳转至<a href="/Client/ClientCenter/Index">个人中心</a>
+            </div>
+        }
+        @if (Model == 1)
+        {
+            <img src="~/Areas/Client/Content/images/slice/ok.png" alt="商户入驻成功" />
+            <p>已是商家！</p>
+            <div class="turnperson  co333 fz13" style="max-width:180px;">
+                【友客分享】商家
+                <span id="time">3</span>S后跳转至<a href="/Client/ClientCenter/Index">个人中心</a>
+            </div>
+        }
+        @if (Model == 2)
+        {
+            <img src = "/Areas/Client/Content/images/loser.png" alt="商户入驻失败"/>
+            <p>申请审核失败！</p>
+            <div class="turnperson  co333 fz13" style="max-width:180px;">
+                <a href="/Client/ClientCenter/Business?New=1">重新申请</a>
+            </div>
+        }
+    </div>
+    <input type="hidden" id="Model" value="@Model" />
+</body>
+</html>
+<script src="~/scripts/lib/client.common.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var model = $("#Model").val();
+        if (model != 2) {
+            scope.countDown();
+        }
+    });
+
+    var scope = (function (obj) { return obj; })(new function () {
+
+        var i = 3;
+        var time;
+
+        /*3s计时器*/
+        function countDown() {
+            $('#time').text(i);
+            if (i == 0) {
+                location.href = "/Client/ClientCenter/Index";
+                clearTimeout(time);
+            } else {
+                time = setTimeout(countDown, 1000);
+            }
+            i--;
+        }
+
+        return {
+            countDown: countDown
+            }
+    });
+</script>

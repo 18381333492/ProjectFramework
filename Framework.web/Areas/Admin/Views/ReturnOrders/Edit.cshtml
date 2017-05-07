@@ -1,0 +1,31 @@
+﻿<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form style="width:99%;height:99%;" id="return_order_manager_edit_form">
+        <input type="hidden" name="ID" id="return_order_manager_edit_ID" />
+        <table class="styletable" style="height:100%">
+            <tbody>
+                <tr>
+                    <td>退款编号：</td>
+                    <td id="return_order_manager_td_number"></td>
+                </tr>
+                <tr>
+                    <td>更改状态：</td>
+                    <td>
+                        <!--0- 退款审核中，1 -接受申请，2 - 退款成功，3 - 拒绝退款-->
+                        <select name="iState" id="return_order_manager_edit_select" class="easyui-combobox" style="width:100px;" data-options="panelHeight:'auto'">
+                            <option value="0">退款审核中</option>
+                            <option value="1">接受申请</option>
+                            <option value="2">退款成功</option>
+                            <option value="3">拒绝退款</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>备注信息：</td>
+                    <td><textarea id="return_order_manager_edit_sRemark" name="sRemark" rows="10" cols="30"></textarea></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>

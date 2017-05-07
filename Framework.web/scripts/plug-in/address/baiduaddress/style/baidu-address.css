@@ -1,0 +1,51 @@
+﻿
+.select_address {
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    height: 23px;
+    width:130px;
+    border: 1px solid #D4D4D4;
+    background-color: #fff;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+#select_ctrs {
+    padding: 15px;
+}
+
+.address_text {
+    position: relative;
+    border: 1px solid #D4D4D4;
+    background-color: #fff;
+    vertical-align: middle;
+    display: inline-block;
+    height: 20px;
+    width:260px;
+    white-space: nowrap;
+    margin: 0;
+    padding: 0;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+}
+
+.map_container {
+    border-top: 1px solid #D4D4D4;    
+    min-height: 300px;
+    max-height: 380px;
+    min-width: 450px;
+    max-width: 650px;
+    /*-moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;*/
+}
+
+.ctrl_container {
+    border: 1px solid #D4D4D4;
+    max-width: 650px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+}

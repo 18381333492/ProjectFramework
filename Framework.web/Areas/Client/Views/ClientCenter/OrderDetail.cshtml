@@ -1,0 +1,325 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>订单详情</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+</head>
+<body id="OrderData" class="bg-f2f2f2">
+    <script type="text/html" id="OrderDetail">
+    <div id="order-del">
+        {{if iState!=0}}
+        <div class="code bg-fff">
+            <div id="code">@*<img src="/Areas/Client/Content/images/barcode.png" />*@</div>
+            <p class="text-center mt2r fc-666">电子码:<span class="fs-16">{{code}}</span></p>
+        </div>
+        {{/if}}
+        <div class="del bg-fff mt1r">
+            <div class="df"><span class="df1 fc-999">订单号</span><span class="df4 fc-333 fs-16">{{sOrderNo}}</span>
+             {{if iState==0}}
+            <span class="style t50 fc-fe8285">待付款</span>
+             {{/if}}
+             {{if iState==1}}
+                <span class="style t50 fc-fe8285">待使用</span>
+             {{/if}}
+             {{if iState==2}}
+                <span class="style t50 fc-fe8285">已核销</span>
+             {{/if}}
+            <!--维权订单-->
+             {{if iState==3}}
+                       {{if returnState==0}}
+                       <span class="style t50 fc-fe8285">退款审核中</span>
+                       {{/if}}
+                       {{if returnState==1}}
+                        <span class="style t50 fc-fe8285">接受申请</span>
+                       {{/if}}
+                       {{if returnState==2}}
+                        <span class="style t50 fc-fe8285">退款成功</span>
+                       {{/if}}
+                       {{if returnState==3}}
+                       <span class="style t50 fc-fe8285">拒绝退款</span>
+                       {{/if}}
+             {{/if}}
+            </div>
+            <div class="df"><span class="df1 fc-999">下单时间</span><span class="df4 fc-333 fs-16">{{dBookTime}}</span></div>
+            {{if iState!=0}}
+            <div class="df"><span class="df1 fc-999">付款时间</span><span class="df4 fc-333 fs-16">{{dPayTime}}</span></div>
+            {{/if}}
+            {{if iState==2}}
+            <div class="df"><span class="df1 fc-999">核销时间</span><span class="df4 fc-333 fs-16">{{dFinishTime}}</span></div>
+            {{/if}}
+            <div class="df"><span class="df1 fc-999">姓名</span><span class="df4 fc-333">{{sReceiver}}</span></div>
+            <div class="df"><span class="df1 fc-999">手机号</span><span class="df4 fc-333 fs-16">{{sReceiverPhone}}</span></div>
+        </div>
+        <div class="order_center bg-fff padtb">
+            <div id="{{ID}}" class="order_pred flex_dom flex_item_stretch">
+                <a href="javascript:;" class="pred_img wid2rem" sOrder="{{ID}}">
+                    <span>
+                        <img src="{{sGoodsPictures}}">
+                    </span>
+                </a>
+                <div class="pred_con  p_relative flex_1">
+                    <h4 class="l-h-04rem fs-14 text-ellipsis-2line fc-333"><span>{{sGoodsName}}</span></h4>
+                    <a href="javascript:;" class="car-store"><span class="bg"></span><span class="ml2r fc-000">{{sShopName}}</span></a>
+                    {{if iType==0}}
+                    <div class="l-h-03rem mt2r fc-999"><span class="fs-16">{{dStartTime}}-{{sEndTime}}</span><span class="ml2r">共{{Day}}晚</span></div>
+                    {{/if}}
+                    {{if iType==1}}
+                    <div class="l-h-03rem mt2r fc-999"><span class="fs-16">{{dStartTime}}</span><span class="ml2r">X{{iAmount}}</span></div>
+                    {{/if}}
+                    {{if iType==2}}
+                    <div class="l-h-03rem mt2r fc-999"><span class="fs-16">X{{iAmount}}</span></div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        <div class="user bg-fff mt1r">
+            <div class="df"><span class="df1 fc-999">优惠券</span>
+             {{if Coupon==1}}
+                <span class="df4 fc-333">
+                    满{{iUsePrice}}减{{iCoiCouponPrice}}
+                </span>
+            {{/if}}
+            {{if Coupon==0}}
+            <span class="df4 fc-333"> 
+                无
+            </span>
+             {{/if}}
+            </div>
+            <div class="df"><span class="df1 fc-999">订单备注</span><span class="df4 fc-333">{{sDescribe}}</span></div>
+        </div>
+    </div>
+    <div id="sum" class="bg-fff">
+        <span>总计:</span><span class="fc-fe8285 fs-16 ml1r">&yen;{{iTotalPrice}}</span>
+        <div class="btn fr">
+            {{if iState==0}}
+            <a href="javascript:;" class="ml1r fc-fe8285 OrderCancel" data-sOrderId="{{ID}}">取消订单</a>
+            <a href="javascript:;" class="ml1r bg-fe8285 fc-fff PayMoney">去付款</a>
+            {{/if}}
+            {{if iState==1}}
+            <a href="javascript:;" class="ml1r fc-fe8285 OrderReturn" data-sOrderId="{{ID}}">退款</a>
+            {{/if}}
+            {{if iState==2}}
+                {{if IsAppraise==0}}
+                 <a href="javascript:;" class="ml1r bg-fe8285 fc-fff order_pingjia" parent="{{ID}}">待评价</a>
+                {{/if}}
+                {{if IsAppraise>0}}
+                <a href="/Client/ClientCenter/CheckAppraise?sOrderId={{ID}}" class="ml1r bg-fe8285 fc-fff">查看评价</a>
+                {{/if}}
+            {{/if}}
+        </div>
+    </div>
+    </script>
+    <input type="hidden" id="ID" value="@ViewBag.ID" />
+</body>
+</html>
+<script src="~/scripts/lib/template.js"></script>
+<script src="~/scripts/lib/client.common.js"></script>
+<script src="~/scripts/plug-in/qrcode/jquery.qrcode.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var ID = $('#ID').val();
+        scope.LoadOrderDetail(ID);
+    });
+
+
+    var scope = (function (obj) { return obj; })(new function () {
+
+        var sGoodsId;
+
+        //电子码的加密处理
+        function CodeSec(sOrderNo) {
+            var array = sOrderNo+"0";
+            var newArray = [];
+            for (var i = 0; i < array.length; i++) {
+                if (i % 2 == 1) {
+                    newArray.push(array[i - 1]);
+                }
+                else {
+                    newArray.push(array[i+1]);
+                }
+            }
+            return newArray.join('');
+        }
+
+        //电子码的解密处理
+        function CodeThd(sOrderNo) {
+            var array = sOrderNo;
+            var newArray = [];
+            for (var i = 0; i < array.length; i++) {
+                if (i % 2 == 1) {
+                    newArray.push(array[i - 1]);
+                }
+                else {
+                    newArray.push(array[i + 1]);
+                }
+            }
+            return newArray.join('').substr(0, newArray.length - 1);
+        }
+        /*!
+        * 加载订单详情数据
+        */
+        function LoadOrderDetail(ID) {
+            common.post("/Client/ClientCenter/LoadOrderDetail", { ID: ID }, function (r) {
+                var json = r.Data;
+                json.code = CodeSec(json.sOrderNo);
+              //  json.code = CodeThd(json.code);
+                json.sGoodsPictures = json.sGoodsPictures.split(',')[0]
+                //iType:0客房 1门票 2周边产品
+                if (json.iType == 0) {
+                    var End = new Date(json.sEndTime.replace(/-/g, "/")).getTime();
+                    var Sta = new Date(json.dStartTime.replace(/-/g, "/")).getTime();
+                    json.Day = parseInt(Math.abs(End - Sta) / 1000 / 60 / 60 / 24) + 1;
+                    json.dStartTime = new Date(json.dStartTime.replace(/-/g, "/")).Format("MM/dd");
+                    json.sEndTime =new Date((new Date(json.sEndTime.replace(/-/g, "/")).getTime()+1*24*60*60*1000)).Format("MM/dd");
+                }
+                if (json.iType == 1) {
+                    json.dStartTime = new Date(json.dStartTime.replace(/-/g, "/")).Format("MM/dd");
+                }
+                if (json.iUsePrice == null) {
+                    json.Coupon = 0;
+                }
+                else {
+                    json.Coupon = 1;
+                }
+                sGoodsId = json.sGoodsPrimaryKey;
+                if (json.iState == 0) {
+                    //组装订单支付数据
+                    common.setStorageItem("_PayData",
+                   {
+                       sOrderId: json.ID,//订单ID
+                       sOrderNo: json.sOrderNo,//订单编号
+                       iTotalPrice: json.iTotalPrice,//实际支付金额
+                       sGoodsName: json.sGoodsName//商品名字
+                   });
+                }
+                var html = template("OrderDetail", json);
+                $('#OrderData').html(html);
+                //绑定事件
+                bingEvent();
+                //电子码的生成
+                $("#code").qrcode({
+                    //render: "html",
+                    width: 100, //宽度 
+                    height: 100, //高度 
+                    text: json.code  //任意内容 
+                });
+            });
+        }
+
+        /*!
+         * 订单取消
+         */
+        function OrderCancel(obj) {
+            confirm("确定要取消订单", {
+                text: "确定", fn: function () {
+                    var element = obj.target;
+                    var sOrderId = $(element).attr("data-sOrderId");
+                    common.post("/Client/ClientCenter/OrderCancel", { sOrderId: sOrderId }, function (r) {
+                        alert("取消成功!", null, 1000);
+                        
+
+                    }, function (r) {
+                        alert(r.Msg, null, 1000);
+                    });
+                }
+            }, { text: "取消", fn: function () { return; } });
+
+        }
+
+
+        /*!
+        * 订单退款
+        */
+        function OrderReturn(obj) {
+            var sOrderId = $(obj).attr("data-sOrderId");
+            common.post("/Client/ClientCenter/OrderReturn", { sOrderId: sOrderId }, function (r) {
+                alert('申请退款成功!', null, 1000);
+                setTimeout(function () {
+                    setTimeout(function () {
+                        location.href = "/Client/ClientCenter/Order?iState=3";
+                    }, 1000);
+                }, 1000)
+            }, function (r) {
+                alert(r.Msg, null, 1000);
+            });
+        }
+
+
+
+        /**!
+         * 绑定事件
+         */
+        function bingEvent() {
+            //评价
+            $('.order_pingjia').on("click", function () {
+                var element = $('#' + $(this).attr("parent"));
+                var html = $(element).html();
+                common.setStorageItem("order_html", { html: html });
+                location.href = "/Client/ClientCenter/OrderAppraise";
+            });
+
+            //绑定订单取消事件
+            $('.OrderCancel').on("click", OrderCancel);
+            //绑定订单退款事件
+            $('.OrderReturn').on("click", function () {
+                var $this = $(this);
+                confirm("确定退款吗?", { text: "是", fn: function () { OrderReturn($this) } }, { text: "否", fn: null });
+            });
+
+            //跳转商品详情页面
+            $('.order_center').on("click", function () {
+                location.href = "/Client/ShopHome/RoomDetail?ID=" + sGoodsId;
+            })
+
+            //绑定跳转支付页面
+            $('.PayMoney').on("click", function () {
+                alert("支付页面跳转中.....", null, 5000);
+                location.href = "/Client/Pay/Index";//跳转支付页面
+            })
+
+        }
+
+        return {
+            LoadOrderDetail: LoadOrderDetail,
+        }
+
+    });
+</script>

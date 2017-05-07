@@ -1,0 +1,24 @@
+﻿<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form id="addMessage" style="width:100%;height:100%">
+        <table class="styletable">
+            <tr>
+                <td>收件人</td>
+                <td><label><input  type="radio" value="1" checked="checked"  name="choseVip"/>全部会员</label>
+                    <label><input type="radio" value="2"   name="choseVip"/>全部分享客</label>
+                </td>
+            </tr>
+            <tr>
+                <td>短信内容</td>
+                <td style="width:100%;height:270px">
+                    <textarea  style="width:100%;height:270px" id="sed_sMessage_Content"></textarea>
+                    @*<input type="text" style="width:600px;height:300px" id="sMessageContent"/>*@
+                  
+                </td>
+            </tr>
+        </table>
+
+    </form>
+</div>
+

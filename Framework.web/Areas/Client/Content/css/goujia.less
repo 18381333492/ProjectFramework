@@ -1,0 +1,1590 @@
+@charset "utf-8";
+@import "MrG_lib";
+
+/*****seckillArea*/
+.seckillArea{
+  width: 100%;
+  height: 100%;
+  padding:0 0.18rem  0.26rem 0.18rem;
+  .seckillArea-eachBox{
+    width: 100%;
+    margin-top: 0.2rem;
+    background-color: #f7f7f7;
+    .seckillArea-eachBox-left{
+      width: 2.9rem;
+      position: relative;
+      float: left;
+      height: 2.5rem;
+      padding: 0.3rem 0 0.2rem 0.2rem;
+      .left-floor1{
+        width: 100%;
+        line-height: 0.38rem;
+        .Gfont(14px,black);
+      }
+      .piceBox{
+        width: 100%;
+        .Gfont(14px,#fe8285);
+        line-height: 0.3rem;
+        margin-top: 4px;
+      }
+      .oldPice{
+        width: 100%;
+        margin-top: 2px;
+        .Gfont(12px,#aeaeae);
+        line-height: 0.24rem;
+      }
+      .redBoxPice{
+        width: 2.2rem;
+        position: absolute;
+        .Gfont(12px,white);
+        left: -0.09rem;
+        line-height: 0.36rem;
+        bottom: 0.3rem;
+        height:0.43rem;
+        background-image: url("../images/piceRedbox.png");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        padding-left: 0.29rem;
+      }
+    }
+    .seckillImage{
+      float: right;
+      width: 2.9rem;
+      height: 2.5rem;
+    }
+    &:after{
+      display: block;
+      content: "";
+      clear:both;
+    }
+  }
+}
+//turn IMg
+.turnImg{
+  width: 100%;
+  position: relative;
+  .image{
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .dingwei{
+    position: absolute;
+    left: 5.3rem;
+    bottom: 0px;
+  }
+  .swiper-pagination{
+    .Gfont(18px,white);
+    width: 50px;
+  }
+}
+/********************romeIn*/
+.romeIn{
+  width: 100%;
+  padding-bottom: 0.7rem;
+  .romeIn-headers{
+    height: 0.7rem;
+    background-color: #1f1e1e;
+    position: relative;
+    .whiteStar{
+      width: 0.42rem;
+      height: 0.39rem;
+      float: right;
+      margin-right: 0.21rem;
+    }
+    .shuxian{
+      height: 0.36rem;
+      border-left: 1px solid white;
+      float: right;
+      margin: 0.08rem 0.3rem;
+    }
+    .whiteHouse{
+      width: 0.41rem;
+      height: 0.4rem;
+      float: right;
+    }
+    .abs{
+      position: absolute;
+      top: 50%;
+      .Gmiddle-y;
+      right: 0.19rem;
+    }
+  }
+
+
+
+  .romName{
+    width: 100%;
+    padding: 0.12rem 0.18rem;
+    .romName-content{
+      width: 100%;
+      border-bottom: 1px solid #eeeeee;
+      .romName-name{
+        .Gfont(16px,#fe8285);
+        line-height: 0.48rem;
+        .oldpice{
+          .Gfont(13px,#999999);
+          text-decoration: line-through;
+          margin-right: 6px;
+        }
+      }
+      .orderSurnTip{
+        line-height: 0.48rem;
+        .Gfont(12px,black);
+        height: 0.48rem;
+        img{
+          width: 0.2rem;
+          height: 0.2rem;
+          vertical-align: middle;
+          margin-right: 7px;
+        }
+      }
+    }
+  }
+  .grayline{
+    border-bottom: 1px solid #eeeeee;
+  }
+  .romTip{
+    width: 100%;
+    height: 0.86rem;
+    line-height: 0.86rem;
+    text-align: center;
+    .Gfont(14px,black);
+    .romTip-xian{
+      display: inline-block;
+      height: 0px;
+      width: 0.44rem;
+      border-top: 1px solid black;
+      vertical-align: middle;
+    }
+  }
+
+  .serveBox{
+    width: 100%;
+    padding:0 0.5rem;
+    display: flex;
+    overflow: hidden;
+    //height: 2rem;
+    display: -webkit-flex;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+    flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    .serve-smallbox{
+      width: 1.1rem;
+      margin-top: 0.22rem;
+      min-width: 25%;
+      .ImgBox{
+        width: 100%;
+        height: 0.52rem;
+        img{
+          display: block;
+          margin: 0px auto;
+        }
+        .img1{
+          width: 0.6rem;
+          height: 0.4rem;
+        }
+        .img2{
+          width: 0.69rem;
+          height: 0.4rem;
+        }
+        .img3{
+          width: 0.44rem;
+          height: 0.4rem;
+        }
+        .img4{
+          width: 0.68rem;
+          height: 0.38rem;
+        }
+        .img5{
+          width: 0.25rem;
+          height: 0.4rem;
+        }
+        .img6{
+          width: 0.38rem;
+          height: 0.4rem;
+        }
+        .img7{
+          width: 0.35rem;
+          height: 0.4rem;
+        }
+        .img8{
+          width: 0.41rem;
+          height: 0.4rem;
+        }
+      }
+      .serveName{
+        .Gfont(12px,#adadad);
+        text-align: center;
+        line-height: 14px;
+      }
+    }
+  }
+
+  .allBtn{
+    width: 100%;
+    height: 0.8rem;
+    padding: 0px 0.18rem;
+    .inallBtn{
+      line-height: 0.8rem;
+      text-align: center;
+      border-bottom: 1px solid #eeeeee;
+      .Gfont(12px,#666666);
+
+      img{
+        width: 0.14rem;
+        height: 0.09rem;
+        vertical-align: middle;
+      }
+    }
+  }
+  .scoreBox{
+    width: 100%;
+    padding: 0.38rem 0.18rem 0;
+    .scoreAndTalk{
+      height: 1rem;
+      position: relative;
+      .scoreAndTalk-content{
+        position: absolute;
+        .Gmiddle-x;
+        &:after{
+          content: "";
+          display: block;
+          clear: both;
+        }
+        .score-box{
+          //width: 0.74rem;
+          float: left;
+          text-align: center;
+          .score{
+            .Gfont(22px,black);
+            line-height: 22px;
+          }
+          .tip{
+            line-height: 14px;
+            .Gfont(12px,black);
+          }
+        }
+        .scoreAndTalk-content-line{
+          width: 0px;
+          margin: 0.07rem 0.32rem 0px;
+          height: 0.36rem;
+          border-left: 1px solid black;
+          float: left;
+        }
+      }
+    }
+  }
+  .talkInform{
+    width: 100%;
+    line-height: 0.58rem;
+    .Gfont(12px,black);
+  }
+  .redAllBtnBox{
+    width: 100%;
+    height: 1.06rem;
+    position: relative;
+    .redAllBtn{
+      width: 1.36rem;
+      height: 0.6rem;
+      border: 1px solid #fc5d5d;
+      text-align: center;
+      line-height: 0.6rem;
+      .Gfont(14px,#fc5d5d);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translateY(-50%) translateX(-50%);
+      -moz-transform: translateY(-50%) translateX(-50%);
+      -ms-transform: translateY(-50%) translateX(-50%);
+      -o-transform: translateY(-50%) translateX(-50%);
+      transform: translateY(-50%) translateX(-50%);
+      border-radius: 50px;
+    }
+  }
+  .ImgAndTalk{
+    width: 100%;
+    background-color: #ffffff;
+    img{
+      display: block;
+      width: 100%;
+      height: 4.3rem;
+    }
+    .talk{
+      width: 100%;
+      padding: 0px 0.18rem;
+      .Gfont(12px,black);
+      line-height: 0.4rem;
+      span{
+        display: block;
+        padding: 0.2rem 0px;
+        border-bottom: 1px solid #eeeeee;
+      }
+    }
+    .footers{
+      width: 100%;
+      height: 0.64rem;
+      position: relative;
+      .contentBox{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 3.6rem;
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -ms-transform: translateX(-50%) translateY(-50%);
+        -o-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        line-height: 12px;
+        a{
+          float: left;
+          .Gfont(12px,#adadad);
+          line-height: 12px;
+        }
+        div{
+          float: left;
+          height: 0.27rem;
+          border-right: 1px solid #adadad;
+          margin: 0px 0.17rem;
+        }
+        &:after{
+          clear: both;
+          content: "";
+          display: block;
+        }
+      }
+    }
+  }
+}
+#footBuyBtn{
+  width: 100%;
+  height: 0.7rem;
+  line-height: 0.7rem;
+  display: block;
+  background-color: #fc7a7e;
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  text-align: center;
+  .Gfont(14px,#ffffff);
+}
+#redPhone{
+  display: block;
+  position: fixed;
+  width: 0.78rem;
+  height: 0.79rem;
+  background-image: url("../images/redPhone.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  top: 60%;
+  left: 0.18rem;
+}
+/*********************goodIn*****/
+.goodIn{
+  width: 100%;
+  padding: 0.5rem 0.18rem 0px;
+  .topStarBox{
+    height: 0.3rem;
+    text-align: center;
+    line-height: 0.3rem;
+    img{
+      vertical-align: middle;
+      width: 0.2rem;
+      height: 0.18rem;
+    }
+  }
+  .scoreAndTalk{
+    height: 1rem;
+    position: relative;
+    margin-top: 0.24rem;
+    border-bottom: 1px solid #eeeeee;
+    .scoreAndTalk-content{
+      position: absolute;
+      .Gmiddle-x;
+      &:after{
+        content: "";
+        display: block;
+        clear: both;
+      }
+      .score-box{
+        //width: 0.74rem;
+        float: left;
+        text-align: center;
+        .score{
+          .Gfont(22px,black);
+          line-height: 22px;
+        }
+        .tip{
+          line-height: 14px;
+          .Gfont(12px,black);
+        }
+      }
+      .scoreAndTalk-content-line{
+        width: 0px;
+        margin: 0.07rem 0.32rem 0px;
+        height: 0.36rem;
+        border-left: 1px solid black;
+        float: left;
+      }
+    }
+  }
+  .goodInBox{
+    width: 100%;
+   .goodInBox-smallbox{
+     width: 100%;
+     padding: 0.3rem 0px;
+     .headerImg{
+       float: left;
+       width: 0.7rem;
+       height: 0.7rem;
+       border-radius: 100%;
+     }
+     .goodInBox-smallbox-right{
+       width: 5rem;
+       float: right;
+       .starFloor{
+         height: 0.3rem;
+         line-height: 0.3rem;
+         img{
+           vertical-align: middle;
+           width: 0.2rem;
+           height: 0.18rem;
+         }
+         .scoreBox{
+           .Gfont(12px,black);
+           margin-left: 0.19rem;
+         }
+       }
+       .roomDescribe{
+         width: 100%;
+         line-height: 0.4rem;
+         .Gfont(12px,black);
+       }
+       .talkTime{
+         color: #999999;
+       }
+       .bossReturn{
+         width: 100%;
+         background-color: #f7f7f7;
+         padding: 0px 0.11rem;
+         .bossReturn-floor{
+           width: 100%;
+           line-height: 20px;
+           .Gfont(12px,black);
+         }
+         .bossReturn-content{
+           width: 100%;
+           line-height: 20px;
+           .Gfont(12px,black);
+         }
+         .bossReturn-time{
+           line-height: 20px;
+           .Gfont(12px,#999999);
+         }
+       }
+     }
+     &:after{
+       content: "";
+       display: block;
+       clear: both;
+     }
+   }
+  }
+}
+.grayline{
+  border-bottom: 1px solid #eeeeee;
+}
+.redcolorwords{
+  color: #fe8285;
+}
+.colorwords{
+  color: black;
+}
+/******************************sureRoom****/
+.sureRoom{
+  width: 100%;
+  .sureRoom-tittle{
+    padding: 0.3rem 0.18rem;
+    .Gfont(14px,black);
+    height: 0.9rem;
+    background-color: white;
+    border-bottom: 1px solid #eeeeee;
+  }
+  .margintop10{
+    margin-top: 0.1rem;
+  }
+  .sureRoom-doble{
+    height: 0.9rem;
+    line-height: 0.9rem;
+    padding: 0px 0.18rem;
+    background-color: white;
+    border-bottom: 1px solid #eeeeee;
+    .sureRoom-doble-left{
+      width: 1.2rem;
+      float: left;
+      line-height: 0.9rem;
+      color: #666666;
+    }
+    .sureRoom-dobleright{
+      height: 0.9rem;
+      line-height: 0.3rem;
+      padding: 0.3rem 0px;
+      float: left;
+      width: 4.7rem;
+      position: relative;
+      span{
+        display: block;
+        height: 0.3rem;
+      }
+      .rightLogosss{
+        display: block;
+        position: absolute;
+        right: 0.18rem;
+        width: 0.14rem;
+        height: 0.26rem;
+        .Gmiddle-y;
+      }
+      .addAnd{
+        position: absolute;
+        height: 0.5rem;
+        .Gmiddle-y;
+        left: 0px;
+        height: 0.5rem;
+        .reduce{
+          width: 0.48rem;
+          height: 0.48rem;
+          border: 1px solid #999999;
+          border-top-left-radius: 5px;
+          border-bottom-left-radius: 5px;
+          text-align: center;
+          line-height: 0.48rem;
+          float: left;
+        }
+        .showNo{
+          float: left;
+          width: 0.64rem;
+          height: 0.48rem;
+          text-align: center;
+          line-height: 0.48rem;
+          border-top: 1px solid #999999;
+          border-bottom: 1px solid #999999;
+        }
+        .add{
+          width: 0.48rem;
+          height: 0.48rem;
+          border: 1px solid #999999;
+          border-bottom-right-radius: 5px;
+          border-top-right-radius: 5px;
+          text-align: center;
+          line-height: 0.48rem;
+          float: left;
+        }
+      }
+      .writeName{
+        display: block;
+        width: 100%;
+        height: 0.3rem;
+        line-height: 0.3rem;
+        .Gfont(14px,#dadada);
+      }
+    }
+  }
+  .orderBuff{
+    width: 100%;
+    padding: 0.18rem;
+    background-color: white;
+    &:after{
+      display: block;
+      content: "";
+      clear: both;
+    }
+    .orderBuff-left{
+      width: 1.2rem;
+      float: left;
+      color: #666666;
+      line-height: 0.4rem;
+    }
+    textarea{
+      display: block;
+      float: left;
+      width: 4.5rem;
+      height: 1.7rem;
+      line-height: 0.4rem;
+      .Gfont(14px,#cccccc);
+      resize: none;
+    }
+  }
+  .payNowBtn{
+    display: block;
+    width: 3.08rem;
+    height: 0.69rem;
+    background-image: url("../images/slice/redBtnBottom.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    line-height: 0.6rem;
+    text-align: center;
+    .Gfont(14px,white);
+    margin: 0.3rem auto;
+  }
+}
+
+/*********userHouse**/
+.userHouse{
+  .goodBox{
+    width: 100%;
+    padding: 0.2rem 0.18rem 0px;
+    background-color: white;
+    .goodImg{
+      float:left;
+      width: 1.64rem;
+      height: 1.64rem;
+    }
+    .goodBox-content{
+      padding-bottom: 0.18rem;
+      border-bottom: 1px dashed #dddddd;
+      &:after{
+        content: "";
+        display: block;
+        clear: both;
+      }
+    }
+    .goodBox-right{
+      width: 4.1rem;
+      float: right;
+      .goodName{
+        line-height: 20px;
+        .Gfont(14px,black);
+      }
+      .goodTime{
+        line-height: 0.56rem;
+        .Gfont(12px,#999999);
+      }
+    }
+    &:after{
+      content: "";
+      display: block;
+      clear: both;
+    }
+  }
+  .starArea{
+    width: 100%;
+    height:0.9rem;
+    border-bottom: 1px solid #f2f2f2 ;
+    background-color: white;
+    padding: 0px 0.18rem;
+    line-height: 0.9rem;
+    img{
+      vertical-align: middle;
+      width: 0.2rem;
+      height: 0.18rem;
+    }
+  }
+
+  .upImgBox{
+    width: 100%;
+    padding: 0px 0.05rem 0.25rem;
+    background-color: white;
+    &:after{
+      content: "";
+      display: block;
+      clear: both;
+    }
+    .upImgBox-each{
+      margin:0.15rem 0.13rem 0px;
+      float: left;
+      width: 1.62rem;
+      height: 1.62rem;
+      background-image: url("../images/gratAddImg.png");
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      position: relative;
+      img{
+        display: block;
+        width: 100%;
+        height: 100%
+      }
+      a{
+        display: block;
+        width:0.3rem ;
+        height: 0.3rem;
+        position: absolute;
+        background-image: url("../images/blackDele.png");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        border-radius: 100%;
+        right: 0px;
+        top: -0.08rem;
+      }
+    }
+  }
+  .talkBox{
+    display: block;
+    resize: none;
+    width: 6rem;
+    height: 3.6rem;
+    background-color: white;
+    padding: 0.27rem 0.23rem;
+    .Gfont(12px,#cccccc);
+    margin: 0.18rem auto;
+  }
+}
+.fabu{
+  display: block;
+  width: 100%;
+  height: 0.7rem;
+  background-color: #fe8285;
+  text-align: center;
+  line-height: 0.7rem;
+  .Gfont(16px,white);
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+}
+
+/******************powerOrder**/
+.powerOrder{
+  width: 100%;
+  .powerOrder-each{
+    width: 100%;
+    background-color: white;
+    margin-bottom: 0.1rem;
+    .powerOrder-each-tittle{
+      width: 100%;
+      height: 0.9rem;
+      line-height: 0.9rem;
+      position: relative;
+      border-bottom: 1px solid #eeeeee;
+      padding: 0px 0.18rem;
+      .Gfont(14px,black);
+      .colorPink{
+        color: #fe8285;
+      }
+      .orderBuff{
+        position: absolute;
+        .Gfont(14px,#fea9ab);
+        line-height: 16px;
+        .Gmiddle-y;
+        right: 0.18rem;
+      }
+      .ColoGr{
+        color: #999999;
+      }
+    }
+    .order-content{
+      .goodBox{
+        width: 100%;
+        padding: 0.2rem 0.18rem 0px;
+        background-color: white;
+        border-bottom: 1px solid #eeeeee;
+        .goodImg{
+          float:left;
+          width: 1.64rem;
+          height: 1.64rem;
+        }
+        .goodBox-content{
+          padding-bottom: 0.18rem;
+          &:after{
+            content: "";
+            display: block;
+            clear: both;
+          }
+        }
+        .goodBox-right{
+          width: 4.1rem;
+          float: right;
+          .goodName{
+            line-height: 20px;
+            .Gfont(14px,black);
+          }
+          .goodTime{
+            line-height: 0.56rem;
+            .Gfont(12px,#999999);
+          }
+        }
+
+        &:after{
+          content: "";
+          display: block;
+          clear: both;
+        }
+      }
+    }
+  }
+}
+
+/*****************orderIn**/
+.orderIn{
+  width: 100%;
+  .weimaBox{
+    width: 100%;
+    padding: 0.3rem;
+    background-color: white;
+    img{
+      display: block;
+      margin: 0px auto;
+      width:1.76rem;
+      height: 1.76rem;
+    }
+    .wemaNo{
+      line-height: 14px;
+      .Gfont(14px,#666666);
+      text-align: center;
+      margin-top: 0.3rem;
+    }
+  }
+
+  .inBoxs{
+    margin-top: 0.1rem;
+    background-color: white;
+    .inBoxs-content{
+      padding: 0px 0.18rem;
+      height: 0.9rem;
+      position: relative;
+      border-bottom: 1px solid #eeeeee;
+      .returnMoney{
+        display: block;
+        .Gfont(14px,#fe8285);
+        border: 1px solid #fe8285;
+        border-radius: 50px;
+        position: absolute;
+        .Gmiddle-y;
+        right: 0.18rem;
+        width: 1.52rem;
+        height: 0.58rem;
+        line-height: 0.58rem;
+        text-align: center;
+      }
+      .inBoxs-content-left{
+        width: 1.14rem;
+        height: 0.9rem;
+        line-height: 0.9rem;
+        .Gfont(14px,#999999);
+        float: left;
+      }
+      .inBoxs-content-right{
+        width: 4.7rem;
+        line-height: 0.9rem;
+        .Gfont(14px,black);
+        float: left;
+        margin-left: 5px;
+      }
+      .colorPink{
+        color: #fe8285;
+      }
+      .inBuff{
+        position: absolute;
+        height: 14px;
+        line-height: 14px;
+        .Gmiddle-y;
+        .Gfont(14px,#fe8285);
+        right: 0.18rem;
+      }
+    }
+    .orderOther{
+      width: 100%;
+      padding: 0.33rem 0.18rem 0.56rem;
+      .order{
+        width: 1.14rem;
+        height: 16px;
+        line-height: 16px;
+        font-size: 14px;
+        color: #999999;
+        font-family: inherit;
+        font-weight: inherit;
+        float: left;
+      }
+      .contents{
+        width: 4.7rem;
+        line-height: 16px;
+        font-size: 14px;
+        color: #000000;
+        font-family: inherit;
+        font-weight: inherit;
+        float: left;
+        margin-left: 5px;
+      }
+
+      &:after{
+        content: "";
+        display: block;
+        clear: both;
+      }
+    }
+    .inContent{
+      .goodBox{
+        width: 100%;
+        padding: 0.2rem 0.18rem 0px;
+        background-color: white;
+        border-bottom: 1px solid #eeeeee;
+        .goodImg{
+          float:left;
+          width: 1.64rem;
+          height: 1.64rem;
+        }
+        .goodBox-content{
+          padding-bottom: 0.18rem;
+          &:after{
+            content: "";
+            display: block;
+            clear: both;
+          }
+        }
+        .goodBox-right{
+          width: 4.1rem;
+          float: right;
+          .goodName{
+            line-height: 20px;
+            .Gfont(14px,black);
+          }
+          .goodTime{
+            line-height: 0.56rem;
+            .Gfont(12px,#999999);
+          }
+        }
+
+        &:after{
+          content: "";
+          display: block;
+          clear: both;
+        }
+      }
+    }
+
+  }
+}
+/************favoriteShop****/
+.favoriteShop{
+  width: 100%;
+  .favoriteShop-nav{
+    height: 0.9rem;
+    background-color: white;
+    position: relative;
+    border-bottom: 1px solid #eeeeee;
+
+    .navBox{
+      width: 100%;
+      height: 12px;
+      position: absolute;
+      .Gmiddle-y;
+      display: flex;
+      display:-webkit-flex;
+      justify-content: space-between;
+      -webkit-justify-content: space-between;
+    }
+    .each-nav{
+      .Gfont(12px,black);
+      display: block;
+      width: 1.55rem;
+      line-height: 12px;
+      text-align: center;
+      border-right: 1px solid #eeeeee;
+      position: relative;
+      .redBottom{
+        display: block;
+        position: absolute;
+        width: 24px;
+        height: 0.07rem;
+        background-color: #fe8285;
+        border-radius: 50px;
+        bottom: -0.34rem;
+        display: none;
+        .Gmiddle-x;
+      }
+      &:last-child{
+        border: none;
+      }
+    }
+    .has .redBottom{
+      display: block;
+    }
+  }
+  .ChoiseDele{
+    height: 0.9rem;
+    line-height: 0.9rem;
+    padding: 0px 0.18rem;
+    border-bottom: 1px solid #eeeeee;
+    .Gfont(16px,black);
+    position: relative;
+    .deleBtns{
+      display: block;
+      width: 1.38rem;
+      height: 0.57rem;
+      line-height: 0.57rem;
+      border: 1px solid #cccccc;
+      border-radius: 5px;
+      position: relative;
+      position: absolute;
+      padding-left: 0.6rem;
+      .Gfont(12px,#666666);
+      .Gmiddle-y;
+      right: 0.18rem;
+      img{
+        width: 0.35rem;
+        height: 0.29rem;
+        vertical-align: middle;
+        position: absolute;
+        .Gmiddle-y;
+        left: 0.2rem;
+      }
+    }
+  }
+  .content-each{
+    padding: .4rem 0.18rem 0px;
+    position: relative;
+    &:after{
+      display: block;
+      content: "";
+      clear: both;
+    }
+    .content-each-right{
+      width: 5.47rem;
+      float: right;
+      padding-bottom: 0.39rem;
+      border-bottom: 1px solid #eeeeee;
+      .imgageBox{
+        width: 100%;
+        height: 3.6rem;
+        position: relative;
+        img{
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
+        .noMoney{
+          width: 1.43rem;
+          height: 0.4rem;
+          .Gfont(14px,white);
+          text-align: center;
+          line-height: 0.4rem;
+          position: absolute;
+          left: 0px;
+           bottom: 0.3rem;
+          background-color: rgba(0,0,0,0.5);
+        }
+      }
+      .shopName{
+        line-height: 0.6rem;
+        .Gfont(14px,black);
+      }
+      .topStarBox{
+        height: 0.3rem;
+        .Gfont(12px,#fe8285);
+        line-height: 0.3rem;
+        img{
+          vertical-align: baseline;
+          width: 0.2rem;
+          height: 0.18rem;
+        }
+      }
+      .placeBox{
+        width: 100%;
+        line-height: 16px;
+        .Gfont(12px,black);
+        margin-top: 0.15rem;
+        img{
+          width: 0.19rem;
+          height: 0.23rem;
+          vertical-align: text-top;
+        }
+      }
+    }
+  }
+}
+/**choiseChangeBox*/
+.choiseChangeBox{
+  width: 0.3rem;
+  height: 0.3rem;
+  border-radius: 100%;
+  display: inline-block;
+  vertical-align: text-top;
+  img{
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+.posmid{
+  position: absolute;
+  left: 0.18rem;
+  top: 2rem;
+}
+.checkedBox{
+  border: 1px solid #e1e1e1;
+  img{
+    display: none;
+  }
+}
+/********************************shareCenter*************/
+.shareCenter{
+  .shareCenter-tittle{
+    width: 100%;
+    padding:0.5rem 0px 0.46rem;
+    background-color: white;
+    .shareke{
+      .Gfont(16px,#8c8c8c);
+      line-height: 16px;
+      text-align: center;
+    }
+    .shareke2{
+      margin-top: 0.16rem;
+      color: #d7d7d7;
+    }
+  }
+  .justBox{
+    width: 100%;
+    height: 0.1rem;
+    background-color: #f7f7f7;
+  }
+  .willMoney{
+    padding: 0.38rem 0px 0.54rem;
+    background-color: #fe8285;
+    .willMoney-tittle{
+      .Gfont(12px,white);
+      line-height: 12px;
+      text-align: center;
+    }
+    .willMoney-content{
+      .Gfont(16px,white);
+      line-height: 16px;
+      text-align: center;
+      margin-top: 0.28rem;
+      .willMoney-logo{
+        display: inline-block;
+        width: 0.38rem;
+        height: 0.38rem;
+        background-image: url("../images/whiteMoneyLogo.png");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        vertical-align: text-top;
+      }
+    }
+  }
+  .shareCenter-Content{
+    width: 100%;
+    background-color: white;
+    padding-top: 0.17rem;
+    .shareCenter-Content-line{
+      width: 6.04rem;
+      height: 0px;
+      border-bottom: 1px solid #eeeeee;
+      margin: 0px auto;
+    }
+    .coantent-floor{
+      width: 100%;
+      padding: 0.17rem 0.18rem;
+      &:after{
+        display: block;
+        content: "";
+        clear: both;
+      }
+      .coantent-floor-box{
+        width: 2.98rem;
+        height: 1rem;
+        padding-left: 0.44rem;
+        padding-top: 0.08rem;
+        border-right: 1px solid #eeeeee;
+        float: left;
+        &:nth-child(2n){
+          border: none;
+        }
+        .floor1{
+          .Gfont(24px,#fe8285);
+          line-height: 18px;
+          span{
+            margin-left: 3px;
+            vertical-align: middle;
+            .Gfont(12px,#666666);
+          }
+        }
+        .floor2{
+          line-height: 12px;
+          .Gfont(12px,#666666);
+          margin-top: 0.07rem;
+        }
+        .floor3{
+          .Gfont(14px,#666666);
+          line-height: 14px;
+          margin-top: 0.3rem;
+          position: relative;
+          text-indent: 0.6rem;
+          img{
+            width: 0.47rem;
+            height:0.4rem;
+            vertical-align: sub;
+            margin-right: 3px;
+            position: absolute;
+            left: 0px;
+            .Gmiddle-y;
+          }
+          .img2{
+            width: 0.43rem;
+            height: 0.4rem;
+          }
+          .img3{
+            width: 0.41rem;
+            height: 0.38rem;
+          }
+          .img4{
+            width: 0.42rem;
+            height: 0.47rem;
+          }
+        }
+      }
+    }
+  }
+}
+/**************houmeIndex*****/
+.houmeIndex{
+  padding-top: 0.87rem;
+  .headerBox{
+    width: 100%;
+    height: 0.87rem;
+    background-color: #eeeeee;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 2500;
+    .left{
+      float: left;
+      display: block;
+      height: 0.87rem;
+      width: 1.08rem;
+      line-height: 0.87rem;
+      .Gfont(14px,#727272);
+      padding-left: 0.18rem;
+      img{
+        display: inline-block;
+        width: 0.17rem;
+        height: 0.1rem;
+        vertical-align: middle;
+      }
+    }
+    .headerSearch{
+      width: 4.53rem;
+      margin-left: 0.15rem;
+      padding: 0.16rem 0.26rem;
+      position: relative;
+      line-height: 0.6rem;
+      height: 0.6rem;
+      float: left;
+      margin-top: 0.12rem;
+      background-color: white;
+      border-radius: 50px;
+      input{
+        display: block;
+        line-height: 12px;
+        height: 12px;
+        .Gfont(12px,#dddddd);
+      }
+      .tips{
+        position: absolute;
+        height: 12px;
+        line-height: 12px;
+        left: 50%;
+        top: 50%;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%) translateX(-50%);
+        -moz-transform: translateY(-50%) translateX(-50%);
+        -ms-transform: translateY(-50%) translateX(-50%);
+        -o-transform: translateY(-50%) translateX(-50%);
+        transform: translateY(-50%) translateX(-50%);
+        .Gfont(12px,#dddddd);
+        img{
+          width: 0.27rem;
+          height: 0.27rem;
+          vertical-align: bottom;
+          margin-right: 0.09rem;
+        }
+      }
+    }
+    .headerright{
+      position: absolute;
+      right: 0.18rem;
+      display: block;
+      .Gmiddle-y;
+      width: 0.32rem;
+      height: 0.36rem;
+    }
+  }
+  .grayBorder{
+    width: 100%;
+    height: 0.1rem;
+    background-color: #f2f2f2;
+  }
+  .headerNav{
+    width: 100%;
+    height: 1.43rem;
+    padding: 0.24rem 0.46rem 0px;
+    .headerNav-box{
+      width: 0.82rem;
+      float: left;
+      display: block;
+      &:nth-child(n+2){
+        margin-left: 0.72rem;
+      }
+      .imgbox{
+        display: block;
+        width: 100%;
+        height: 0.5rem;
+        background-image: url("../images/slice/grayLogoes1.png");
+        background-size: 0.51rem 0.43rem;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      .imgbox2{
+        background-image: url("../images/slice/grayLogoes2.png");
+        background-size: 0.54rem 0.4rem;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      .imgbox3{
+        background-image: url("../images/slice/grayLogoes3.png");
+        background-size: 0.56rem 0.46rem;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      .imgbox4{
+        background-image: url("../images/slice/grayLogoes4.png");
+        background-size: 0.45rem 0.45rem;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      .navName{
+        display: block;
+        width: 100%;
+        height: 12px;
+        line-height: 12px;
+        .Gfont(12px,#333333);
+        text-align: center;
+        margin-top: 0.15rem;
+      }
+    }
+    &:after{
+      content: "";
+      display: block;
+      clear: both;
+    }
+  }
+
+  .killArea{
+    width: 100%;
+    padding: 0.27rem 0px 0.23rem 0.2rem;
+    .killArea-top{
+      width: 100%;
+      height: 0.3rem;
+      .Gfont(14px,#333333);
+      position: relative;
+      .blackLine{
+        width: 0.1rem;
+        height: 100%;
+        float: left;
+        background-color: #333333;
+        border-radius: 50px;
+        margin-left: 0.05rem;
+      }
+      .tittles{
+        line-height: 0.3rem;
+        float: left;
+        margin-left: 0.2rem;
+      }
+      .killMore{
+        position: absolute;
+        display: block;
+        .Gfont(13px,#333333);
+        line-height: 12px;
+        height: 12px;
+        .Gmiddle-y;
+        right: 0.18rem;
+        img{
+          width: 0.3rem;
+          height: 0.3rem;
+          vertical-align: sub;
+          display: inline-block;
+          border-radius: 100%;
+        }
+      }
+    }
+    .turnArea{
+      width: 100%;
+      &:after{
+        content: "";
+        display: block;
+        clear: both;
+      }
+      .seckillArea-eachBox{
+        width: 5.5rem;
+        margin-top: 0.2rem;
+        background-color: #f7f7f7;
+        .seckillArea-eachBox-left{
+          width: 2.4rem;
+          position: relative;
+          float: left;
+          height: 2.5rem;
+          padding: 0.3rem 0 0.2rem 0.2rem;
+          .left-floor1{
+            width: 100%;
+            line-height: 0.38rem;
+            .Gfont(12px,black);
+          }
+          .piceBox{
+            width: 100%;
+            .Gfont(12px,#fe8285);
+            line-height: 0.3rem;
+            margin-top: 4px;
+          }
+          .oldPice{
+            width: 100%;
+            margin-top: 2px;
+            .Gfont(12px,#aeaeae);
+            line-height: 0.24rem;
+          }
+          .redBoxPice{
+            width: 2.2rem;
+            position: absolute;
+            .Gfont(12px,white);
+            line-height: 0.36rem;
+            left: -0.09rem;
+            bottom: 0.2rem;
+            height:0.43rem;
+            background-image: url("../images/piceRedbox.png");
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            padding-left: 0.29rem;
+          }
+        }
+        .seckillImage{
+          float: right;
+          width: 2.9rem;
+          height: 2.5rem;
+        }
+        &:after{
+          display: block;
+          content: "";
+          clear:both;
+        }
+      }
+    }
+    .content-each-right{
+      width: 5.38rem;
+      float: left;
+      margin-top: 0.24rem;
+      .imgageBox{
+        width: 100%;
+        height: 2.4rem;
+        position: relative;
+        img{
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
+        .noMoney{
+          width: 1.43rem;
+          height: 0.4rem;
+          .Gfont(14px,white);
+          text-align: center;
+          line-height: 0.4rem;
+          position: absolute;
+          left: 0px;
+          bottom: 0.3rem;
+          background-color: rgba(0,0,0,0.5);
+        }
+      }
+      .shopName{
+        line-height: 0.5rem;
+        .Gfont(14px,black);
+        .oldPrice{
+          text-decoration: line-through;
+          .Gfont(12px,#a1a1a1);
+        }
+      }
+      .topStarBox{
+        height: 0.3rem;
+        .Gfont(12px,#fe8285);
+        line-height: 0.3rem;
+        img{
+          vertical-align: baseline;
+          width: 0.2rem;
+          height: 0.18rem;
+        }
+      }
+      .placeBox{
+        width: 100%;
+        line-height: 16px;
+        .Gfont(12px,black);
+        margin-top: 0.15rem;
+        img{
+          width: 0.19rem;
+          height: 0.23rem;
+          vertical-align: text-top;
+        }
+      }
+    }
+    .content-each-right2{
+      width: 6rem;
+      float: none;
+      .imgageBox{
+        height: 4rem;
+      }
+    }
+  }
+  .imgArea{
+    padding: 0px 0.18rem 0.24rem ;
+    border-top: 1px solid #eeeeee;
+    img{
+      display: block;
+      width: 100%;
+      margin-top: 0.1rem;
+    }
+  }
+  .shareBottom{
+    height: 0.88rem;
+    position: relative;
+    .grayLIne{
+      width: 6.04rem;
+      border-top: 1px solid #eeeeee;
+      height: 0px;
+      margin: 0px auto;
+    }
+    .bottomContent{
+      position: absolute;
+      height: 0.46rem;
+      line-height: 0.46rem;
+      .Gfont(12px,#999999);
+      left: 50%;
+      top: 50%;
+      -webkit-transform: translateX(-50%) translateY(-50%);
+      -moz-transform: translateX(-50%) translateY(-50%);
+      -ms-transform: translateX(-50%) translateY(-50%);
+      -o-transform: translateX(-50%) translateY(-50%);
+      transform: translateX(-50%) translateY(-50%);
+      img{
+        display: inline-block;
+        height: 0.46rem;
+        width: 0.62rem;
+        vertical-align: middle;
+      }
+      .xian{
+        display: inline-block;
+        height: 0.3rem;
+        width: 0px;
+        border-left: 1px solid #999999;
+        vertical-align: middle;
+      }
+    }
+  }
+  .turnImg .swiper-pagination{
+    width: 100%;
+  }
+  .swiper-pagination-bullet-active{
+    background-color: #fe8285;
+  }
+}
+.blackss{
+  color: black !important;
+}
+.swiper-slide img{
+  display: block;
+  width: 100%;
+}

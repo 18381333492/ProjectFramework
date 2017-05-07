@@ -1,0 +1,139 @@
+﻿
+<!--房态管理-->
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px;">
+        <form id="RoomManage_domain_form" style="width:100%;height:100%" ;>
+            <div id="RoomManage_domain_grid_tool" style="padding:15px;">
+                    <span>关键字</span>
+                    <input class="easyui-textbox" name="sKeyWord" data-options="iconCls:'icon-search',prompt:'商品名称'" style="width:150px">
+                    <a id="search_RoomManage" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜 索</a>
+                    <br /><br />
+                    @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
+              </div>
+            <table id="RoomManage_datagrid"></table>
+        </form>
+</div>
+<script type="text/javascript">
+    $(function () {
+        modules.get(enums.Modules.CACHE).setMenuDomain("房态列表", new function () {
+            var eui = modules.get(enums.Modules.JQUERY_EASYUI);
+            var f = modules.get(enums.Modules.FUNC);
+            var grid = $("#RoomManage_datagrid");
+
+
+            //查看时间表
+            function timeDetail() {
+                var sGoodsId = $(this).attr("sGoodsId");
+                var iHouseCount = $(this).attr("iHouseCount");
+                var div = $("<div/>");
+                div.dialog({
+                    title: "时间表",
+                    width: 600,
+                    height: 650,
+                    href: '/Admin/RoomManage/Detail?sGoodsId=' + sGoodsId + '&iHouseCount=' + iHouseCount,
+                    modal: true,
+                    buttons: [
+                        {//关闭
+                            text: '关闭',
+                            iconCls: 'icon-cancel',
+                            handler: function () {
+                                $(div).dialog("close");
+                            }
+                        },
+                    ],
+                    onClose: function () {
+                        $(div).dialog("destroy");
+                        div = null;
+                    },
+                    onLoad: function () {
+                    }
+                });
+            }
+
+
+            /**
+            * 房态管理的搜索
+            */
+            $('#search_RoomManage').click(function () {
+                grid.datagrid('getPager').pagination("select");
+            });
+
+            /**
+             * 载入房态管理数据列表
+             * param {Number} pageNumber 页码
+             * param {Number} pageSize 每页显示条数
+             */
+            function LoadRoomManage(pageNumber, pageSize) {
+                try {
+                    var param = $("#RoomManage_domain_form").serializeObject();
+                    param.PageIndex/*当前页码*/ = pageNumber;
+                    param.pageSize/*每页显示条数*/ = pageSize;
+                    f.post("/Admin/RoomManage/List", param, function (r) {
+                        grid.datagrid("loadData", r.Data.Result);
+                        grid.datagrid("getPager").pagination({
+                            pageNumber: pageNumber,
+                            pageSize: pageSize,
+                            total: r.Data.MaxCount
+                        });
+                    }, function (r) {
+                        eui.alertErr(r.Msg);
+                    });
+                } catch (e) {
+                    eui.alertErr(e.message);
+                }
+            }
+
+            /**
+             * 初始化grid数据
+             */
+            function initData() {
+                eui.bindPaginationEvent(grid, {
+                    idField: "ID",
+                    loadMsg: "正在加载...",
+                    toolbar: "#RoomManage_domain_grid_tool",
+                    fit: true,
+                    fitColumns: true,
+                    pagination: true,
+                    rownumbers: true,
+                    columns: [[
+                    { field: 'checkbox', checkbox: true },
+                    { field: 'sGoodsName', title: '房客名称', align: 'center', width: 100 },
+                    {
+                        field: 'dGoodsFisrtPrice', title: '价格', align: 'center', width: 80, formatter(value) {
+                            return value.toFixed(2);
+                        }
+                    },
+                    { field: 'iHouseCount', title: '包含同类房间数', align: 'center', width: 100 },
+                    {
+                        field: 'ID', title: '查看时间表', align: 'center', width: 150, formatter: function (value,row) {
+                            return '<a class="time" sGoodsId=' + row.ID + ' iHouseCount=' + row.iHouseCount + '>查看时间表</a>'
+                        }
+                    },
+                    ]],
+                    onLoadSuccess: function () {
+                        $(".datagrid-header-check input[type=checkbox]").remove();
+                        $('.time').on('click', timeDetail);
+                    },
+                }, LoadRoomManage).pagination("select");
+            }
+
+            //执行数据绑定
+            try {
+                initData();
+               // initEvent();
+            } catch (e) {
+                eui.alertErr(e.message);
+            }
+
+
+            /**
+             * 资源的释放
+             */
+            function destroy(){
+            }
+
+            return {
+                destroy: destroy
+            }
+        });
+    });
+</script>

@@ -1,0 +1,175 @@
+﻿
+<!--房态管理时间表-->
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+<style>
+    .time {
+        margin: auto;
+    }
+    .time .red{
+        color:red;
+        font-size:10px;
+        font-weight:100;
+    }
+    .time tr td{
+        border:1px solid #CACACA;
+        font-weight:800;
+        text-align:center;
+        font-size:15px;
+        width:60px;
+        height:60px;
+        line-height:25px;
+    }
+    .month{
+        margin: auto;
+    }
+        .month tr td {
+            font-size: 15px;
+            width: 40px;
+            height: 40px;
+            line-height: 30px;
+            text-align: center;
+            color: blue;
+            font-weight: 700;
+        }
+         .month tr td div{
+            width:40px; height:40px;border-radius:20px;margin:auto;line-height:40px;
+         }
+         .month tr td div:hover{
+             cursor:pointer;
+             background-color:#3298DE;
+         }
+    .back{
+        background-color:#3298DE;
+    }
+</style>
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+     
+    <select id="year"
+            style="margin:auto;width:150px;height:25px;display:block;margin-top:20px">
+    </select>
+    <table class="month">
+        <tr>
+            <td><div>1月</div></td>
+            <td><div>2月</div></td>
+            <td><div>3月</div></td>
+            <td><div>4月</div></td>
+            <td><div>5月</div></td>
+            <td><div>6月</div></td>
+            <td><div>7月</div></td>
+            <td><div>8月</div></td>
+            <td><div>9月</div></td>
+            <td><div>10月</div></td>
+            <td><div>11月</div></td>
+            <td><div>12月</div></td>
+        </tr>
+    </table>
+    <table id="date" class="time">
+        <tr>
+            <td>日</td>
+            <td>一</td>
+            <td>二</td>
+            <td>三</td>
+            <td>四</td>
+            <td>五</td>
+            <td>六</td>
+        </tr>
+    </table>
+</div>
+<input id="sGoodsId" type="hidden" value="@ViewBag.sGoodsId" />
+<input id="iHouseCount" type="hidden" value="@ViewBag.iHouseCount"/>
+<script type="text/javascript">
+    $(function () {
+        var eui = modules.get(enums.Modules.JQUERY_EASYUI);
+        var f = modules.get(enums.Modules.FUNC);
+        var sGoodsId = $('#sGoodsId').val();
+        var iHouseCount =Number($('#iHouseCount').val());
+        var NowDate = new Date('@DateTime.Now.ToString()');
+
+        //初始化数据
+        
+        GetRoomDetail({ sGoodsId: sGoodsId, year: NowDate.getFullYear(), month: NowDate.getMonth() + 1 }, NowDate)
+
+        //初始化年份Select
+        var html_year = [];
+        for (var i = NowDate.getFullYear() ; i < 2100; i++) {
+            html_year.push('<option value="' + i + '">' + i + '年</option>');
+        }
+        $('#year').append(html_year.join(''));
+
+        //默认设置年份为当前时间
+        $('#year').val(new Date().getFullYear());
+
+
+        //单击月份切换数据
+        $('.month tr td').on('click', function () {
+            var year = Number($('#year option:checked').val());
+            var month = Number($(this).text().substr(0, $(this).text().length - 1));
+            GetRoomDetail({ sGoodsId: sGoodsId, year: year, month: month },new Date(year,month-1));
+        });
+
+        //年份的选择事件
+        $('#year').change(function () {
+            var year = Number($('#year option:checked').val());
+            GetRoomDetail({ sGoodsId: sGoodsId, year: year, month:1  },new Date(year,0))
+        });
+
+        //获取房间数时是数据
+        function GetRoomDetail(param,date) {
+            f.post('/Admin/RoomManage/GetRoomDetail', param, function (res) {
+                var array = res.Data;
+                Detail(date, array);
+            },
+            function (r) {
+                eui.alertErr('数据获取失败!');
+            },false);
+        }
+
+
+        //数据绑定
+        function Detail(nowTime, array) {
+            $('#date .remove').remove();
+            var nowTime = nowTime;
+            var year = nowTime.getFullYear();
+            var month = nowTime.getMonth();
+            var days = array.length;
+            var main = [];
+            for (var i = 1; i <= days;) {
+                var html = [];
+                var order = new Date(year, month, i).getDay();
+                html.push('<tr class="remove">')
+                for (var j = 0; j < 7; j++) {
+                    if (j == order) {
+                        if (i <= days) {
+                            var count =array[i-1];
+                            //if (count == -1) count = iHouseCount;
+                            //else count = iHouseCount - count;
+                            html.push('<td>' + i + '');
+                            html.push('<br/>');
+                            html.push('<span class="red">剩余:' + count + '</span>');
+                            html.push('</td>');
+                            i++;
+                            order++;
+                        }
+                        else {
+                            html.push('<td></td>');
+                        }
+                    }
+                    else {
+                        html.push('<td></td>');
+                    }
+                }
+                html.push('</tr>');
+                main.push(html.join(''));
+            }
+            $('#date').append(main.join(''));
+            //设置月份背景色
+            $('.month td div').removeClass('back');
+            $('.month td div').eq(month).addClass('back');
+            //设置号数背景色
+            $('#date .remove').find('td').removeClass('back');
+            if (NowDate.getFullYear() == year && NowDate.getMonth() == month) {
+                $('#date .remove td span').eq(NowDate.getDate() - 1).parent().addClass('back');
+            }
+        }
+    });
+</script>

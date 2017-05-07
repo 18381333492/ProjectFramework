@@ -1,0 +1,4 @@
+﻿该程序集主要用作缓存一些数据，当做缓存池来用
+
+ApplicationCache用于缓存一些应用上的缓存数据
+DataBaseCache将根据实际情况进行缓存

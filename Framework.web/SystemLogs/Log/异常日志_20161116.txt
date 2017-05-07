@@ -1,0 +1,75 @@
+﻿
+===================================================================================================
+异常时间：2016-11-16 16:02:38,974 
+异常级别：ERROR 
+引发类型：System.Web.Mvc.ActionDescriptor
+所在方法：ExtractParameterFromDictionary
+异常简述：对于“Framework.web.Areas.Client.Controllers.ClientCenterController”中方法“System.Web.Mvc.ActionResult Order(Int32)”的不可以为 null 的类型“System.Int32”的参数“iState”，参数字典包含一个 null 项。可选参数必须为引用类型、可以为 null 的类型或声明为可选参数。
+参数名: parameters
+详细信息：
+   在 System.Web.Mvc.ActionDescriptor.ExtractParameterFromDictionary(ParameterInfo parameterInfo, IDictionary`2 parameters, MethodInfo methodInfo)
+   在 System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   在 System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.ActionInvocation.InvokeSynchronousActionMethod()
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.<BeginInvokeSynchronousActionMethod>b__39(IAsyncResult asyncResult, ActionInvocation innerInvokeState)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`2.CallEndDelegate(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   在 System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethod(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.<InvokeActionMethodFilterAsynchronouslyRecursive>b__3d()
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.<>c__DisplayClass46.<InvokeActionMethodFilterAsynchronouslyRecursive>b__3f()
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.<>c__DisplayClass46.<InvokeActionMethodFilterAsynchronouslyRecursive>b__3f()
+
+===================================================================================================
+异常时间：2016-11-16 16:55:06,733 
+异常级别：ERROR 
+引发类型：System.RuntimeType
+所在方法：TryChangeType
+异常简述：类型“System.String”的对象无法转换为类型“System.Nullable`1[System.Guid]”。
+详细信息：
+   在 System.RuntimeType.TryChangeType(Object value, Binder binder, CultureInfo culture, Boolean needsSpecialCast)
+   在 System.RuntimeType.CheckValue(Object value, Binder binder, CultureInfo culture, BindingFlags invokeAttr)
+   在 System.Reflection.RtFieldInfo.UnsafeSetValue(Object obj, Object value, BindingFlags invokeAttr, Binder binder, CultureInfo culture)
+   在 System.Runtime.Serialization.FormatterServices.SerializationSetValue(MemberInfo fi, Object target, Object value)
+   在 System.Runtime.Serialization.FormatterServices.PopulateObjectMembers(Object obj, MemberInfo[] members, Object[] data)
+   在 System.Runtime.Serialization.Formatters.Binary.ObjectReader.ParseObjectEnd(ParseRecord pr)
+   在 System.Runtime.Serialization.Formatters.Binary.ObjectReader.Parse(ParseRecord pr)
+   在 System.Runtime.Serialization.Formatters.Binary.__BinaryParser.Run()
+   在 System.Runtime.Serialization.Formatters.Binary.ObjectReader.Deserialize(HeaderHandler handler, __BinaryParser serParser, Boolean fCheck, Boolean isCrossAppDomain, IMethodCallMessage methodCallMessage)
+   在 System.Runtime.Serialization.Formatters.Binary.BinaryFormatter.Deserialize(Stream serializationStream, HeaderHandler handler, Boolean fCheck, Boolean isCrossAppDomain, IMethodCallMessage methodCallMessage)
+   在 System.Web.Util.AltSerialization.ReadValueFromStream(BinaryReader reader)
+   在 System.Web.SessionState.SessionStateItemCollection.ReadValueFromStreamWithAssert()
+   在 System.Web.SessionState.SessionStateItemCollection.DeserializeItem(String name, Boolean check)
+   在 System.Web.SessionState.SessionStateItemCollection.get_Item(String name)
+   在 System.Web.SessionState.HttpSessionStateContainer.get_Item(String name)
+   在 System.Web.HttpSessionStateWrapper.get_Item(String name)
+   在 Framework.web.Models.ClientLoginFilterAttribute.OnActionExecuting(ActionExecutingContext filterContext) 位置 E:\源码\成都亿合科技\源码\友客分享商城\ProjectFramework\Framework.web\Models\ClientLoginFilterAttribute.cs:行号 22
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.InvokeActionMethodFilterAsynchronouslyRecursive(Int32 filterIndex)
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.InvokeActionMethodFilterAsynchronouslyRecursive(Int32 filterIndex)
+
+===================================================================================================
+异常时间：2016-11-16 16:56:09,875 
+异常级别：ERROR 
+引发类型：System.RuntimeType
+所在方法：TryChangeType
+异常简述：类型“System.String”的对象无法转换为类型“System.Nullable`1[System.Guid]”。
+详细信息：
+   在 System.RuntimeType.TryChangeType(Object value, Binder binder, CultureInfo culture, Boolean needsSpecialCast)
+   在 System.RuntimeType.CheckValue(Object value, Binder binder, CultureInfo culture, BindingFlags invokeAttr)
+   在 System.Reflection.RtFieldInfo.UnsafeSetValue(Object obj, Object value, BindingFlags invokeAttr, Binder binder, CultureInfo culture)
+   在 System.Runtime.Serialization.FormatterServices.SerializationSetValue(MemberInfo fi, Object target, Object value)
+   在 System.Runtime.Serialization.FormatterServices.PopulateObjectMembers(Object obj, MemberInfo[] members, Object[] data)
+   在 System.Runtime.Serialization.Formatters.Binary.ObjectReader.ParseObjectEnd(ParseRecord pr)
+   在 System.Runtime.Serialization.Formatters.Binary.ObjectReader.Parse(ParseRecord pr)
+   在 System.Runtime.Serialization.Formatters.Binary.__BinaryParser.Run()
+   在 System.Runtime.Serialization.Formatters.Binary.ObjectReader.Deserialize(HeaderHandler handler, __BinaryParser serParser, Boolean fCheck, Boolean isCrossAppDomain, IMethodCallMessage methodCallMessage)
+   在 System.Runtime.Serialization.Formatters.Binary.BinaryFormatter.Deserialize(Stream serializationStream, HeaderHandler handler, Boolean fCheck, Boolean isCrossAppDomain, IMethodCallMessage methodCallMessage)
+   在 System.Web.Util.AltSerialization.ReadValueFromStream(BinaryReader reader)
+   在 System.Web.SessionState.SessionStateItemCollection.ReadValueFromStreamWithAssert()
+   在 System.Web.SessionState.SessionStateItemCollection.DeserializeItem(String name, Boolean check)
+   在 System.Web.SessionState.SessionStateItemCollection.get_Item(String name)
+   在 System.Web.SessionState.HttpSessionStateContainer.get_Item(String name)
+   在 System.Web.HttpSessionStateWrapper.get_Item(String name)
+   在 Framework.web.Models.ClientLoginFilterAttribute.OnActionExecuting(ActionExecutingContext filterContext) 位置 E:\源码\成都亿合科技\源码\友客分享商城\ProjectFramework\Framework.web\Models\ClientLoginFilterAttribute.cs:行号 22
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.InvokeActionMethodFilterAsynchronouslyRecursive(Int32 filterIndex)
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.InvokeActionMethodFilterAsynchronouslyRecursive(Int32 filterIndex)

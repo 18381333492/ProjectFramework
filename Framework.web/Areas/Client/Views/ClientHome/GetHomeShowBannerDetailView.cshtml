@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>展示详情</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+    <style>
+        #content_div p{
+            line-height:.35rem;
+        }
+        .lzxdetail span{display:inline;}
+        .lzxdetail img {
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="lzxdetail" id="content_div" data-id="@ViewBag.ID" style="padding:0 10px;">
+
+        <!--详情模板-->
+        <script id="content_script" type="text/html">
+            <h4 class="co333" style="padding:10px 0 0 0 !important;">{{sTitle}}</h4>
+            <span style="padding:0 !important;">{{dPublishTime}}</span>
+            {{sContent}}
+        </script>
+
+    </div>
+</body>
+</html>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+<script src="~/scripts/lib/client.common.js"></script>
+<script src="~/scripts/lib/template.js"></script>
+<script type="text/javascript">
+    //文档加载完成
+    $(function () {
+        var obj = new homeShowBanner();
+        obj.getData();//绑定数据
+    });
+    //定义构造函数
+    function homeShowBanner() { };
+    //定义对象原型
+    homeShowBanner.prototype = {
+        //获取数据
+        getData: function () {
+            common.post("/Client/ClientHome/GetHomeShowBannerDetail", { ID: $("#content_div").attr("data-id") }, function (res) {
+                
+                //设置输出HTML
+                template.config("escape",false);
+
+                //渲染模板
+                var html=template("content_script", res.Data);
+                $("#content_div").html(html);
+
+            }, function (res) {
+                alert(res.Msg);
+            });
+        }
+    };
+</script>

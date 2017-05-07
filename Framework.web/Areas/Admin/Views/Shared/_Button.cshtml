@@ -1,0 +1,14 @@
+﻿@using Framework.DTO;
+@{
+    var btns = ViewData["btns"] as List<UserMenuButton>;
+
+    if (btns != null && btns.Count > 0)
+    {
+        foreach (var item in btns)
+        {
+            <a id="@item.ID" data-id="@item.sDataID" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'@item.sIcon',plain:true">@item.sButtonName</a>
+        }
+    }
+}
+
+

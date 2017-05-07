@@ -1,0 +1,291 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <!--该控件为百度地图加地址选择插件-->
+    <!--css-->
+    <link href="style/baidu-address.css" rel="stylesheet" />
+    <!--javascript-->
+    <script src="scripts/jquery-1.11.3.min.js"></script>    
+    <script src="scripts/baidu.map.js"></script>
+    <script src="scripts/area.data.js">地理信息数据</script>
+</head>
+<body onload="map.init()">
+    <div class="ctrl_container">
+        <div id="select_ctrs">
+            省份：<select class="select_address" name="province" id="province"></select>
+            城市：<select class="select_address" name="city" id="city"></select>
+            县区：<select class="select_address" name="county" id="county"></select><br /><br />
+            地址：<input class="address_text" type="text" name="fname" id="suggestId" />
+            <a id="baidu_map_choose_search" href="javascript:;">搜索</a>
+        </div>
+        <div class="map_container" id="map"></div>
+    </div>
+</body>
+</html>
+<script>
+    var map = new function MapAddressChoose() {
+
+        var map = new BMap.Map("map");                                                  // 创建Map实例
+
+        var main_cache = window.parent.modules.get(window.parent.enums.Modules.CACHE);  // 主页面的全局缓存
+
+        var BAIDU_MAP_ADDRESS_CHOOSER = window.parent.enums.VARIABLE.BAIDU_MAP_ADDRESS_CHOOSER; // 百度地图的插件选择结果变量
+
+
+        var point;
+
+        /**
+         * 根据经纬度设置地区
+         * @param {type} longitude 经度
+         * @param {type} latitude 维度
+         * @param {type} level 缩放级别
+         */
+        function loadPlace(longitude, latitude, level) {
+            if (parseFloat(longitude) > 0 || parseFloat(latitude) > 0) {
+
+                map.enableScrollWheelZoom(true); //启用滚轮放大缩小
+
+                //向地图中添加缩放控件
+                var ctrlNav = new window.BMap.NavigationControl({
+                    anchor: BMAP_ANCHOR_TOP_LEFT,
+                    type: BMAP_NAVIGATION_CONTROL_LARGE
+                });
+
+                map.addControl(ctrlNav);
+
+                //向地图中添加缩略图控件
+                var ctrlOve = new window.BMap.OverviewMapControl({
+                    anchor: BMAP_ANCHOR_BOTTOM_RIGHT,
+                    isOpen: 1
+                });
+
+                map.addControl(ctrlOve);
+
+                //向地图中添加比例尺控件
+                var ctrlSca = new window.BMap.ScaleControl({
+                    anchor: BMAP_ANCHOR_BOTTOM_LEFT
+                });
+
+                map.addControl(ctrlSca);
+
+                level = level || 12;
+
+                //绘制地图
+                point = new BMap.Point(longitude, latitude); //地图中心点
+
+                map.centerAndZoom(point, level); // 初始化地图,设置中心点坐标和地图级别。
+
+                map.setCurrentCity("成都");
+            }
+        }
+
+        /**
+        * 设置当前地址
+        */
+        function setPlace() {
+            var baddressRet = getRet();
+            //
+            //清除地图上所有覆盖物
+            remove_overlay();
+            var county = document.getElementById('county').options[document.getElementById('county').options.selectedIndex].text;
+            var province = document.getElementById('province').options[document.getElementById('province').options.selectedIndex].text;
+            var city = document.getElementById('city').options[document.getElementById('city').options.selectedIndex].text;
+            var suggest = document.getElementById('suggestId').value;
+                       
+            if (province === "北京市" ||
+                province === "重庆市" ||
+                province === "上海市" ||
+                province === "天津市") {
+                city = province;
+            } else if (city === '请选择城市') {
+                return alert('请选择城市');
+            }
+
+            suggest = county === "请选择县区" ? suggest : county + suggest;
+            baddressRet.a = suggest;
+            var myGeo/*地址解析对象*/ = new BMap.Geocoder();
+
+            // 将地址解析结果显示在地图上,并调整地图视野
+            myGeo.getPoint(suggest, function (p) {
+                if (p) {
+                    lat = p.lat;
+                    lng = p.lng;
+                    map.centerAndZoom(p, 12);
+                    map.addOverlay(new BMap.Marker(p));                                        
+                    baddressRet.lat = lat;
+                    baddressRet.lng = lng;                    
+                    setRet(baddressRet);
+                }
+                else {
+                    alert("您输入的地址没有解析到结果!");
+                }
+            }, city);
+
+        }
+
+        /**
+         * 地图点击事件
+         */
+        map.addEventListener("click", function (e) {
+            //alert(e.point.lng + "," + e.point.lat);
+            //add_overlay(e.point);
+        });
+
+        //添加覆盖物
+        function add_overlay(clickPoint) {
+            var marker = new BMap.Marker(clickPoint); // 创建点
+            map.addOverlay(marker);//增加点
+        }
+
+        //清除覆盖物
+        function remove_overlay() {
+            map.clearOverlays();
+        }
+
+        function setRet(ret) {
+            debugger
+            window.parent.modules.get(window.parent.enums.Modules.CACHE).setCache(window.parent.enums.VARIABLE.BAIDU_MAP_ADDRESS_CHOOSER, ret);
+        }
+
+        function getRet() {
+            var ret = window.parent.modules.get(window.parent.enums.Modules.CACHE).getCache(window.parent.enums.VARIABLE.BAIDU_MAP_ADDRESS_CHOOSER);
+            return ret;
+        }
+
+        function initRet() {
+            var baddressRet = {};
+            baddressRet.s = "请选择省份";
+            baddressRet.c = "请选择城市";
+            baddressRet.q = "请选择县区";
+            baddressRet.a = "";
+            baddressRet.lat = 0;
+            baddressRet.lng = 0;
+            main_cache.setCache(BAIDU_MAP_ADDRESS_CHOOSER, baddressRet);
+            //window.parent.modules.get(window.parent.enums.Modules.CACHE).setCache(window.parent.enums.VARIABLE.BAIDU_MAP_ADDRESS_CHOOSER, baddressRet);
+        }
+
+        function initSelection() {
+            initRet();
+
+            //设置默认值
+            var option = $("<option>").val("0").text("请选择省份");
+            $("[name='province']").append(option);
+
+            option = $("<option>").val("0").text("请选择城市");
+            $("[name='city']").append(option);
+
+            option = $("<option>").val("0").text("请选择县区");
+            $("[name='county']").append(option);
+
+            //绑定省份
+            for (var i = 0; i < areas.length; i++) {
+                if (parseInt(areas[i].level) == 1) {
+                    option = $("<option>").val(areas[i].code).text(areas[i].name);
+                    $("[name='province']").append(option);
+                }
+            }
+
+            $("#select_ctrs")
+                .on("change", "[name='province']", function () {
+                    var code = parseInt($(this).val());
+                    var s = getRet();                    
+                    s.s = $(this).find("option:selected").text();
+                    //加载城市
+                    if (code > 0) {
+                        $("[name='city'] option:gt(0)").remove();
+                        $("[name='county'] option:gt(0)").remove();
+                        for (var i = 0; i < areas.length; i++) {
+                            if (parseInt(areas[i].parentCode) == code) {
+                                option = $("<option>").val(areas[i].code).text(areas[i].name);
+                                $("[name='city']").append(option);                                
+                            }
+                        }
+                    } else {
+                        $("[name='city'] option:gt(0)").remove();
+                        $("[name='county'] option:gt(0)").remove();
+                    }
+                    //绘制地图
+                    if (code > 0) {
+                        for (var i = 0; i < areas.length; i++) {
+                            if (parseInt(areas[i].code) == code) {
+                                var longitude = areas[i].longitude;
+                                var latitude = areas[i].latitude;
+                                loadPlace(longitude, latitude, 10);
+                                s.lat = latitude;
+                                s.lng = longitude;
+                                break;
+                            }
+                        }
+                    }
+                    setRet(s);
+                })
+                .on("change", "[name='city']", function () {
+                    var code = parseInt($(this).val());
+                    var c = getRet();
+                    c.c = $(this).find("option:selected").text();
+                    //加载县区
+                    if (code > 0) {
+                        $("[name='county'] option:gt(0)").remove();
+
+                        for (var i = 0; i < areas.length; i++) {
+                            if (parseInt(areas[i].parentCode) == code) {
+                                option = $("<option>").val(areas[i].code).text(areas[i].name);
+                                $("[name='county']").append(option);                               
+                            }
+                        }
+                    } else {
+
+                        $("[name='county'] option:gt(0)").remove();
+                    }
+
+                    //绘制地图
+                    if (code > 0) {
+                        for (var i = 0; i < areas.length; i++) {
+                            if (parseInt(areas[i].code) == code) {
+
+                                var longitude = areas[i].longitude;
+                                var latitude = areas[i].latitude;
+                                loadPlace(longitude, latitude, 12);
+                                c.lat = latitude;
+                                c.lng = longitude;
+                                break;
+                            }
+                        }
+                    }
+                    setRet(c);
+                })
+                .on("change", "[name='county']", function () {
+                    var code = parseInt($(this).val());
+                    var c = getRet();
+                    c.q = $(this).find("option:selected").text();
+                    setRet(c);
+                    //绘制地图
+                    if (code > 0) {
+                        for (var i = 0; i < areas.length; i++) {
+                            if (parseInt(areas[i].code) == code) {
+
+                                var longitude = areas[i].longitude;
+                                var latitude = areas[i].latitude;
+
+                                loadPlace(longitude, latitude);
+
+                                break;
+                            }
+                        }
+                    }
+                })
+                .on("click", "#baidu_map_choose_search", function (e) {
+                    setPlace();
+                })
+
+            loadPlace(104.4, 30.75, 12);
+        }
+        return {
+            loadPlace: loadPlace,
+            init: initSelection
+        };
+    }
+</script>

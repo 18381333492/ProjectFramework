@@ -1,0 +1,21 @@
+﻿@model List<Framework.DTO.EHECD_WithdrawSettingDTO>
+    <div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+        <form style="width:99%;height:99%;" id="withdrawCash_setting_form">
+            <table class="styletable" style="height:100%">
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.sRoleName：</td>
+                            <td>
+                                <span><input type="hidden" name="ID" id="withdrawCash_setting_ID" value="@item.ID" />每隔</span>
+                                <input id="withdrawCash_setting_iIntervalDays" name="iIntervalDays" value="@item.iIntervalDays" class="easyui-textbox" missingMessage="不能为空" data-options="width:50,required:true,validType:['isNumber','minInt[0]'],min:1">
+                                <span>天&emsp;可提现一次&emsp;&emsp;最低提现金额（元）</span>
+                                <input id="withdrawCash_setting_iMinimumMoney" name="iMinimumMoney" value="@item.iMinimumMoney" class="easyui-textbox" missingMessage="不能为空" data-options="width:120,required:true,validType:['isNumber','minInt[1]'],min:0.01">
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </form>
+    </div>

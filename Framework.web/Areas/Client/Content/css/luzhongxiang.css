@@ -1,0 +1,198 @@
+div,p {
+    box-sizing: border-box;
+}
+em,i{font-style: normal;}
+u{text-decoration: none;}
+.bgfc{background-color: #fcf7f0;}
+.bgf2{background-color:#f2f2f2; }
+.bgf6{background-color: #f6f6f6;}
+.bgfff{background-color: #fff;}
+.pd10{padding:10px;}
+.pd20{padding:20px;}
+.pdt10{padding-top: 10px;}
+.pdt15{padding-top: 15px;}
+.pdb10{padding-bottom: 10px;}
+.pdt5{padding-top: 5px;}
+.pdb5{padding-bottom: 5px;}
+.pdlr10{padding-left: 10px;padding-right: 10px;}
+.pdlr20{padding-left: 20px;padding-right: 20px;}
+.pdlr60{padding-left:60px;padding-right: 60px;}
+.mt5{margin-top: 5px;}
+.mb5{margin-bottom: 5px;}
+.mt10{margin-top: 10px;}
+.mt18{margin-top: 18px;}
+.mt40{margin-top: 40px !important;}
+.mt54{margin-top: 54px;}
+.mt25{margin-top: 25px;}
+.mb10{margin-bottom: 10px;}
+.mb5{margin-bottom: 5px;}
+.mb50{margin-bottom: 1.3rem;}
+.ml5{margin-left: 5px;}
+.mr5{margin-right: 5px;}
+.fz12{font-size: 12px;}
+.fz13{font-size: 13px;}
+.fz14{font-size: 14px;}
+.fz15{font-size: 15px;}
+.fz16{font-size: 16px;}
+.fz18{font-size: 18px;}
+.cofff{color:#fff;}
+.co000{color:#000 !important;}
+.co333{color: #333 !important;}
+.co666{color: #666 !important;}
+.co999{color: #999 !important;}
+.coccc{color:#ccc !important;}
+.cored{color:#fe8285;}
+.coaaa{color: #aaa !important;}
+.lzxfl{float: left;}
+.lzxfr{float: right;}
+.textl{text-align: left;}
+.textr{text-align: right;}
+.textc{text-align: center;}
+.ovh{overflow: hidden;}
+.clearboth{clear:both;}
+.hl25{height: 25px;line-height: 25px;}
+.hl30{height: 30px;line-height: 30px;}
+.hl35{height: 35px;line-height: 35px;}
+.hl40{height: 40px;line-height: 40px;}
+.hl45{height: 45px;line-height: 45px;}
+.hl60{height: 60px;line-height: 60px;}
+.w100{width: 100%;}
+.borteee{border-top: 1px solid #eee;}
+.borbeee{border-bottom: 1px solid #eee;}
+.bordereee{border: 1px solid #eee;}
+.bordernone{border:none;}
+.dispb{display: block;}
+.clearth:after{clear:both;font-size: 0;content: "";display: inline-block;width:100%;height: 0;} 
+/*input::-webkit-input-placeholder{color:#333;}
+*/
+
+
+/*1.注册*/
+.lzxregedit  li{
+	border-bottom: 1px solid #eee;
+
+}
+.lzxregedit  li span{
+	display: inline-block;
+	width: 25px;
+	vertical-align: middle;
+	background-repeat:no-repeat;
+	background-position: center center;
+	background-size: 15px;
+}
+.lzxregedit  li  input[type="tel"],.lzxregedit  li  input[type="text"],.lzxregedit  li  input[type="password"]{
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 10px;
+	padding: 15px 0;
+	padding-top: 20px;
+	color:#333;
+}
+#m-btn {
+    vertical-align: middle;
+    height: 30px;
+    line-height: 30px;
+    min-width: 80px;
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid #fe8285;
+    margin: auto 0;
+    color:#fe8285;
+}
+
+.agress{margin-top: 12px;display: block;clear:both;width: 100%}
+.agress span{display: inline-block;margin-left: 10px;}
+.agress input{display:none;}
+.agress input+i{border-radius: 50%;width: 14px;height: 14px;border: 1px solid #ccc;display: inline-block;position: relative;left:0px;top:3px;}
+.agress input:checked + i{border: 1px solid #fe8285;}
+.agress input:checked + i::before{content:"";width: 10px;height:10px;background-color: #fe8285;border-radius: 50%;left: 50%;top:50%;position: absolute;margin-top: -5px;margin-left: -5px;}
+.lzxsure{width: 100%;overflow: hidden;text-align: center;margin: 28px auto;}
+.lzxsure button{
+    display: block;
+    width:3.5rem;
+    height:.75rem;
+    padding-bottom:.22rem;
+    padding-top: .1rem;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+    background-image: url("../images/slice/w-btnqueren.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    margin:0 auto;
+}
+.noid{text-align: center;}
+.noid a{text-decoration: underline;}
+.lzxlogo img{margin: 50px auto 40px;width: 82px;}
+/*3.*/
+.lzxheader{background-color:#fff;height: 50px;line-height: 50px;width: 100%;padding: 10px;display: -webkit-box;display: -webkit-flex;display: flex;border-bottom: 1px solid #eee;}
+/*.headleft{width: 25px;margin-right:5px;height: 34px;line-height: 34px;font-size: 26px;color: #ffffff;text-align:center;float: left;}*/
+.headright{float:right;width:40px;height: 30px;line-height: 30px;background-position: right center;background-repeat: no-repeat;background-size: 18px auto;}
+.headcenter{display: block;-webkit-box-flex: 1;-webkit-flex: 1;flex: 1;height: 30px;line-height: 30px;text-align:center;color:#fff;font-size:15px;}
+.headsearch{background-color: #f2f2f2;border-radius: 30px;color: #fff;position: relative;text-align: left;padding: 0 10px;height: 30px;line-height: 30px;}
+.headcenter span {
+    display: inline-block;
+    width: 25px;
+    height: 30px;
+    line-height: 30px;
+    background-image: url(../images/slice/search.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 15px auto;
+    float:right;
+}
+.headcenter input{min-width:200px;height: 30px;line-height: 30px;position: absolute;left:35px;color:#333;top:50%;transform: translateY(-50%);-webkit-transform: translateY(-50%);font-size:14px;margin-left:-20px}
+.currentcity{position: relative;overflow: hidden;line-height: 30px}
+.currentcity a{display: inline-block;border: 1px solid #999;border-radius: 5px;min-width: 54px;height: 30px;line-height: 28px;color: #333;text-align: center;}
+.lzxarea li{line-height: 40px;height: 40px;border-bottom: 1px solid #eee;color: #333;}
+.lzxdetail h4{padding: 10px 10px 0 10px;}
+.lzxdetail span{color: #999;display: block;margin-bottom: 15px;height: 30px;line-height: 30px;padding-left: 10px;padding-right: 10px;}
+.lzxdetail em{color: #666;font-size:12px;display: inline-block;text-align: left;margin-right: 15px;}
+.w-ppp{margin-bottom: 30px;color: #999;line-height: 1.5;padding-left: 10px;padding-right: 10px;}
+.lzxresult li{height: 30px;line-height: 30px;color: #666;}
+.lzxdetail img{width: 100%;margin-bottom: 15px;} 
+
+/*7.支付*/
+.lzxzhifu.pay_style div label.radio_right em {background-position: left center;}
+ .lzxzhifu.pay_style div label.radio_right em+b {margin-left: 0px; }
+ .lzxzhifu .lzxpre span{min-width:70px; display: inline-block;}
+  .lzxzhifu.pay_style div .money {color: #fe8285;}
+.radio_right u{float: left;}
+.lzxpay label.check_btn2 input:checked+span i {background-color: #fe8285;}
+.lzxpay label.check_btn2 input+span {border:1px solid #ccc; }
+.lzxpay label.check_btn2 input:checked+span {border:1px solid #fe8285; }
+.paysuccess{text-align: center;}
+.paysuccess img{width: 60px;margin: 90px auto 12px auto; display: block;}
+.paysuccess p{color:#333;line-height: 1.5; text-indent: 8px;}
+.paysuccess  .turnperson a{color:#fe8285;text-decoration: underline;}
+.paysuccess  .turnperson{display:inline-block;margin: 30px auto;max-width: 150px;text-align: center;line-height: 1.5;}
+.msglist {padding-bottom: 18px;border-bottom: 1px solid #eee;margin-bottom: 20px;}
+.msglist h3 em{display: inline-block;background-color: #fe8285;color: #fff;border-radius: 3px;padding: 2px;margin-left: 3px;font-size: 10px;}
+.msglist span{display: block;height: 30px;line-height: 30px;}
+
+.lzxregedit li em{
+    display: inline-block;
+    vertical-align: middle;
+    padding: 15px 0;
+    padding-top: 20px;
+    color: #999;
+    min-width: 50px;
+}
+
+.lzxheadicon{width: 100%;height:1.2rem;text-align:center;border-top: 1px solid #eee;border-bottom: 1px solid #eee;font-size: 0;}
+.iconcont{ width: 1rem;height: 1rem;border-radius:50%;display:inline-block;margin:.1rem auto;background-repeat: no-repeat; background-position: center center;background-size: cover;}
+
+.sharecenter h4{margin-bottom: 25px;margin-top: 30px;text-align: center;}
+.sharecenter p{margin-bottom: 15px;color: #999;line-height: 1.5;padding-left: 10px;padding-right: 10px;}
+
+.righticon {position: relative;width:21px;}
+.righticon strong{display:inline-block;width:21px;height: 21px;background-position: right center;background-repeat: no-repeat;background-size:contain;position: absolute;top:50%;right:0;transform:translateY(-50%);-webkit-transform:translateY(-50%);}
+
+.scancont{width: 100%;text-align: center;}
+.scancont img{display:inline-block;margin-top: 35px;width: 75px;}
+.scancont h3{margin-top: 20px;margin-bottom: 30px;}
+
+.sharefoot{width: 100%;height: 45px;line-height: 45px;text-align: center;position: fixed;left:0;bottom:0;}
+.sharecont{display: inline-block;}
+.sharecont strong{display: inline-block;margin-right:7px; width: 31px;height:23px;background-position: center center;background-repeat: no-repeat;background-size:contain;vertical-align: middle;}
+.sharecont a{display: inline-block;border-left: 1px solid #999;padding-left: 5px;height:15px;line-height: 15px;color: #999;}

@@ -1,0 +1,252 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>分享中心</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+    <link href="~/Content/dropload.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+</head>
+<body class="bg-f2f2f2">
+    <div id="share-store">
+        <div class="head">
+            <div class="search bg-f2f2f2 clearfix">
+                <span class="input-box bg-fff">
+                    <input id="sGoodsName" type="text" placeholder="商品名字" />
+                </span>
+                <a  href="javascript:;" class="fr sGoodsName">搜索</a>
+            </div>
+            <div class="title bg-fff text-center">
+                @if (ViewBag.IsShared == 1)
+                {
+                <a href="javascripe:;" class="tl50 text-center cancel changeBtneee">取消分享此店铺</a>
+                }
+                else  
+                {
+                   <a href="javascripe:;" class="tl50 text-center cancel changeBtnsss">分享此店铺</a>
+                }
+            </div>
+        </div>
+        <div id="ShopGoodsList" class="share-on">
+           <script id="ShopGoods" type="text/html">
+            {{each list as m index}}
+            <div class="order_center bg-fff mb1r">
+                <div class="order_pred flex_dom flex_item_stretch">
+                    <a href="javascript:;" class="pred_img wid2rem">
+                        <span>
+                            <img src="{{m.sGoodsPictures}}">
+                        </span>
+                    </a>
+                    <div class="pred_con  p_relative flex_1">
+                        <h4 class="l-h-04rem fs-14 text-ellipsis-1line fc-333"><span>{{m.sGoodsName}}</span></h4>
+                        <p class="fc-fe8285 fs-16 height4">&yen;{{m.dGoodsFisrtPrice}}</p>
+                        {{if m.One!=false}}
+                        <p class="fc-999 height4">一级佣金:<span class="fs-16">&yen;{{m.OneLevel}}</span></p>
+                        {{/if}}
+                        {{if m.Sec!=false}}
+                        <p class="fc-999 height4">二级佣金:<span class="fs-16">&yen;{{m.SecLevel}}</span></p>
+                        {{/if}}
+                        {{if m.Thrid!=false}}
+                        <p class="fc-999 height4">三级佣金:<span class="fs-16">&yen;{{m.ThridLevel}}</span></p>
+                        {{/if}}
+                    </div>
+                </div>
+                <div class="price">
+                    <div class="btn fr">
+                        <a data-ID="{{m.ID}}" href="javascript:;" class="ml1r bg-fe8285 fc-fff GoodsDetail">分享赚钱</a>
+                    </div>
+                </div>
+            </div>
+          {{/each}}
+          </script>
+        </div>
+    </div>
+</body>
+</html>
+<script src="~/scripts/lib/template.js"></script>
+<script src="~/scripts/lib/client.common.js"></script>
+<script type="text/javascript">
+    $(function () {
+        scope.InitShopGoodsData();
+        scope.bingPage();
+        scope.Search();
+        scope.bingEvent();
+    });
+
+    var scope = (function (obj) { return obj; }(new function () {
+
+        var sGoodsName = "";
+
+        /*!
+        * 绑定滑动分页
+        */
+        function bingPage() {
+            common.page.initDropLoad(InitShopGoodsData);
+        }
+
+        /*!
+        * 加载店铺商品数据列表
+        */
+        function InitShopGoodsData() {
+            common.post("/Client/ShareCenter/LoadShopGoodsList",
+               {
+                   pageIndex: common.page.pagerParam.pageIndex,
+                   pageSize: common.page.pagerParam.pageSize,
+                   sGoodsName: sGoodsName,
+                   sShopId: common.getStorageItem("_sShopID_")
+               }, function (r) {
+                   $(r.Data.Result).each(function () {
+                       this.dGoodsFisrtPrice = this.dGoodsFisrtPrice.toFixed(2);
+                       /*处理商品信息**/
+                       this.sGoodsPictures = this.sGoodsPictures.split(',')[0];
+
+                       if (this.iCommissionType==1) {
+                           //佣金类型(1--固定金额，2--商品价格比例)
+                           if (this.OneLevel == 0) this.One = false;
+                           if (this.SecLevel == 0) this.Sec = false;
+                           if (this.ThridLevel == 0) this.Thrid = false;
+                           this.OneLevel = (this.dMoney * this.OneLevel*0.01).toFixed(2);
+                           this.SecLevel = (this.dMoney * this.SecLevel * 0.01).toFixed(2);
+                           this.ThridLevel = (this.dMoney * this.ThridLevel * 0.01).toFixed(2);
+
+                       }
+                       if (this.iCommissionType == 2) {
+                           //佣金类型(1--固定金额，2--商品价格比例)
+                           if (this.OneLevel == 0) this.One = false;
+                           if (this.SecLevel == 0) this.Sec = false;
+                           if (this.ThridLevel == 0) this.Thrid = false;
+                           this.OneLevel = (this.dGoodsFisrtPrice * 0.01 * this.dMoney * this.OneLevel * 0.01).toFixed(2);
+                           this.SecLevel = (this.dGoodsFisrtPrice * 0.01 * this.dMoney * this.SecLevel * 0.01).toFixed(2);
+                           this.ThridLevel = (this.dGoodsFisrtPrice * 0.01 * this.dMoney * this.ThridLevel * 0.01).toFixed(2);
+                       }
+
+                   });
+                   var json = { list: r.Data.Result }
+                   var html = template("ShopGoods", json);
+                   $('#ShopGoodsList').append(html);
+
+                   //分享事件绑定
+                   $('.GoodsDetail').on("click", function () {
+                       var sGoodsId = $(this).attr("data-ID");
+                       common.post("/Client/ShareCenter/ShareGoods", { sGoodsId: sGoodsId },
+                           function (r) {
+                               location.href = "/Client/ShopHome/RoomDetail?ID=" + sGoodsId;
+                           }, function (r) {
+                               if (r.Data == -1) {
+                                   confirm("你不是该店铺的分享客,分享商品将没有下级分享客和佣金,是否继续分享？",
+                                       { "text": "确定", fn: function () { location.href = "/Client/ShopHome/RoomDetail?ID=" + sGoodsId; } },
+                                       { "text": "取消", fn: function () { return; } });
+                               }
+                           });
+                   });
+
+                   //没有数据展示
+                   if ($('#ShopGoodsList div').length == 0) {
+                       window.noData('#ShopGoodsList');
+                   }
+                   common.page.calculationPage(r.Data.MaxCount);
+               });
+        }
+
+
+        //按商品名字搜索
+        function Search() {
+            $('.sGoodsName').on("click", function () {
+                common.page.pagerParam.pageIndex = 1;
+                common.page.pagerParam.pageSize = 10;
+                sGoodsName = $('#sGoodsName').val();
+                $('#ShopGoodsList').html("");
+                InitShopGoodsData();
+            });
+        }
+
+        //分享店铺
+        function ShareShop() {
+            var sShopID = common.getStorageItem("_sShopID_")
+            common.post("/Client/ShareCenter/ShareShop", {
+                sShopID: sShopID
+            }, function (r) {
+                alert("分享店铺成功!", null, 500);
+                $('.title a').text("取消分享此店铺");
+                $('.title a').removeClass("changeBtnsss");
+                $('.title a').addClass("changeBtneee");
+            }, function (r) {
+                if (Number(r.Data) == -1) {
+                    alert("申请失败，您已被此店冻结", null, 1000);
+                }
+                else {
+                    alert("分享店铺失败", null, 1000);
+                }
+            });
+        }
+
+
+        //取消分享
+        function CancelShare() {
+            var sShopID = common.getStorageItem("_sShopID_")
+            common.post("/Client/ShareCenter/CancelShare", {
+                sShopID: sShopID
+            }, function (r) {
+                alert("取消分享店铺成功!", null, 500);
+                $('.title a').text("分享此店铺");
+                $('.title a').addClass("changeBtnsss");
+                $('.title a').removeClass("changeBtneee");
+            }, function (r) {
+                alert("取消分享店铺失败", null, 1000);
+            });
+        }
+
+        //绑定事件
+        function bingEvent() {
+            $('.title a').on("click", function () {
+                if ($(this).text() == "取消分享此店铺")
+                    CancelShare();
+                else
+                    ShareShop();
+            })
+        }
+
+        return {
+            InitShopGoodsData: InitShopGoodsData,
+            bingPage: bingPage,
+            Search: Search,
+            bingEvent: bingEvent
+        }
+    }));
+</script>

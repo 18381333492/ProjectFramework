@@ -1,0 +1,18 @@
+﻿<link href="~/scripts/plug-in/date/laydate-master/need/laydate.css" rel="stylesheet" />
+<link href="~/scripts/plug-in/date/laydate-master/skins/molv/laydate.css" rel="stylesheet" />
+<script src="~/scripts/plug-in/date/laydate-master/laydate.dev.js"></script>
+
+<script src="~/Areas/Admin/Scripts/Mail/Index.js"></script>
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px;">
+    <form id="mail_manager_form" style="width:100%;height:100%;">
+        <table id="mail_manager_menu"></table>
+        <div id="mail_manager_tool" style="padding:15px;display:none;">
+            <span>   用户：<input type="text" class="easyui-textbox" data-options="prompt:'用户名 / 昵称',validType:['isHtmlValidate','maxLength[200]']" id="search_mail_userid"> </span> &nbsp;&nbsp;&nbsp;&nbsp;
+            <span>发送时间：<input readonly="readonly" name="dStartTime" id="start_send_mail" onclick="modules.get('cache').getCache('laydate').laydate({ istime :true})" class="textbox" style="height:20px;" /></span>---
+            <input readonly="readonly" name="dEndTime" id="end_send_mail" onclick="modules.get('cache').getCache('laydate').laydate({ istime :true})" class="textbox" style="height:20px;" />
+            &nbsp;&nbsp;&nbsp;&nbsp;
+             @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
+        </div>
+    </form>
+</div>

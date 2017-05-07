@@ -1,0 +1,37 @@
+﻿<form id="add_menu_form">
+    <style>
+        .tablestype {
+            width: 90%;
+            height: 90%;
+            margin-left: 10px;
+            margin-top: 5px;
+        }
+
+            .tablestype td {
+                text-align: right;
+                height: 30px;
+            }
+    </style>
+    <div>
+        <table class="gridtable tablestype">
+            <tr>
+                <td>菜单名称：</td>
+                <td style="text-align:left;padding-left:15px">
+                    <input type="text" name="sMenuName" class="easyui-textbox" data-options="required:true,validType:['maxLength[20]','isHtmlValidate']" missingmessage="请输入菜单名称" />
+                </td>
+            </tr>
+            <tr>
+                <td>链接地址：</td>
+                <td style="text-align:left;padding-left:15px">
+                    <input type="text" name="sUrl" class="easyui-textbox" data-options="required:false,validType:['maxLength[50]','isHtmlValidate']" missingmessage="请输入菜单连接地址" />
+                </td>
+            </tr>
+            <tr>
+                <td>排序号：</td>
+                <td style="text-align:left;padding-left:15px">
+                    <input type="text" name="iOrder" class="easyui-numberbox" data-options="required:true,min:0,validType:['isNumber']" missingmessage="请输入菜单排序编号" />
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>

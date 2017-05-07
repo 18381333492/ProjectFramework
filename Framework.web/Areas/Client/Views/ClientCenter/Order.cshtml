@@ -1,0 +1,289 @@
+﻿<!DOCTYPE html>
+<html style="height:100%">
+<head lang="en">
+    <meta charset="utf-8">
+    <title>@ViewBag.sTitle</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+    <link href="~/Content/dropload.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+</head>
+<body class="bg-f2f2f2" style="height:100%">
+    <div id="share">
+        <!--订单数据列表-->
+        <script type="text/html" id="Order">
+            {{each list as m index}}
+            <div  class="order_center bg-fff mb1r">
+                <div class="order_num flex_dom"><span class="fc-999">订单号<i class="fc-333 fs-16 ml2r">{{m.sOrderNo}}</i></span>
+                    {{if m.iState==0}}
+                    <em class="fc-fe8285">待付款</em>
+                    {{/if}}
+                    {{if m.iState==1}}
+                    <em class="fc-fe8285">待使用</em>
+                    {{/if}}
+                    {{if m.iState==2}}
+                    <em class="fc-fe8285">已核销</em>
+                    {{/if}}
+                <!--维权订单-->
+               {{if m.iState==3}}
+                    {{if m.returnState==0}}
+                    <em class="fc-fe8285">退款审核中</em>
+                    {{/if}}
+                    {{if m.returnState==1}}
+                    <em class="fc-fe8285">接受申请</em>
+                    {{/if}}
+                    {{if m.returnState==2}}
+                    <em class="fc-fe8285">退款成功</em>
+                    {{/if}}
+                    {{if m.returnState==3}}
+                    <em class="fc-fe8285">拒绝退款</em>
+                    {{/if}}
+               {{/if}}
+
+                </div>
+                <div id="{{m.ID}}" class="order_pred flex_dom flex_item_stretch">
+                    <a href="/Client/ClientCenter/OrderDetail?ID={{m.ID}}" class="pred_img wid2rem" sOrder="{{m.ID}}">
+                        <span>
+                            <img src="{{m.sGoodsPictures}}">
+                        </span>
+                    </a>
+                    <div class="pred_con  p_relative flex_1" onclick="scope.detail('{{m.ID}}')">
+                        <h4 class="l-h-04rem fs-14 text-ellipsis-2line fc-333"><span>{{m.sGoodsName}}</span></h4>
+                        <a href="javascript:;" class="car-store"><span class="bg"></span><span class="ml2r fc-000">{{m.sShopName}}</span></a>
+                        {{if m.iType==0}}
+                        <div class="l-h-03rem mt2r fc-999"><span class="fs-16">{{m.dStartTime}}-{{m.sEndTime}}</span><span class="ml2r">共{{m.Day}}晚</span></div>
+                        {{/if}}
+                        {{if m.iType==1}}
+                        <div class="l-h-03rem mt2r fc-999"><span class="fs-16">{{m.dStartTime}}</span><span class="ml2r">x{{m.iAmount}}</span></div>
+                        {{/if}}
+                        {{if m.iType==2}}
+                        <div class="l-h-03rem mt2r fc-999"><span class="fs-16">X{{m.iAmount}}</span></div>
+                        {{/if}}
+                    </div>
+                </div>
+                <div class="price">
+                    <span>共计:</span>
+                    <span class="fc-fe8285 fs-16">&yen;{{m.iTotalPrice}}</span>
+                    <div class="btn fr">
+                        {{if m.iState==0}}
+                        <a href="javascript:;"  class="ml1r fc-fe8285 OrderCancel" data-sOrderId="{{m.ID}}">取消订单</a>
+                        <a href="javascript:;"  class="ml1r bg-fe8285 fc-fff PayMoney">去付款</a>
+                        {{/if}}
+                        {{if m.iState==1}}
+                        <a href="javascript:;"  class="ml1r fc-fe8285 OrderReturn" data-sOrderId="{{m.ID}}">退款</a>
+                        {{/if}}
+                        {{if m.iState==2}}
+                            {{if m.IsAppraise==0}}
+                           <a href="javascript:;" class="ml1r bg-fe8285 fc-fff order_pingjia" parent="{{m.ID}}">待评价</a>
+                            {{/if}}
+                           {{if m.IsAppraise>0}}
+                          <a  href="/Client/ClientCenter/CheckAppraise?sOrderId={{m.ID}}" class="ml1r bg-fe8285 fc-fff">查看评价</a>
+                           {{/if}}
+                        {{/if}}
+                    </div>
+                    <input type="hidden" class="iTotalPrice" value="{{m.iTotalPrice}}" />
+                    <input type="hidden" class="sOrderNo" value="{{m.sOrderNo}}" />
+                    <input type="hidden" class="sOrderId" value="{{m.ID}}" />
+                    <input type="hidden" class="sGoodsName" value="{{m.sGoodsName}}" />
+                </div>
+            </div>
+            {{/each}}
+          </script>
+</div>
+ <input type="hidden" id="iState" name="iState"  value="@ViewBag.iState"/>
+</body>
+</html>
+<script src="~/scripts/lib/template.js"></script>
+<script src="~/scripts/lib/client.common.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var iState = Number($('#iState').val());
+        scope.InitOrderData(iState);
+        scope.bingPage();
+    });
+
+    var scope = (function (obj) { return obj; })(new function () {
+
+        /*!
+        * 绑定滑动分页
+        */
+        function bingPage() {
+            common.page.initDropLoad(InitOrderData);
+        }
+
+        /*!
+        * 初始化订单数据列表
+        */
+        function InitOrderData(iState) {
+            common.post("/Client/ClientCenter/OrderList",
+                {
+                    pageIndex: common.page.pagerParam.pageIndex,
+                    pageSize: common.page.pagerParam.pageSize,
+                    iState: iState  //-1所有的订单, 0-待付款,1-已付款,2-已核销,3-维权
+                }, function (r) {
+                    var json = { list: r.Data.Result }
+                    $(json.list).each(function () {
+                        if (this.sGoodsPictures == null) {
+                            this.sGoodsPictures = "";
+                        }
+                        this.sGoodsPictures = this.sGoodsPictures.split(',')[0]
+                        //iType:0客房 1门票 2周边产品
+                        if (this.iType == 0) {
+                            var End = new Date(this.sEndTime.replace(/-/g, "/")).getTime();
+                            var Sta = new Date(this.dStartTime.replace(/-/g, "/")).getTime();
+                            this.Day = parseInt(Math.abs(End - Sta) / 1000 / 60 / 60 / 24)+1;
+                            this.dStartTime = new Date(this.dStartTime.replace(/-/g, "/")).Format("MM/dd");
+                            this.sEndTime =new Date((new Date(this.sEndTime.replace(/-/g, "/")).getTime()+1*24*60*60*1000)).Format("MM/dd");
+                        }
+                        if (this.iType == 1) {
+                            this.dStartTime = new Date(this.dStartTime.replace(/-/g, "/")).Format("MM/dd");
+                        }
+                    });
+                    var html = template("Order", json);
+                    $('#share').append(html);
+                    bingEvent();//绑定事件
+
+                    //没有数据展示
+                    if ($('#share .order_center').length == 0) {
+                        window.noData('#share');
+                    }
+
+                    common.page.calculationPage(r.Data.MaxCount);
+                });
+        }
+
+        //绑定占位图
+        function bingImg() {
+            //没有数据展示
+            if ($('#share .order_center').length == 0) {
+                window.noData('#share');
+            }
+        }
+
+
+        /*!
+        * 订单取消
+        */
+        function OrderCancel(obj) {
+            confirm("确定要取消订单", {
+                text: "确定", fn: function () {
+                    var element = obj.target;
+                    var sOrderId = $(element).attr("data-sOrderId");
+                    common.post("/Client/ClientCenter/OrderCancel", { sOrderId: sOrderId }, function (r) {
+                        alert("取消成功!", null, 500);
+                        $(element).parents('.order_center').remove();
+                        bingImg();
+                    }, function (r) {
+                        alert(r.Msg, null, 1000);
+                    });
+                }
+            },
+                {
+                    text: "取消", fn: function () {
+                        return;
+                    }
+                }
+                );
+        }
+
+
+        /*!
+        * 订单退款
+        */
+        function OrderReturn(obj) {
+            var sOrderId = $(obj).attr("data-sOrderId");
+            common.post("/Client/ClientCenter/OrderReturn", { sOrderId: sOrderId }, function (r) {
+                alert('申请退款成功!', null, 500);
+                $(obj).parents('.order_center').remove();
+                bingImg();
+                setTimeout(function () {
+                    location.href = "/Client/ClientCenter/Order?iState=3";
+                },1000);
+            }, function (r) {
+                alert(r.Msg, null, 1000);
+            });
+        }
+
+        /**!
+        * 绑定事件
+        */
+        function bingEvent() {
+            
+            //评价订单
+            $('.order_pingjia').on("click", function () {
+                var element = $('#' + $(this).attr("parent"));
+                var html = $(element).html();
+                common.setStorageItem("order_html", { html: html });
+                location.href = "/Client/ClientCenter/OrderAppraise";
+            });
+            //绑定订单取消事件
+            $('.OrderCancel').on("click", OrderCancel);
+            //绑定订单退款事件
+            $('.OrderReturn').on("click", function () {
+                var $this = $(this);
+                confirm("确定退款吗?", { text: "是", fn: function () { OrderReturn($this) } }, { text: "否", fn: null });
+            });
+
+            //支付事件绑定
+            $('.PayMoney').on("click", function () {
+                var element = $(this).parents(".price");
+                //组装订单支付数据
+                common.setStorageItem("_PayData",
+               {
+                   sOrderId: $('.sOrderId', $(element)).val(),//订单ID
+                   sOrderNo: $('.sOrderNo', $(element)).val(),//订单编号
+                   iTotalPrice: $('.iTotalPrice', $(element)).val(),//实际支付金额
+                   sGoodsName: $('.sGoodsName', $(element)).val()
+               });
+                alert("支付页面跳转中.....",null,5000);
+                location.href = "/Client/Pay/Index";//跳转支付页面
+            });
+           
+        }
+
+        function detail(id) {
+            window.location.href = "/Client/ClientCenter/OrderDetail?ID=" + id;
+        }
+
+        return {
+            InitOrderData: InitOrderData,
+            bingPage: bingPage, detail: detail
+        }
+
+    });
+</script>

@@ -1,0 +1,1065 @@
+﻿
+<link href="~/scripts/plug-in/date/laydate-master/need/laydate.css" rel="stylesheet" />
+<link href="~/scripts/plug-in/date/laydate-master/skins/molv/laydate.css" rel="stylesheet" />
+<script src="~/scripts/plug-in/date/laydate-master/laydate.dev.js"></script>
+<script src="~/scripts/plug-in/qrcode/jquery.qrcode.min.js"></script>
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px;">
+        <form id="goods_domain_form" style="width:100%;height:100%" ;>
+            <div id="good_domain_grid_tool" style="padding:15px;">
+                    <span>类型</span>
+                    <select class="easyui-combobox" name="sGoodsCategory" style="width:100px;" data-options="panelHeight:'auto'">
+                        <option value="0">全部</option>
+                        <option value="1">客房</option>
+                        <option value="2">票务</option>
+                        <option value="3">周边</option>
+                    </select>
+                    <span>状态</span>
+                    <select class="easyui-combobox" name="bShelves" style="width:100px;" data-options="panelHeight:'auto'">
+                        <option value="-1">全部</option>
+                        <option value="1">上架</option>
+                        <option value="0">下架</option>
+                    </select>
+                    <span>上架时间</span>
+                   <input  name="dStartTime" onclick="laydate({ istime: true })" class="textbox" style="height:25px;" readonly="readonly">--
+                   <input  name="dEndTime" onclick="laydate({ istime: true })" class="textbox" style="height:25px;" readonly="readonly">
+                    <span>关键字</span>
+                    @if (ViewBag.tUserType == 0)
+                    {
+                    <input class="easyui-textbox" name="sKeyWord" data-options="iconCls:'icon-search',prompt:'商品名称/店铺名称'" style="width:150px">
+                    }
+                    else
+                    {
+                      <input class="easyui-textbox" name="sKeyWord" data-options="iconCls:'icon-search',prompt:'商品名称'" style="width:150px">
+                    }
+                    <a id="search_Goods" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜 索</a>
+                    <br /><br />
+                    @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
+              </div>
+            <table id="goods_datagrid"></table>
+        </form>
+</div>
+<!-- //用户类型 0：平台用户，1：店铺，2：合伙人-->
+<input type="hidden" id="tUserType" value="@ViewBag.tUserType" />
+<script type="text/javascript">
+    $(function () {
+        modules.get(enums.Modules.CACHE).setMenuDomain("商品列表", new function () {
+            var eui = modules.get(enums.Modules.JQUERY_EASYUI);
+            var f = modules.get(enums.Modules.FUNC);
+            var ue = modules.get(enums.Modules.BAIDU_EDITOR);
+            var grid = $("#goods_datagrid");
+            var goods = {};
+
+            /**
+             * 初始化事件
+             */
+            function initEvent() {
+                $("#goods_domain_form")
+                    .on("click", "a[data-id='Goods_Add']", AddGoods)//新增商品
+                    .on("click", "a[data-id='Goods_Edit']", EditGoods)//编辑商品
+                    .on("click", "a[data-id='Goods_Cancel']", CancelGoods)//删除商品
+                    .on("click", "a[data-id='Goods_Shelves']", IsShelves)//商品的上下架
+                    .on("click", "a[data-id='Goods_Seckill']", SetSecKill)//设置秒杀活动
+                    .on("click", "a[data-id='Goods_SpecialSale']", SetSpecialSale)//设置特价活动;
+                    .on("click", "a[data-id='Goods_SetMoney']", SetMoney)//统一设置商品佣金
+                    .on("click", "a[data-id='Goods_Prices']", SetPrices)//设置商品时间段价格
+            }
+
+            /**
+            * 商品的搜索
+            */
+            $('#search_Goods').click(function () {
+                grid.datagrid('getPager').pagination("select");
+            });
+
+            /**
+             * 添加商品
+            */
+            function AddGoods() {
+                var div = $("<div/>");
+                div.dialog({
+                    title: "添加商品",
+                    width: 900,
+                    height: 600,
+                    href: '/Admin/Goods/Add',
+                    modal: true,
+                    buttons: [
+                         {//关闭
+                             text: '关闭',
+                             iconCls: 'icon-cancel',
+                             handler: function () {
+                                 $(div).dialog("close");
+                             }
+                         },
+                        {//保存到草稿箱
+                            text: '保存到草稿箱',
+                            iconCls: 'icon-save',
+                            handler: function () {
+                                AddHander(div, "/Admin/GoodsPreviewView/Insert");
+                            }
+                        }, 
+                        {//预览
+                            text: '预览',
+                            iconCls: 'icon-save',
+                            handler: function () {
+                                AddHander(div,"/Admin/GoodsPreviewView/Insert",true);
+                            }
+                        },
+                        {//确定
+                            text: '确定',
+                            iconCls: 'icon-ok',
+                            handler: function () {
+                                AddHander(div);
+                            }
+                        }],
+                    onClose: function () {
+                        $(div).dialog("destroy");
+                        div = null;
+                    },
+                    onLoad: function () {
+                        //初始化房客的信息
+                        $('input:radio[name=sGoodsCategory]').first().click();
+                        //初始化图片控件
+                        goods.uploadImage = new UploadImage({ target: "sGoodsPictures", maxFileCount: 10, imgLst: [] });
+                        //初始化富文本编辑框
+                        goods.Editor=ue.initUE('sGoodsIntroduce');
+                    }
+                });
+            }
+
+            /*
+             添加商品处理
+            */
+            function AddHander(div,url,isPreview) {
+                if ($("#add_goods_form").form("validate")) {
+                    var json = $("#add_goods_form").serializeObject();
+                    //商品介绍
+                    json.sGoodsIntroduce = goods.Editor.getContent();
+                    if (goods.uploadImage.imageList.length > 0) {//上传图片
+                        var picture = [];
+                        $(goods.uploadImage.imageList).each(function () {
+                            picture.push(this.filePath);
+                        });
+                        json.sGoodsPictures = picture.join();
+                    }
+                    else {
+                        eui.alertErr("至少上传一张图片!");
+                        return;
+                    }
+                    //佣金
+                    if (json.iCommissionType === "1") {//固定金额
+                        json.dMoney = json.dMoney[0];
+                    }
+                    else {//商品比例
+                        json.dMoney = json.dMoney[1];
+                    }
+                    if (json.sGoodsCategory === "1") {
+                        //添加客房
+                        var html = [];
+                        $("#houseFacilities input:checkbox:checked").each(function () {
+                            html.push($(this).val());
+                        });
+                        json.sHouseOrTicketDetail = html.join();
+                    }
+                    if (json.sGoodsCategory != "3") {
+                        //添加满时间段和票务时间段
+                        var res = InstallData(json.iHouseCount, json.sGoodsCategory);
+                        if (res.state) {
+                            json.time = res.data;
+                        }
+                        else {
+                            return;
+                        }
+                    }
+                    url = url || "/Admin/Goods/Insert";
+                    f.post(url, json, function (ret) {
+                        if (isPreview) {
+                            PreviewGoods(ret.Data);
+                        }
+                        else {
+                            eui.alertInfo(ret.Msg);
+                            eui.search(grid, false);
+                            $(div).dialog("close");
+                        }
+                    }, function (ret) {
+                        eui.alertErr(ret.Msg);
+                    });
+                }
+            }
+
+
+            /**
+            * 编辑商品
+            */
+            function EditGoods() {
+                var array = grid.datagrid("getSelections");
+                if (array.length == 1) {
+                    var div = $("<div/>");
+                    div.dialog({
+                        title: "编辑商品",
+                        width: 900,
+                        height: 600,
+                        href: '/Admin/Goods/Edit?ID=' + array[0].ID,
+                        modal: true,
+                        buttons: [
+                            {//关闭
+                                text: '关闭',
+                                iconCls: 'icon-cancel',
+                                handler: function () {
+                                    $(div).dialog("close");
+                                }
+                            },
+                            {//保存到草稿箱
+                                text: '保存到草稿箱',
+                                iconCls: 'icon-save',
+                                handler: function () {
+                                    EditHander(div, "/Admin/GoodsPreviewView/Insert");
+                                }
+                            },
+                            {//预览
+                                text: '预览',
+                                iconCls: 'icon-save',
+                                handler: function () {
+                                    EditHander(div, "/Admin/GoodsPreviewView/Insert", true);
+                                }
+                            },
+                            {//确定
+                                text: '确定',
+                                iconCls: 'icon-ok',
+                                handler: function () {
+                                    EditHander(div);
+                                }
+                            }],
+                        onClose: function () {
+                            $(div).dialog("destroy");
+                            div = null;
+                        },
+                        onLoad: function () {
+                            //初始化商品分类
+                            $('#sGoodsCategory label').hide();
+                            var sGoodsCategory = Number($('input:radio[name=sGoodsCategory]').first().attr("sGoodsCategory"));
+                            $('input:radio[name=sGoodsCategory]').eq(sGoodsCategory - 1).click();
+                            $('#sGoodsCategory label').eq(sGoodsCategory - 1).show();
+                            /*
+                             *佣金的数据初始化
+                            */
+                            var dMoney = $('input:radio[name=iCommissionType]').first().attr("dMoney");
+                            var iCommissionType = Number($('input:radio[name=iCommissionType]').first().attr("iCommissionType"));
+                            if (iCommissionType == 1) $('#first_dMoney').textbox('setText', dMoney);
+                            else $('#sec_dMoney').textbox('setText', dMoney);
+                            $('input:radio[name=iCommissionType]').eq(iCommissionType - 1).click();
+
+                            //初始化图片控件
+                            var picture = $('#sGoodsPictures').attr("sGoodsPictures").split(',');
+                            var imgLst = [];
+                            if ($('#sGoodsPictures').attr("sGoodsPictures") != "") {
+                                $(picture).each(function () {
+                                    imgLst.push({ filePath: this });
+                                });
+                            }
+                            goods.uploadImage = new UploadImage({
+                                target: "sGoodsPictures", maxFileCount: 10, imgLst: imgLst, removeExistsImageHandle: function (file) {
+                                    var order;
+                                    var src = goods.uploadImage.imageList[0].filePath;
+                                    for (var i = 0; i < goods.uploadImage.imageList.length; i++) {
+                                        if (goods.uploadImage.imageList[i].filePath == file) {
+                                            order = i;
+                                            goods.uploadImage.imageList.splice(order, 1)
+                                            break;
+                                        }
+                                    }
+                                }});
+
+                            //初始化富文本编辑框
+                            var sGoodsIntroduce = $('#sGoodsIntroduce').attr("sGoodsIntroduce");
+                            goods.Editor = ue.initUE('sGoodsIntroduce', sGoodsIntroduce);
+                        }
+                    });
+                }
+                else {
+                    eui.alertErr("请选择一条数据进行操作!");
+                }
+            }
+
+            /*
+            编辑商品处理
+            */
+            function EditHander(div, url, isPreview) {
+                if ($("#edit_goods_form").form("validate")) {
+                    var json = $("#edit_goods_form").serializeObject();
+                    //商品介绍
+                    json.sGoodsIntroduce = goods.Editor.getContent();
+                    if (goods.uploadImage.imageList.length > 0) {//上传图片
+                        var picture = [];
+                        $(goods.uploadImage.imageList).each(function () {
+                            picture.push(this.filePath);
+                        });
+                        json.sGoodsPictures = picture.join();
+                    }
+                    else {
+                        eui.alertErr("至少上传一张图片!");
+                        return;
+                    }
+                    //佣金
+                    if (json.iCommissionType === "1") {//固定金额
+                        json.dMoney = json.dMoney[0];
+                    }
+                    else {//商品比例
+                        json.dMoney = json.dMoney[1];
+                    }
+                    if (json.sGoodsCategory === "1") {
+                        //添加客房
+                        var html = [];
+                        $("#houseFacilities input:checkbox:checked").each(function () {
+                            html.push($(this).val());
+                        });
+                        json.sHouseOrTicketDetail = html.join();
+                    }
+                    if (json.sGoodsCategory != "3") {
+                        //添加满时间段和票务时间段
+                        var res = InstallData(json.iHouseCount, json.sGoodsCategory);
+                        if (res.state) {
+                            json.time = res.data;
+                        }
+                        else {
+                            return;
+                        }
+                    }
+                    url = url || "/Admin/Goods/Update";
+                    f.post(url, json, function (ret) {
+                        if (isPreview) {
+                            PreviewGoods(ret.Data);
+                        }
+                        else {
+                            eui.alertInfo(ret.Msg);
+                            eui.search(grid, false);
+                            $(div).dialog("close");
+                        }
+                    }, function (ret) {
+                        eui.alertErr(ret.Msg);
+                    });
+                }
+            }
+
+
+
+            //组装满房时间段的数据和票务时间段的数据
+            function InstallData(iHouseCount,sGoodsCategory) {
+                //时间的中间变量
+                var state = true;
+                var data = [];
+                var temp_time = 0;
+                //统计所有的时间段
+                var timeStaSelect = [];//开始时间
+                var timeEndSelect = [];//结束时间
+
+                $('#FullHouseTime div').each(function () {
+                    var start = $(this).find('.start').val().replace(/-/g, "/");
+                    var end = $(this).find('.end').val().replace(/-/g, "/");
+                    var value = $(this).find('.addrequried').val();//满房数量或者票务数量
+                    timeStaSelect.push(start);
+                    timeEndSelect.push(end);
+                    if (new Date(start).toString() == "Invalid Date" || new Date(end).toString() == "Invalid Date") {
+                        eui.alertErr("时间无效,请重新选择!");
+                        state = false;
+                        return;
+                    };
+                    if (new Date(end).getTime() - new Date(start).getTime() < 0) {
+                        eui.alertErr("结束时间必须大于开始时间!");
+                        state = false;
+                        return;
+                    }
+                    if (Number(value) == 0) {
+                        eui.alertErr("请填写数量!");
+                        state = false;
+                        return;
+                    }
+                    if (sGoodsCategory == 1) {
+                        if (Number(value) > iHouseCount) {
+                            eui.alertErr("满房数量不能超过房间数量!");
+                            state = false;
+                            return;
+                        }
+                    }
+                    data.push({
+                        dStartTime: start,
+                        dEndTime: end,
+                        iFullHouseCount: value
+                    });
+                });
+                for (var i = 0; i < timeStaSelect.length; i++) {
+                    for (var j = 0; j < timeStaSelect.length; j++)
+                    {
+                        if (timeStaSelect[i] != timeStaSelect[j] && timeEndSelect[i] != timeEndSelect[j]) {
+                            //不跟自己比较
+                            if (new Date(timeEndSelect[i]) >= new Date(timeStaSelect[j]) && new Date(timeEndSelect[i]) <= new Date(timeEndSelect[j])) {
+                                eui.alertErr("时间段出现交叉,请重新选择!");
+                                state = false;
+                                break;
+                            }
+                        }
+                    }
+                    if (state == false)
+                        break;
+                }
+                return {
+                    data: JSON.stringify(data),
+                    state: state,
+                }
+            }
+
+
+            //商品草稿的预览
+            function PreviewGoods(ID) {
+                var div = $("<div/>");
+                div.dialog({
+                    title: "商品预览",
+                    width: 300,
+                    height: 300,
+                    href: '/Admin/GoodsPreviewView/GoodsPreview',
+                    modal: true,
+                    buttons: [
+                        {//关闭
+                            text: '关闭',
+                            iconCls: 'icon-cancel',
+                            handler: function () {
+                                $(div).dialog("close");
+                            }
+                        },
+                    ],
+                    onClose: function () {
+                        //预览之后删除该商品草稿
+                        var Ids = [];
+                        Ids.push("'" + ID + "'");
+                        f.post("/Admin/GoodsPreviewView/Cancel", { Ids: Ids.join() },
+                        function (ret) {
+                            $(div).dialog("destroy");
+                            div = null;
+                        }, function (ret) {
+                            eui.alertErr(ret.Msg);
+                        });
+                    },
+                    onLoad: function () {
+                        $("#code").qrcode({
+                            //render: "html",
+                            width: 160, //宽度 
+                            height: 160, //高度 
+                            text: 'http://' + window.location.host + '/Client/ShopHome/RoomDetail?ID=' + ID //任意内容 
+                        });
+                    }
+                });
+            }
+
+            /**
+            * 删除商品
+            */
+            function CancelGoods() {
+                var array = grid.datagrid("getSelections");
+                if (array.length > 0) {
+                    $.messager.confirm('确认', '确认要删除所选商品?', function (r) {
+                        if (r) {
+                            var Ids = [];
+                            $(array).each(function () {
+                                Ids.push("'" + this.ID + "'");
+                            });
+                            f.post("/Admin/Goods/Cancel", { Ids: Ids.join() },
+                            function (ret) {
+                                eui.alertInfo("删除商品成功!");
+                                eui.search(grid, false);
+                                grid.datagrid('clearSelections');
+                            }, function (ret) {
+                                eui.alertErr(ret.Msg);
+                            });
+                        }
+                    });
+                }
+                else {
+                    eui.alertErr("请选择数据进行操作!");
+                }
+            }
+
+            /**
+             * 商品的上下架
+             */
+            function IsShelves() {
+                var array = grid.datagrid("getSelections");
+                if (array.length == 1) {
+                    var type = array[0].bShelves == true ? 2 : 1;
+                    var title = array[0].bShelves == true ? "下架" : '上架';
+                    $.messager.confirm('确认', '确认要' + title + '所选商品?', function (r) {
+                        if (r) {
+                            f.post("/Admin/Goods/Shelves", { ID: array[0].ID, type: type },
+                            function (ret) {
+                                eui.alertInfo("操作成功!");
+                                eui.search(grid, false);
+                            }, function (ret) {
+                                eui.alertErr(ret.Msg);
+                            });
+                        }
+                    });
+                }
+                else {
+                    eui.alertErr("请选择一条数据进行操作!");
+                }
+            }
+
+            /**
+            * 设置商品秒杀活动
+            */
+            function SetSecKill() {
+                var array = grid.datagrid("getSelections");
+                if (array.length == 1) {
+                    if (array[0].bSeckill) {//取消秒杀
+                        $.messager.confirm('确认', '您要取消该商品的秒杀活动?', function (r) {
+                            if (r) {
+                                f.post("/Admin/Goods/SetOrCancelSeckill", { sGoodsId: array[0].ID, type: 2 },//(1 - 设置秒杀, 2 - 取消秒杀)
+                                function (ret) {
+                                    eui.alertInfo("取消秒杀活动成功!");
+                                    eui.search(grid, false);
+                                    $(div).dialog("close");
+                                }, function (ret) {
+                                    eui.alertErr(ret.Msg);
+                                });
+                            }
+                        });
+                    }
+                    else {//设置秒杀
+                        if (array[0].bSpecialSale) {
+                            eui.alertErr("该商品已参加过特价活动,不能在参加秒杀活动!");
+                            return;
+                        }
+                        var param = "sGoodsName=" + array[0].sGoodsName + '&dGoodsPrice=' + array[0].dGoodsFisrtPrice.toFixed(2) + '&sGoodsCategory=' + array[0].sGoodsCategory;
+                        var div = $("<div/>");
+                        div.dialog({
+                            title: "取消/设置商品秒杀活动",
+                            width: 450,
+                            height: 400,
+                            href: '/Admin/Goods/SeckillView?' + param,
+                            modal: true,
+                            buttons: [
+                                {//确定
+                                    text: '确定',
+                                    iconCls: 'icon-ok',
+                                    handler: function () {
+                                        //设置秒杀
+                                        if ($("#set_goodsSeckill_form").form("validate")) {
+                                            var json = $("#set_goodsSeckill_form").serializeObject();
+                                            if (parseFloat(json.dSeckillPrices) <= 0) {
+                                                eui.alertErr("秒杀价格不能为0!");
+                                                return;
+                                            }
+                                            if (new Date(json.SecKillStartTime.replace(/-/g, "/")).toString() == "Invalid Date") {
+                                                eui.alertErr("开始时间无效!");
+                                                return;
+                                            };
+                                            if (new Date(json.SecKillEndTime.replace(/-/g, "/")).toString() == "Invalid Date") {
+                                                eui.alertErr("结束时间无效!");
+                                                return;
+                                            };
+                                            if (new Date(json.SecKillEndTime.replace(/-/g, "/")) - new Date(json.SecKillStartTime.replace(/-/g, "/")) < 0) {
+                                                eui.alertErr("结束时间必须大于开始时间!");
+                                                return;
+                                            }
+                                            if (array[0].sGoodsCategory != 3) {
+                                                //使用时间段
+                                                if (new Date(json.sActivityUseStartTime.replace(/-/g, "/")).toString() == "Invalid Date") {
+                                                    eui.alertErr("使用开始时间无效!");
+                                                    return;
+                                                };
+                                                if (new Date(json.sActivityUseEndTime.replace(/-/g, "/")).toString() == "Invalid Date") {
+                                                    eui.alertErr("使用结束时间无效!");
+                                                    return;
+                                                };
+                                                if (new Date(json.sActivityUseEndTime.replace(/-/g, "/")) - new Date(json.sActivityUseStartTime.replace(/-/g, "/")) < 0) {
+                                                    eui.alertErr("使用结束时间必须大于开始时间!");
+                                                    return;
+                                                }
+                                                if (new Date(json.SecKillStartTime.replace(/-/g, "/")) - new Date(json.sActivityUseStartTime.replace(/-/g, "/")) > 0) {
+                                                    eui.alertErr("秒杀活动开始时间必需在使用时间之前!");
+                                                    return;
+                                                }
+                                                if (new Date(json.SecKillEndTime.replace(/-/g, "/")) - new Date(json.sActivityUseEndTime.replace(/-/g, "/")) > 0)     {
+                                                    eui.alertErr("秒杀活动结束时间必需在使用时间结束之前!");
+                                                    return;
+                                                }
+                                                json.sActivityUseTime = json.sActivityUseStartTime + ',' + json.sActivityUseEndTime;//使用时间段
+                                            }
+                                            json.sSeckillTime = json.SecKillStartTime + ',' + json.SecKillEndTime;//秒杀时间段
+                                            json.type = 1 //(1 - 设置秒杀, 2 - 取消秒杀)
+                                            json.sGoodsId = array[0].ID;//商品主键ID
+                                            f.post("/Admin/Goods/SetOrCancelSeckill", json,
+                                                function (ret) {
+                                                    eui.alertInfo("秒杀活动设置成功!");
+                                                    eui.search(grid, false);
+                                                    $(div).dialog("close");
+                                                }, function (ret) {
+                                                    eui.alertErr(ret.Msg);
+                                                });
+                                        }
+                                    }
+                                },
+                                  {//关闭
+                                      text: '关闭',
+                                      iconCls: 'icon-cancel',
+                                      handler: function () {
+                                          $(div).dialog("close");
+                                      }
+                                  },
+                            ],
+                            onClose: function () {
+                                $(div).dialog("destroy");
+                                div = null;
+                            },
+                        });
+                    }
+                }
+                else {
+                    eui.alertErr("请选择一条数据进行操作");
+                }
+            }
+
+            /**
+            * 设置商品特价活动
+            */
+            function SetSpecialSale() {
+                var array = grid.datagrid("getSelections");
+                if (array.length == 1) {
+                    if (array[0].bSpecialSale) {//取消特价
+                        $.messager.confirm('确认', '您要取消该商品的特价活动?', function (r) {
+                            if (r) {
+                                f.post("/Admin/Goods/SetOrCancelSpecialSale", { sGoodsId: array[0].ID, type: 2 },//(1 - 设置特价, 2 - 取消特价)
+                                function (ret) {
+                                    eui.alertInfo("取消特价活动成功!");
+                                    eui.search(grid, false);
+                                    $(div).dialog("close");
+                                }, function (ret) {
+                                    eui.alertErr(ret.Msg);
+                                });
+                            }
+                        });
+                    }
+                    else {//设置特价
+                        if (array[0].bSeckill) {
+                            eui.alertErr("该商品已参加过秒杀活动,不能在参加特价活动!");
+                            return;
+                        }
+                        var param = "sGoodsName=" + array[0].sGoodsName + '&dGoodsPrice=' + array[0].dGoodsFisrtPrice.toFixed(2) + '&sGoodsCategory=' + array[0].sGoodsCategory;
+                        var div = $("<div/>");
+                        div.dialog({
+                            title: "取消/设置商品特价活动",
+                            width: 450,
+                            height: 400,
+                            href: '/Admin/Goods/SpecialSaleView?' + param,
+                            modal: true,
+                            buttons: [
+                                {//确定
+                                    text: '确定',
+                                    iconCls: 'icon-ok',
+                                    handler: function () {
+                                        //设置特价
+                                        if ($("#set_goodsSpecialSale_form").form("validate")) {
+                                            var json = $("#set_goodsSpecialSale_form").serializeObject();
+                                            if (parseFloat(json.dSpecialSalePrices) <= 0) {
+                                                eui.alertErr("特卖价格不能为0!");
+                                                return;
+                                            }
+                                            if (new Date(json.SpecialSaleStartTime.replace(/-/g, "/")).toString() == "Invalid Date") {
+                                                eui.alertErr("开始时间无效!");
+                                                return;
+                                            };
+                                            if (new Date(json.SpecialSaleEndTime.replace(/-/g, "/")).toString() == "Invalid Date") {
+                                                eui.alertErr("结束时间无效!");
+                                                return;
+                                            };
+                                            if (new Date(json.SpecialSaleEndTime.replace(/-/g, "/")) - new Date(json.SpecialSaleStartTime.replace(/-/g, "/")) < 0) {
+                                                eui.alertErr("结束时间必须大于开始时间!");
+                                                return;
+                                            }
+                                            if (array[0].sGoodsCategory != 3) {
+                                                //使用时间段
+                                                if (new Date(json.sActivityUseStartTime.replace(/-/g, "/")).toString() == "Invalid Date") {
+                                                    eui.alertErr("使用开始时间无效!");
+                                                    return;
+                                                };
+                                                if (new Date(json.sActivityUseEndTime.replace(/-/g, "/")).toString() == "Invalid Date") {
+                                                    eui.alertErr("使用结束时间无效!");
+                                                    return;
+                                                };
+                                                if (new Date(json.sActivityUseEndTime.replace(/-/g, "/")) - new Date(json.sActivityUseStartTime.replace(/-/g, "/")) < 0) {
+                                                    eui.alertErr("使用结束时间必须大于开始时间!");
+                                                    return;
+                                                }
+                                                if (new Date(json.SpecialSaleStartTime.replace(/-/g, "/")) - new Date(json.sActivityUseStartTime.replace(/-/g, "/")) > 0) {
+                                                    eui.alertErr("特卖活动开始时间必需在使用时间之前!");
+                                                    return;
+                                                }
+                                                if (new Date(json.SpecialSaleEndTime.replace(/-/g, "/")) - new Date(json.sActivityUseEndTime.replace(/-/g, "/")) > 0) {
+                                                    eui.alertErr("特卖活动结束时间必需在使用结束时间之前!");
+                                                    return;
+                                                }
+                                                json.sActivityUseTime = json.sActivityUseStartTime + ',' + json.sActivityUseEndTime;//使用时间段
+                                            }
+                                            json.sSpecialSaleTime = json.SpecialSaleStartTime + ',' + json.SpecialSaleEndTime;//特价时间段
+                                            json.type = 1 //(1 - 设置特价, 2 - 取消特价)
+                                            json.sGoodsId = array[0].ID;//商品主键ID
+                                            f.post("/Admin/Goods/SetOrCancelSpecialSale", json,
+                                                function (ret) {
+                                                    eui.alertInfo("特价活动设置成功!");
+                                                    eui.search(grid, false);
+                                                    $(div).dialog("close");
+                                                }, function (ret) {
+                                                    eui.alertErr(ret.Msg);
+                                                });
+                                        }
+                                    }
+                                },
+                                  {//关闭
+                                      text: '关闭',
+                                      iconCls: 'icon-cancel',
+                                      handler: function () {
+                                          $(div).dialog("close");
+                                      }
+                                  },
+                            ],
+                            onClose: function () {
+                                $(div).dialog("destroy");
+                                div = null;
+                            },
+                        });
+                    }
+                }
+                else {
+                    eui.alertErr("请选择一条数据进行操作");
+                }
+            }
+
+            /**
+             * 统一设置商品佣金
+            */
+            function SetMoney() {
+                var div = $("<div/>");
+                div.dialog({
+                    title: "设置商品统一佣金",
+                    width: 450,
+                    height: 200,
+                    href: '/Admin/Goods/SetAllMoneyView',
+                    modal: true,
+                    buttons: [
+                        {//确定
+                            text: '确定',
+                            iconCls: 'icon-ok',
+                            handler: function () {
+                                if ($("#set_allMoney_form").form("validate")) {
+                                    var json = $("#set_allMoney_form").serializeObject();
+                                    //佣金
+                                    if (json.iCommissionType === "1") {//固定金额
+                                        json.dMoney = json.dMoney[0];
+                                    }
+                                    else {//商品比例
+                                        json.dMoney = json.dMoney[1];
+                                    }
+                                    f.post("/Admin/Goods/SetAllMoney", json,
+                                        function (ret) {
+                                            eui.alertInfo("统一设置分销佣金成功!");
+                                            $(div).dialog("close");
+                                        }, function (ret) {
+                                            eui.alertErr(ret.Msg);
+                                        });
+                                }
+                            }
+                        },
+                          {//关闭
+                              text: '关闭',
+                              iconCls: 'icon-cancel',
+                              handler: function () {
+                                  $(div).dialog("close");
+                              }
+                          },
+                    ],
+                    onClose: function () {
+                        $(div).dialog("destroy");
+                        div = null;
+                    },
+                    onLoad: function () {
+                        //佣金类型的选择
+                        $('input:radio[name=iCommissionType]').click(function () {
+                            if ($(this).val() === "1") {
+                                $('#first_dMoney').textbox({ required: true });
+                                $('#sec_dMoney').textbox({ required: false });
+                            } else {
+                                $('#first_dMoney').textbox({ required: false });
+                                $('#sec_dMoney').textbox({ required: true });
+                            }
+                        });
+                    }
+                });
+            }
+
+            /**
+            * 设置商品时间段价格
+            */
+            function SetPrices() {
+                var array = grid.datagrid("getSelections");
+                if (array.length == 1) {
+                    var div = $("<div/>");
+                    var param = 'dGoodsFisrtPrice=' + array[0].dGoodsFisrtPrice.toFixed(2)
+                        + '&dGoodsSecPrice=' + array[0].dGoodsSecPrice.toFixed(2)
+                        + '&dGoodsThirdPrice=' + array[0].dGoodsThirdPrice.toFixed(2);
+                    div.dialog({
+                        title: "设置商品价格管理",
+                        width: 600,
+                        height: 560,
+                        href: '/Admin/Goods/SetPricesView?' + param,
+                        modal: true,
+                        buttons: [
+                            {//确定
+                                text: '确定',
+                                iconCls: 'icon-ok',
+                                handler: function () {
+                                    var selected = $('#add_goods_form input:radio:checked');
+                                    var value = [];
+                                    if (selected.length > 0) {
+                                        $(selected).each(function () {
+                                            var Mon = $(this).attr("class");
+                                            var Day = $(this).attr("date");
+                                            var prices = $(this).val();
+                                            Mon = Mon.substr(0, Mon.length - 1);
+                                            Day = Day.substr(0, Day.length - 1);
+                                            value.push(Mon + "-" + Day + ":" + prices);
+                                        });
+                                        f.post("/Admin/Goods/SetPrices", { sGoodsId: array[0].ID, sTimePrices: value.join() },
+                                        function (ret) {
+                                            eui.alertInfo("设置成功!");
+                                            $(div).dialog("close");
+                                        }, function (ret) {
+                                            eui.alertErr(ret.Msg);
+                                        });
+                                    }
+                                    else {
+                                        eui.alertErr("请设置时间段的价格");
+                                    }
+                                }
+                            },
+                              {//关闭
+                                  text: '关闭',
+                                  iconCls: 'icon-cancel',
+                                  handler: function () {
+                                      $(div).dialog("close");
+                                  }
+                              },
+                        ],
+                        onClose: function () {
+                            $(div).dialog("destroy");
+                            div = null;
+                        },
+                        onLoad: function () {
+                            //初始化选择的价格时间段
+                            f.post("/Admin/Goods/GetSelectTimePricesByGoodsId", { sGoodsId: array[0].ID },
+                                 function (ret) {
+                                     if (ret.Data != "") {
+                                         var array = ret.Data.split(',');
+                                         $(array).each(function () {
+                                             var item = this.split('-');
+                                             var temp = item[1].split(':');
+                                             $('#add_goods_form input:radio[class=' + item[0] + '月][date=' + temp[0] + '号][value=' + temp[1] + ']').prop("checked", true);
+                                         });
+                                     }
+                                   
+                                 }, function (ret) {
+                                     eui.alertErr("数据加载失败!");
+                                 });
+                        }
+                    });
+                }
+                else {
+                    eui.alertErr("请选择一条数据进行操作!");
+                }
+            }
+
+
+            //商品详情的查看
+            function GoodsDetail(ID) {
+                    var div = $("<div/>");
+                    div.dialog({
+                        title: "查看商品",
+                        width: 900,
+                        height: 600,
+                        href: '/Admin/Goods/Detail?ID=' + ID,
+                        modal: true,
+                        buttons: [
+                            {//关闭
+                                text: '关闭',
+                                iconCls: 'icon-cancel',
+                                handler: function () {
+                                    $(div).dialog("close");
+                                }
+                            }],
+                        onClose: function () {
+                            $(div).dialog("destroy");
+                            div = null;
+                        },
+                        onLoad: function () {
+                            //初始化商品分类
+                            $('#sGoodsCategory label').hide();
+                            var sGoodsCategory = Number($('input:radio[name=sGoodsCategory]').first().attr("sGoodsCategory"));
+                            $('input:radio[name=sGoodsCategory]').eq(sGoodsCategory - 1).click();
+                            $('#sGoodsCategory label').eq(sGoodsCategory - 1).show();
+                            /*
+                             *佣金的数据初始化
+                            */
+                            var dMoney = $('input:radio[name=iCommissionType]').first().attr("dMoney");
+                            var iCommissionType = Number($('input:radio[name=iCommissionType]').first().attr("iCommissionType"));
+                            if (iCommissionType == 1) $('#first_dMoney').textbox('setText', dMoney);
+                            else $('#sec_dMoney').textbox('setText', dMoney);
+                            $('input:radio[name=iCommissionType]').eq(iCommissionType - 1).click();
+
+                            //初始化图片控件
+                            var picture = $('#sGoodsPictures').attr("sGoodsPictures").split(',');
+                            var imgLst = [];
+                            if ($('#sGoodsPictures').attr("sGoodsPictures") != "") {
+                                $(picture).each(function () {
+                                    imgLst.push({ filePath: this });
+                                });
+                            }
+                            goods.uploadImage = new UploadImage({ target: "sGoodsPictures", maxFileCount: 10, imgLst: imgLst });
+
+                            //初始化富文本编辑框
+                            var sGoodsIntroduce = $('#sGoodsIntroduce').attr("sGoodsIntroduce");
+                            goods.Editor = ue.initUE('sGoodsIntroduce', sGoodsIntroduce);
+                        }
+                    });
+            }
+
+
+
+            /**
+             * 载入商品列表
+             * param {Number} pageNumber 页码
+             * param {Number} pageSize 每页显示条数
+             */
+            function LoadGoods(pageNumber, pageSize) {
+                try {
+                    var param = $("#goods_domain_form").serializeObject();
+                    param.PageIndex/*当前页码*/ = pageNumber;
+                    param.pageSize/*每页显示条数*/ = pageSize;
+                    param.tUserType = $('#tUserType').val();//用户类型
+                    f.post("/Admin/Goods/List", param, function (r) {
+                        grid.datagrid("loadData", r.Data.Result);
+                        grid.datagrid("getPager").pagination({
+                            pageNumber: pageNumber,
+                            pageSize: pageSize,
+                            total: r.Data.MaxCount
+                        });
+                    }, function (r) {
+                        eui.alertErr(r.Msg);
+                    });
+                } catch (e) {
+                    eui.alertErr(e.message);
+                }
+            }
+
+            /**
+             * 初始化grid数据
+             */
+            function initData() {
+                var columns = [
+                    { field: 'checkbox', checkbox: true },
+                    { field: 'sGoodsName', title: '商品名称', align: 'center', width: 100 },
+                    {
+                        field: 'dGoodsFisrtPrice', title: '价格', align: 'center', width: 80, formatter: function (value) {
+                            return value.toFixed(2);
+                        }
+                    },
+                    {
+                        field: 'sGoodsCategory', title: '商品分类', align: 'center', width: 100, formatter: function (value, row, index) {
+                            switch (value) {
+                                case 1:
+                                    return "客房"; break;
+                                case 2:
+                                    return "票务"; break;
+                                case 3:
+                                    return "周边"; break;
+                                default:
+                                    break;
+                            }
+                        }
+                    },
+                    {
+                        field: 'bShelves', title: '状态', align: 'center', width: 60, formatter: function (value, row, index) {
+                            if (value == true) {
+                                return "<span style='color:green'>上架</span>";
+                            }
+                            else return "<span style='color:red'>下架</span>";
+                        }
+                    },
+                    {
+                        field: 'bSeckill', title: '参与活动?', align: 'center', width: 250, formatter: function (value, row, index) {
+                            if (!row.bSeckill && !row.bSpecialSale) {
+                                return '无';
+                            }
+                            else {
+                                var html = [];
+                                if (row.bSeckill) {
+                                    html.push('<p style="color:red;font-size:13px;margin-top:5px;">秒杀活动 秒杀价:￥' + row.dSeckillPrices.toFixed(2) + '</p>');
+                                    html.push('<p style="color:red;font-size:13px">时间段：' + row.sSeckillTime.split(',')[0] + '---' + row.sSeckillTime.split(',')[1] + '</p>');
+                                    return html.join('');
+                                }
+                                if (row.bSpecialSale) {
+                                    html.push('<p style="color:blue;font-size:13px;margin-top:5px;">特卖活动 特价:￥' + row.dSpecialSalePrices.toFixed(2) + '</p>');
+                                    html.push('<p style="color:blue;font-size:13px">时间段：' + row.sSpecialSaleTime.split(',')[0] + '---' + row.sSpecialSaleTime.split(',')[1] + '</p>');
+                                    return html.join('');
+                                }
+                            }
+                        }
+                    },
+                    { field: 'dShelvesTime', title: '上架时间', align: 'center', width: 150 }
+                ]
+                var tUserType = $('#tUserType').val();
+                if (tUserType == 0) { //平台
+                    columns.splice(6, 0, { field: 'sShopName', title: '店铺名称', align: 'center', width: 150 })
+                    columns.splice(8, 0, {
+                        field: 'ID', title: '查看', align: 'center', width: 100, formatter: function (value, row, index) {
+                            return "<a class='goodDetail' data-ID="+value+">查看</a>";
+                        }})
+                }
+                eui.bindPaginationEvent(grid, {
+                    idField: "ID",
+                    loadMsg: "正在加载...",
+                    toolbar: "#good_domain_grid_tool",
+                    fit: true,
+                    fitColumns: true,
+                    pagination: true,
+                    rownumbers: true,
+                    columns: [columns],
+                    onLoadSuccess: function () {
+                        //绑定详情事件
+                        $('.goodDetail').on("click", function () {
+                            var ID = $(this).attr("data-ID");
+                            GoodsDetail(ID);
+                        });
+                        $(".datagrid-header-check input[type=checkbox]").remove();
+                    },
+                }, LoadGoods).pagination("select");
+            }
+
+            //执行数据绑定和事件绑定
+            try {
+                initData();
+                initEvent();
+            } catch (e) {
+                eui.alertErr(e.message);
+            }
+
+
+            /**
+             * 资源的释放
+             */
+            function destroy() {
+                goods.uploadImage.destroy();
+            }
+
+            return {
+                destroy: destroy
+            }
+        });
+    });
+</script>

@@ -1,0 +1,18 @@
+﻿<script src="~/Areas/Admin/Scripts/WeChart/KeyWordReply.js"></script>
+
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px;">
+    <form id="wechart_keyword_reply_form" style="width:100%;height:100%;">
+        <table id="wechart_keyword_reply_menu"></table>
+        <div id="wechart_keyword_reply_tool" style="padding:15px;display:none;">
+            关键字回复：<label><input type="radio" value="1" name="sReplyState" id="wechart_keyword_reply_on" checked="checked" />开启</label>
+                        <label><input type="radio" value="0" name="sReplyState" id="wechart_keyword_reply_down" />关闭</label>
+           &nbsp;&nbsp;&nbsp;&nbsp; 回复类型：<label><input type="radio" value="1" name="replyType" id="wechart_keyword_replyType_on" checked="checked" />图文混合</label>
+                      <label><input type="radio" value="0" name="replyType" id="wechart_keyword_replyType_down" />纯文本</label>
+            <br /><br />
+            类型:<input class="easyui-combobox" id="wechart_keyword_reply_type">
+            关键字：<input type="text" class="easyui-textbox" data-options="prompt:'关键字',validType:['isHtmlValidate','maxLength[200]']" id="wechart_keyword_reply_search" />
+            @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
+        </div>
+    </form>
+</div>

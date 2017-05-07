@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{17FD7AD8-A20D-4F3B-B441-A9F2D2732A93}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Framework.DTO</RootNamespace>
+    <AssemblyName>Framework.DTO</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationData\Artical.cs" />
+    <Compile Include="ApplicationData\RoleMenus\UserMenuButton.cs" />
+    <Compile Include="ApplicationData\RoleMenus\UserMenu.cs" />
+    <Compile Include="ApplicationData\RoleMenus\UserRole.cs" />
+    <Compile Include="ApplicationData\RoleMenus\UserRoleMenuInfo.cs" />
+    <Compile Include="clientData.cs" />
+    <Compile Include="EHECD_ApplyDTO.cs" />
+    <Compile Include="EHECD_ArticleDTO.cs" />
+    <Compile Include="EHECD_BaseSettingDTO.cs" />
+    <Compile Include="EHECD_CategoriesDTO.cs" />
+    <Compile Include="EHECD_ClientAddressDTO.cs" />
+    <Compile Include="EHECD_ClientBalanceDetailDTO.cs" />
+    <Compile Include="EHECD_ClientCollectGoodsDTO.cs" />
+    <Compile Include="EHECD_ClientDTO.cs" />
+    <Compile Include="EHECD_CollectDTO.cs" />
+    <Compile Include="EHECD_CommentDTO.cs" />
+    <Compile Include="EHECD_CouponDetailsDTO.cs" />
+    <Compile Include="EHECD_CouponDTO.cs" />
+    <Compile Include="EHECD_CustomServiceDTO.cs" />
+    <Compile Include="EHECD_FullHouseTimeDTO.cs" />
+    <Compile Include="EHECD_FunctionMenuDTO.cs" />
+    <Compile Include="EHECD_GoodsDTO.cs" />
+    <Compile Include="EHECD_GoodsPreviewViewDTO.cs" />
+    <Compile Include="EHECD_GoodsTimePriceDTO.cs" />
+    <Compile Include="EHECD_GuestRoomTypeDTO.cs" />
+    <Compile Include="EHECD_ImagesDTO.cs" />
+    <Compile Include="EHECD_MenuButtonDTO.cs" />
+    <Compile Include="EHECD_MenuDTO.cs" />
+    <Compile Include="EHECD_OperatDTO.cs" />
+    <Compile Include="EHECD_OrdersActionHistoryDTO.cs" />
+    <Compile Include="EHECD_OrdersDTO.cs" />
+    <Compile Include="EHECD_OrdersGoodsDTO.cs" />
+    <Compile Include="EHECD_OrdersPayMethodsDTO.cs" />
+    <Compile Include="EHECD_PrivilegeDTO.cs" />
+    <Compile Include="EHECD_ReturnOrdersDTO.cs" />
+    <Compile Include="EHECD_ReturnOrdersGoodsDTO.cs" />
+    <Compile Include="EHECD_ReturnOrdersHistoryDTO.cs" />
+    <Compile Include="EHECD_RoleDTO.cs" />
+    <Compile Include="EHECD_RoomDetailDTO.cs" />
+    <Compile Include="EHECD_RoomTypeDTO.cs" />
+    <Compile Include="EHECD_ScannerDTO.cs" />
+    <Compile Include="EHECD_SendMeaasgeDTO.cs" />
+    <Compile Include="EHECD_SharedClientInfoDTO.cs" />
+    <Compile Include="EHECD_SharedGoodsDTO.cs" />
+    <Compile Include="EHECD_ShareManagerDTO.cs" />
+    <Compile Include="EHECD_ShopSetDTO.cs" />
+    <Compile Include="EHECD_SysMessageDetailDTO.cs" />
+    <Compile Include="EHECD_SysMessageDTO.cs" />
+    <Compile Include="EHECD_SystemLogDTO.cs" />
+    <Compile Include="EHECD_SystemUserDTO.cs" />
+    <Compile Include="EHECD_SystemUser_R_RoleDTO.cs" />
+    <Compile Include="EHECD_TravelsNotesDTO.cs" />
+    <Compile Include="EHECD_UpdatePartnerDTO.cs" />
+    <Compile Include="EHECD_WeCharReplyDTO.cs" />
+    <Compile Include="EHECD_WeChartMenuDTO.cs" />
+    <Compile Include="EHECD_WechartReplyTypeDTO.cs" />
+    <Compile Include="EHECD_WeChatSetDTO.cs" />
+    <Compile Include="EHECD_WithdrawCashDTO.cs" />
+    <Compile Include="EHECD_WithdrawSettingDTO.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="FieldInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ApplicationData\DataBaseInfo\CreateSQL\crebas.sql" />
+    <Content Include="ApplicationData\DataBaseInfo\CreateSQL\dbo.sql" />
+    <Content Include="ApplicationData\DTOCreator\TableToDTOGenerator.exe" />
+    <Content Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="ApplicationData\DataBaseInfo\PDM\quanxian.pdm" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,221 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>秒杀专场</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link href="~/Content/dropload.css" rel="stylesheet" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+    <style>
+        .seckillArea{height:auto;padding: 0 0.18rem 0.6rem 0.18rem;}
+    </style>
+</head>
+<body>
+    <!--seckillArea-->
+    <div class="seckillArea" id="content_div">
+    </div>
+
+    <!--模板-->
+    <script type="text/html" id="content_script">
+        {{each list as item index}}
+        <div class="seckillArea-eachBox seckillNames" data-detailID="{{item.ID}}">
+            <div class="seckillArea-eachBox-left">
+                <div class="left-floor1">{{item.sGoodsName}}</div>
+                <p class="piceBox">秒杀价:&yen;{{item.dSeckillPrices.toFixed(2)}}</p>
+                <p class="oldPice">原价:&yen;{{item.dGoodsFisrtPrice.toFixed(2)}}</p>
+                <div class="redBoxPice seckillItem" data-sSeckillTime="{{item.sSeckillTime}}">{{item.sSeckillTime | getTimes }}</div>
+                {{if item.sGoodsCategory ===1}}<!--店铺-->
+                <div class="newPrice">{{item.sActivityUseTime | formatRoomTime }}</div>
+                {{/if}}
+                {{if item.sGoodsCategory ===2}}<!--票务-->
+                <div class="newPrice">{{item.sActivityUseTime | formatTekitTime }}</div>
+                {{/if}}
+            </div>
+            <img src="{{item.sGoodsPictures | formatPic}}" class="seckillImage" alt="">
+        </div>
+        {{/each}}
+    </script>
+
+</body>
+</html>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+<script src="~/scripts/lib/client.common.js"></script>
+<script src="~/scripts/lib/template.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var obj = new GetSeckill();
+        obj.getList();
+    });
+
+    //对象构造函数
+    function GetSeckill() { }
+    //定义对象原型
+    GetSeckill.prototype = {
+        //获取列表对象数据
+        getList: function () {
+            var _this = this;
+
+            //添加模板辅助方法
+            template.helper("formatPic", _this.formatPic);
+            template.helper("getTimes", _this.timeCountdown);//倒计时时间
+            template.helper("formatRoomTime", _this.formatRoomTime);
+            template.helper("formatTekitTime", _this.formatTekitTime);
+
+            _this.loadDataCallback();
+            common.page.initDropLoad(_this.loadDataCallback);
+        },
+        //加载数据回调
+        loadDataCallback: function () {
+            var _this = this;
+            common.post("/Client/ClientHome/GetSecKillList", common.page.pagerParam, function (res) {
+
+                if (res.Data.MaxCount <= 0) {
+
+                    //无数据
+                    window.noData("#content_div");
+
+                } else {
+
+                    //判断是否显示过【无数据】，如果有则就清空html内容
+                    if ($("#content_div #allOrder_havaNoData").length > 0) $("#content_div").html("");
+
+                    common.page.calculationPage(res.Data.MaxCount);
+
+                    //渲染模板
+                    var html = template("content_script", { list: res.Data.Result });
+                    $("#content_div").append(html);
+
+                    //初始化倒计时
+                    _this.initTimeCount();
+                }
+            }, function (res) {
+                alert(res.Msg);
+            });
+        },
+        //初始化时间计时器
+        initTimeCount: function () {
+            var _this = this;
+
+            var seckillGoods = $(".seckillNames");//秒杀商品的div[]
+            var seckillItems = $(".seckillItem");//秒杀商品的秒杀时间div[]
+
+            //保存时间计时器
+            function Dictionary() {
+                this.data = new Array();
+                this.put = function (key, value) { this.data[key] = value; };
+                this.get = function (key) { return this.data[key]; };
+            };
+            var intervalsDictionary = new Dictionary();
+
+            $.each(seckillItems, function (index, item) {
+                
+                var jqItem = $(item);
+                var seckillTime = jqItem.attr("data-sSeckillTime");
+
+                //绑定商品详情的点击事件
+                $(seckillGoods[index]).bind("click", function () {
+                    var id = $(this).attr("data-detailID");
+                    window.location.href = "/Client/ShopHome/RoomDetail?ID=" + id;
+                });
+
+                //设置计时器间隔调用的方法
+                var interval = function (seckillTime, jqItem, detailID, _this) {
+                    var endTime = seckillTime.split(",")[1];
+                    
+                    //如果秒杀活动结束  取消绑定的事件并提示
+                    if (new Date(endTime + " 23:59:59") == new Date().Format("yyyy-MM-dd hh:mm:ss")) {
+
+                        $(seckillGoods[index]).unbind();//取消事件
+                        clearInterval(intervalsDictionary.get(detailID));//取消计时器
+
+                        //提示用户活动已经结束
+                        $(seckillGoods[index]).bind("click", function () {
+                            alert("活动已结束！");
+                        });
+                    };
+                    _this.changeSeckillTime(seckillTime, jqItem, _this);
+                };
+                //启动计时器
+                var detailID = $(seckillGoods[index]).attr("data-detailID");
+                var flag = setInterval(interval, 1000, seckillTime, jqItem, detailID, _this);
+                intervalsDictionary.put(detailID, flag);
+            });
+        },
+        //设置改变的时间
+        changeSeckillTime: function (timeStr, jqItem, _this) {
+            jqItem.text(_this.timeCountdown(timeStr));
+        },
+        //设置倒计时显示的时间格式（template.helper）
+        timeCountdown: function (time) {
+            //设置计时时间
+            var endTime = time.split(",")[1]+" 23:59:59";//获取结束时间
+           
+            //秒杀倒计时（毫秒值）
+            var times = new Date(endTime.replace(/-/g, "/")).getTime() - new Date().getTime();
+
+            var hours = Math.floor(times / 1000 / 60 / 60);//小时
+            var minutesTemp = Math.floor((times - (hours * 1000 * 60 * 60)) / 1000 / 60);//分钟
+            var minutes = parseInt(minutesTemp) < 10 ? "0" + minutesTemp : minutesTemp;
+            var secondsTemp = Math.floor((times - (hours * 1000 * 60 * 60) - minutesTemp * 1000 * 60) / 1000);//秒
+            var seconds = parseInt(secondsTemp) < 10 ? "0" + secondsTemp : secondsTemp;
+
+            //返回
+            return "{0}时{1}分{2}秒".format(hours, minutes, seconds);
+        },
+        //格式化入驻时间
+        formatRoomTime: function (times) {
+            if (times == null || times == "") return "";
+            var timeArr = times.split(",");
+            return "入住时间：{0}至{1}".format(new Date(timeArr[0].replace(/-/g, "/")).Format("MM-dd"), new Date(timeArr[1].replace(/-/g, "/")).Format("MM-dd"));
+        },
+
+        //票务使用时间
+        formatTekitTime: function (times) {
+
+            if (times == null || times == "") return "";
+            var timeArr = times.split(",");
+            return "使用时间：{0}至{1}".format(new Date(timeArr[0].replace(/-/g, "/")).Format("MM-dd"), new Date(timeArr[1].replace(/-/g, "/")).Format("MM-dd"));
+
+        },
+
+        //格式化图片（template.helper）
+        formatPic: function (pic) {
+             return pic.split(",")[0];
+        }
+    };
+
+</script>

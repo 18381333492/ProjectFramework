@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>特卖专场</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link href="~/Content/dropload.css" rel="stylesheet" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+</head>
+<body class="w-bgcolorF2F2F2" >
+
+   <div id="content_div"></div>
+
+    <!--列表模板-->
+    <script type="text/html" id="content_script">
+        {{each list as item index}}
+        <div class="w-width100 w-padding02 w-marginBottom01 w-bgcolorFFF w-TextClass" data-detailID="{{item.ID}}" style="padding-bottom:.1rem;">
+            <img src="{{item.sGoodsPictures | formatPic}}" alt="" />
+            <h4 class="w-font14 w-color333 w-height05">{{item.sGoodsName}}</h4>
+            <h4 class="w-font20 w-colorfe8285 w-height04">&yen;{{item.dSpecialSalePrices.toFixed(2)}} <span class="w-font12 w-color999 w-fontDelete">&yen;{{item.dGoodsFisrtPrice.toFixed(2)}}</span></h4>
+        </div>
+        {{/each}}
+    </script>
+
+</body>
+</html>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+<script src="~/scripts/lib/client.common.js"></script>
+<script src="~/scripts/lib/template.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var obj = new GetSpeacailSale();
+        obj.getList();
+    });
+
+    //对象构造函数
+    function GetSpeacailSale() { }
+    //定义对象原型
+    GetSpeacailSale.prototype = {
+        //获取列表对象数据
+        getList: function () {
+            var _this = this;
+
+            //添加辅助方法
+            template.helper("formatPic", _this.formatPic);
+
+            _this.loadDataCallback();
+            common.page.initDropLoad(_this.loadDataCallback);
+        },
+        //加载数据回调
+        loadDataCallback: function () {
+            var _this = this;
+            common.post("/Client/ClientHome/GetSpecailSaleList", common.page.pagerParam, function (res) {
+
+                if (res.Data.MaxCount <= 0) {
+
+                    // 无数据
+                    window.noData("#content_div");
+
+                } else {
+
+                    //判断是否显示过【无数据】，如果有则就清空html内容
+                    if ($("#content_div #allOrder_havaNoData").length > 0) $("#content_div").html("");
+
+                    common.page.calculationPage(res.Data.MaxCount);
+
+                    //渲染模板
+                    var html = template("content_script", { list: res.Data.Result });
+                    $("#content_div").append(html);
+
+                    //解绑事件
+                    $("#content_div .w-width100").unbind("click");
+                    //绑定商品详情的点击事件
+                    $("#content_div .w-width100").bind("click", function () {
+                        var id = $(this).attr("data-detailID");
+                        window.location.href = "/Client/ShopHome/RoomDetail?ID=" + id;
+                    });
+                }
+            }, function (res) {
+                alert(res.Msg);
+            });
+        },
+        //格式化图片（template.helper）
+        formatPic: function (pic) {
+            return pic.split(",")[0];
+        }
+    };
+
+</script>

@@ -1,0 +1,26 @@
+[
+  {
+    "outputFileName": "Areas/Admin/Scripts/Menu/Index.min.js",
+    "inputFiles": [
+      "Areas/Admin/Scripts/Menu/Index.js"
+    ]
+  },
+  {
+    "outputFileName": "scripts/lib/array.module.min.js",
+    "inputFiles": [
+      "scripts/lib/array.module.js"
+    ]
+  },
+  {
+    "outputFileName": "scripts/lib/baidu.ueditor.module.min.js",
+    "inputFiles": [
+      "scripts/lib/baidu.ueditor.module.js"
+    ]
+  },
+  {
+    "outputFileName": "Areas/Admin/Scripts/OrderManager/Index.min.js",
+    "inputFiles": [
+      "Areas/Admin/Scripts/OrderManager/Index.js"
+    ]
+  }
+]

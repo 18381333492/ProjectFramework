@@ -1,0 +1,426 @@
+﻿<link href="~/scripts/plug-in/date/laydate-master/need/laydate.css" rel="stylesheet" />
+<link href="~/scripts/plug-in/date/laydate-master/skins/molv/laydate.css" rel="stylesheet" />
+<script src="~/scripts/plug-in/date/laydate-master/laydate.dev.js"></script>
+<script src="~/scripts/plug-in/qrcode/jquery.qrcode.min.js"></script>
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px;">
+        <form id="GoodsPreviewView_domain_form" style="width:100%;height:100%" ;>
+            <div id="GoodsPreviewView_domain_grid_tool" style="padding:15px;">
+                    <span>类型</span>
+                    <select class="easyui-combobox" name="sGoodsCategory" style="width:100px;" data-options="panelHeight:'auto'">
+                        <option value="0">全部</option>
+                        <option value="1">客房</option>
+                        <option value="2">票务</option>
+                        <option value="3">周边</option>
+                    </select>
+                   <span>草稿时间段</span>
+                   <input  name="dStartTime" onclick="laydate({ istime: true })" class="textbox" style="height:25px;" readonly="readonly">--
+                   <input  name="dEndTime" onclick="laydate({ istime: true })" class="textbox" style="height:25px;" readonly="readonly">
+                    <span>关键字</span>
+                    <input class="easyui-textbox" name="sKeyWord" data-options="iconCls:'icon-search',prompt:'商品名称'" style="width:150px">
+                    <a id="search_GoodsPreviewView" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜 索</a>
+                    <br /><br />
+                    @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
+              </div>
+            <table id="GoodsPreviewView_datagrid"></table>
+        </form>
+</div>
+<script type="text/javascript">
+    $(function () {
+        modules.get(enums.Modules.CACHE).setMenuDomain("商品草稿编辑箱", new function () {
+            var eui = modules.get(enums.Modules.JQUERY_EASYUI);
+            var f = modules.get(enums.Modules.FUNC);
+            var ue = modules.get(enums.Modules.BAIDU_EDITOR);
+            var grid = $("#GoodsPreviewView_datagrid");
+            var GoodsPreviewView = {};
+
+             /**
+             * 初始化事件
+             */
+            function initEvent() {
+                $("#GoodsPreviewView_domain_form")
+                    .on("click", "a[data-id='GoodsPreviewView_Edit']", EditGoodsPreviewView)//编辑商品草稿
+                    .on("click", "a[data-id='GoodsPreviewView_Cancel']", CancelGoodsPreviewView)//删除商品草稿
+            }
+
+            /**
+            * 商品草稿的搜索
+            */
+            $('#search_GoodsPreviewView').click(function () {
+                grid.datagrid('getPager').pagination("select");
+            });
+
+            /**
+            * 编辑商品草稿
+            */
+            function EditGoodsPreviewView() {
+                var array = grid.datagrid("getSelections");
+                if (array.length == 1) {
+                    var div = $("<div/>");
+                    div.dialog({
+                        title: "编辑商品",
+                        width: 900,
+                        height: 600,
+                        href: '/Admin/GoodsPreviewView/Edit?ID=' + array[0].ID,
+                        modal: true,
+                        buttons: [
+                            {//关闭
+                                 text: '关闭',
+                                 iconCls: 'icon-cancel',
+                                 handler: function () {
+                                     $(div).dialog("close");
+                                 }
+                             },
+                            {//保存到草稿箱
+                                text: '保存到草稿箱',
+                                iconCls: 'icon-save',
+                                handler: function () {
+                                    GoodsPreviewViewHandle(div);
+                                }
+                            },
+                            {//预览
+                                text: '预览',
+                                iconCls: 'icon-save',
+                                handler: function () {
+                                    GoodsPreviewViewHandle(div,function (ID) {
+                                        PreviewGoods(ID);
+                                    });
+                                }
+                            },
+                            {//确定
+                                text: '确定',
+                                iconCls: 'icon-ok',
+                                handler: function () {
+                                    //删除该草稿
+                                    var ID=$('#GoodsPreviewView_ID').val();
+                                    var Ids = [];
+                                    Ids.push(ID);
+                                    f.post("/Admin/GoodsPreviewView/DeleteAndIndert", { ID: ID },
+                                    function (ret) {
+                                        $(div).dialog("close");
+                                        eui.alertInfo("操作成功!");
+                                        eui.search(grid, false);
+                                        grid.datagrid('clearSelections');
+                                    }, function (ret) {
+                                        eui.alertErr(ret.Msg);
+                                    });
+                                }
+                            }],
+                        onClose:function () {
+                            $(div).dialog("destroy");
+                            div = null;
+                        },
+                        onLoad: function () {
+                            //初始化商品分类
+                            $('#sGoodsCategory label').hide();
+                            var sGoodsCategory = Number($('input:radio[name=sGoodsCategory]').first().attr("sGoodsCategory"));
+                            $('input:radio[name=sGoodsCategory]').eq(sGoodsCategory - 1).click();
+                            $('#sGoodsCategory label').eq(sGoodsCategory - 1).show();
+                            /*
+                             *佣金的数据初始化
+                            */
+                            var dMoney = $('input:radio[name=iCommissionType]').first().attr("dMoney");
+                            var iCommissionType = Number($('input:radio[name=iCommissionType]').first().attr("iCommissionType"));
+                            if (iCommissionType == 1) $('#first_dMoney').textbox('setText', dMoney);
+                            else $('#sec_dMoney').textbox('setText', dMoney);
+                            $('input:radio[name=iCommissionType]').eq(iCommissionType - 1).click();
+
+                            //初始化图片控件
+                            var picture = $('#sGoodsPictures').attr("sGoodsPictures").split(',');
+                            var imgLst = [];
+                            if ($('#sGoodsPictures').attr("sGoodsPictures") !="") {
+                                $(picture).each(function () {
+                                    imgLst.push({ filePath: this });
+                                });
+                            }
+                            GoodsPreviewView.uploadImage = new UploadImage({ target: "sGoodsPictures", maxFileCount: 10, imgLst: imgLst });
+
+                            //初始化富文本编辑框
+                            var sGoodsIntroduce=$('#sGoodsIntroduce').attr("sGoodsIntroduce");
+                            GoodsPreviewView.Editor = ue.initUE('sGoodsIntroduce', sGoodsIntroduce);
+                        }
+                    });
+                }
+                else {
+                    eui.alertErr("请选择一条数据进行操作!");
+                }
+            }
+
+            
+            //商品草稿的处理
+            function GoodsPreviewViewHandle(div,Preview) {
+                if ($("#edit_GoodsPreviewView_form").form("validate")) {
+                    var json = $("#edit_GoodsPreviewView_form").serializeObject();
+                    //商品介绍
+                    json.sGoodsIntroduce = GoodsPreviewView.Editor.getContent();
+                    if (GoodsPreviewView.uploadImage.imageList.length > 0) {//上传图片
+                        var picture = [];
+                        $(GoodsPreviewView.uploadImage.imageList).each(function () {
+                            picture.push(this.filePath);
+                        });
+                        json.sGoodsPictures = picture.join();
+                    }
+                    else {
+                        eui.alertErr("至少上传一张图片!");
+                        return;
+                    }
+                    //佣金
+                    if (json.iCommissionType === "1") {//固定金额
+                        json.dMoney = json.dMoney[0];
+                    }
+                    else {//商品比例
+                        json.dMoney = json.dMoney[1];
+                    }
+                    if (json.sGoodsCategory === "1") {
+                        //添加客房
+                        var html = [];
+                        $("#houseFacilities input:checkbox:checked").each(function () {
+                            html.push($(this).val());
+                        });
+                        json.sHouseOrTicketDetail = html.join();
+                    }
+                    if (json.sGoodsCategory != "3") {
+                        //添加满时间段和票务时间段
+                        var res = InstallData(json.iHouseCount, json.sGoodsCategory);
+                        if (res.state) {
+                            json.time = res.data;
+                        }
+                        else {
+                            return;
+                        }
+                    }
+                    f.post("/Admin/GoodsPreviewView/Update", json,
+                        function (ret) {
+                            if (Preview) {
+                                Preview(ret.Data);
+                            }
+                            else {
+                                eui.alertInfo("商品草稿编辑成功");
+                                eui.search(grid, false);
+                                $(div).dialog("close");
+                            }
+                        }, function (ret) {
+                            eui.alertErr(ret.Msg);
+                        });
+                }
+            }
+
+            //商品草稿的预览
+            function PreviewGoods(ID) {
+                var div = $("<div/>");
+                div.dialog({
+                    title: "商品预览",
+                    width: 300,
+                    height: 300,
+                    href: '/Admin/GoodsPreviewView/GoodsPreview',
+                    modal: true,
+                    buttons: [
+                        {//关闭
+                            text: '关闭',
+                            iconCls: 'icon-cancel',
+                            handler: function () {
+                                $(div).dialog("close");
+                            }
+                        },
+                    ],
+                    onClose: function () {
+                        $(div).dialog("destroy");
+                        div = null;
+                    },
+                    onLoad: function () {
+                        $("#code").qrcode({
+                            //render: "html",
+                            width: 160, //宽度 
+                            height: 160, //高度 
+                            text: 'http://' + window.location.host + '/Client/ShopHome/RoomDetail?ID=' + ID //任意内容 
+                        });
+                    }
+                });
+            }
+
+            //组装满房时间段的数据和票务时间段的数据
+            function InstallData(iHouseCount, sGoodsCategory) {
+                //时间的中间变量
+                var state = true;
+                var data = [];
+                var temp_time = 0;
+                //统计所有的时间段
+                var timeStaSelect = [];//开始时间
+                var timeEndSelect = [];//结束时间
+
+                $('#FullHouseTime div').each(function () {
+                    var start = $(this).find('.start').val().replace(/-/g, "/");
+                    var end = $(this).find('.end').val().replace(/-/g, "/");
+                    var value = $(this).find('.addrequried').val();
+                    timeStaSelect.push(start);
+                    timeEndSelect.push(end);
+                    if (new Date(start).toString() == "Invalid Date" || new Date(end).toString() == "Invalid Date") {
+                        eui.alertErr("时间无效,请重新选择!");
+                        state = false;
+                        return;
+                    };
+                    if (new Date(end).getTime() - new Date(start).getTime() < 0) {
+                        eui.alertErr("结束时间必须大于开始时间!");
+                        state = false;
+                        return;
+                    }
+                    if (Number(value) == 0) {
+                        eui.alertErr("请填写数量!");
+                        state = false;
+                        return;
+                    }
+                    if (sGoodsCategory == 1) {
+                        if (Number(value) > iHouseCount) {
+                            eui.alertErr("满房数量不能超过房间数量!");
+                            state = false;
+                            return;
+                        }
+                    }
+                    data.push({
+                        dStartTime: start,
+                        dEndTime: end,
+                        iFullHouseCount: value
+                    });
+                });
+                for (var i = 0; i < timeStaSelect.length; i++) {
+                    for (var j = 0; j < timeStaSelect.length; j++) {
+                        if (timeStaSelect[i] != timeStaSelect[j] && timeEndSelect[i] != timeEndSelect[j]) {
+                            //不跟自己比较
+                            if (new Date(timeEndSelect[i]) >= new Date(timeStaSelect[j]) && new Date(timeEndSelect[i]) <= new Date(timeEndSelect[j])) {
+                                eui.alertErr("时间段出现交叉,请重新选择!");
+                                state = false;
+                                break;
+                            }
+                        }
+                    }
+                    if (state == false)
+                        break;
+                }
+                return {
+                    data: JSON.stringify(data),
+                    state: state,
+                }
+            }
+
+
+
+
+            /**
+            * 删除商品草稿
+            */
+            function CancelGoodsPreviewView() {
+                var array = grid.datagrid("getSelections");
+                if (array.length > 0) {
+                    $.messager.confirm('确认', '确认要删除所选商品草稿?', function (r) {
+                        if (r) {
+                            var Ids = [];
+                            $(array).each(function () {
+                                Ids.push("'" + this.ID + "'");
+                            });
+                            f.post("/Admin/GoodsPreviewView/Cancel", { Ids: Ids.join() },
+                            function (ret) {
+                                eui.alertInfo("操作成功!");
+                                eui.search(grid, false);
+                                grid.datagrid('clearSelections');
+                            }, function (ret) {
+                                eui.alertErr(ret.Msg);
+                            });
+                        }
+                    });
+                }
+                else {
+                    eui.alertErr("请选择数据进行操作!");
+                }
+            }
+
+
+
+
+            /**
+             * 载入商品草稿列表
+             * param {Number} pageNumber 页码
+             * param {Number} pageSize 每页显示条数
+             */
+            function LoadGoodsPreviewView(pageNumber, pageSize) {
+                try {
+                    var param = $("#GoodsPreviewView_domain_form").serializeObject();
+                    param.PageIndex/*当前页码*/ = pageNumber;
+                    param.pageSize/*每页显示条数*/ = pageSize;
+                    f.post("/Admin/GoodsPreviewView/List", param, function (r) {
+                        grid.datagrid("loadData", r.Data.Result);
+                        grid.datagrid("getPager").pagination({
+                            pageNumber: pageNumber,
+                            pageSize: pageSize,
+                            total: r.Data.MaxCount
+                        });
+                    }, function (r) {
+                        eui.alertErr(r.Msg);
+                    });
+                } catch (e) {
+                    eui.alertErr(e.message);
+                }
+            }
+
+            /**
+             * 初始化grid数据
+             */
+            function initData() {
+                eui.bindPaginationEvent(grid, {
+                    idField: "ID",
+                    loadMsg: "正在加载...",
+                    toolbar: "#GoodsPreviewView_domain_grid_tool",
+                    fit: true,
+                    fitColumns: true,
+                    pagination: true,
+                    rownumbers: true,
+                    columns: [[
+                    { field: 'checkbox', checkbox: true },
+                    { field: 'sGoodsName', title: '商品名称', align: 'center', width: 100 },
+                    {
+                        field: 'dGoodsFisrtPrice', title: '价格', align: 'center', width: 80, formatter(value) {
+                            return value.toFixed(2);
+                        }
+                    },
+                    {
+                        field: 'sGoodsCategory', title: '商品分类', align: 'center', width: 100, formatter: function (value, row, index) {
+                            switch (value) {
+                                case 1:
+                                    return "客房";
+                                case 2:
+                                    return "票务";
+                                case 3:
+                                    return "周边";
+                                default:
+                                    break;
+                            }
+                        }
+                    },
+                    { field: 'dShelvesTime', title: '草稿时间', align: 'center', width: 150 },
+                    ]],
+                    onLoadSuccess: function () {
+                        $(".datagrid-header-check input[type=checkbox]").remove();
+                    },
+                }, LoadGoodsPreviewView).pagination("select");
+            }
+
+            //执行数据绑定和时间绑定
+            try {
+                initData();
+                initEvent();
+            } catch (e) {
+                eui.alertErr(e.message);
+            }
+
+
+            /**
+             * 资源的释放
+             */
+            function destroy() {
+                GoodsPreviewView.uploadImage.destroy();
+            }
+
+            return {
+                destroy: destroy
+            }
+        });
+    });
+</script>

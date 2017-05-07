@@ -1,0 +1,17 @@
+﻿<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+<script src="~/Areas/Admin/Scripts/TravelNote/Index.js"></script>
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px;">
+    <form id="travelNote_index_form" style="width:100%;height:100%" ;>
+        <div id="travelNote_index_tool_div" style="padding:15px;">
+            <span>模糊查询：</span>
+            <input id="travelNote_index_input_seach_where" name="sWhere" class="easyui-textbox" data-options="prompt:'游记标题/上传人/民宿名'" style="width:300px">
+            &emsp;&emsp;
+            <a id="travelNote_index_btn_seach" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+            <br /><br />
+            @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
+        </div>
+
+        <table id="travelNote_index_datagrid"></table>
+    </form>
+</div>

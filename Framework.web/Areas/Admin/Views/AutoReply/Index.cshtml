@@ -1,0 +1,96 @@
+﻿
+<script src="~/Areas/Admin/Scripts/WeChart/AutoReply.js"></script>
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form id="add_auto_reply_form" style="width:100%;height:100%">
+        <div  style="width:100%">
+            <table class="styletable">
+                <tr>
+                    <td>
+                       开启/关闭自动回复
+                    </td>
+                    <td>
+                        <label><input type="radio" value="1" name="reply_on" id="add_auto_reply_on" checked="checked" />开启</label>
+                        <label><input type="radio" value="0" name="reply_on" id="add_auto_reply_down" />关闭</label>
+                   
+                    </td>
+                </tr>
+                <tr>
+                    <td>回复内容设置</td>
+                    <td>
+                        <label><input type="radio" value="0" name="sReplyState" id="add_auto_reply_text" checked="checked" />文本</label>
+                        <label><input type="radio" value="1" name="sReplyState" id="add_auto_reply_picture" />图文</label>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <div  id="dd_auto_reply_text_content_div">
+                <table class="styletable" style="height: 340px;width:100%">
+                    <tr>
+                        <td>
+                            <textarea name="sContent1" style="height: 340px; width: 99%;" id="add_auto_reply_picture_scontent_add"></textarea>
+                        </td>
+                    </tr>
+                  
+                </table>
+            </div>
+        </div>
+        <div style=" display: none;" id="add_auto_reply_picture_content_div">
+            <table class="styletable" style="height: 340px;width:100%;">
+                <tr>
+                    <td>
+                        标题：
+                    </td>
+                    <td>
+                        <div id="auto_reply_title"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td> 图片外链</td>
+                    <td>
+                        <div id="add_auto_reply_images">
+                            <div id="add_auto_reply_upload" class="uploader">
+                                <div class="queueList" style="">
+                                    <div id="dndArea" class="placeholder">
+                                        <div id="filePicker"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        商城链接：
+                    </td>
+                    <td>
+                        <div id="auto_reply_shopurl"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        内容：
+                    </td>
+                    <td>
+                        <div id="auto_reply_content"></div>
+                    </td>
+                </tr>
+                
+            </table>
+            <input type="hidden" id="keyword_reply_id" name="ID" />
+        </div>
+       <div>
+           <table class="styletable" style="width:100%">
+               <tr>
+                   <td colspan="2" style="text-align:center">
+                       <a id="add_auto_reply_btn_save" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
+                   </td>
+               </tr>
+           </table>
+       </div>
+    </form>
+</div>
+

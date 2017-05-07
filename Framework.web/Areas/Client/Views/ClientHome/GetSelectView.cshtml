@@ -1,0 +1,723 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>友客分享</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link href="~/Content/dropload.css" rel="stylesheet" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="main_content">
+
+        <section class="top_erea" style="height:3rem">
+            <div class="w-positionFIT-Z30 wid100 back-fff">
+                <!--搜索框-->
+                <div class="w-paddingLeftRight02 w-borderBeee w-flex w-width100  w-bgcolorFFF" style="padding-top:.2rem;padding-bottom: .2rem;">
+                    <div class="w-Lineinput w-Lineinput2 w-flexitem1">
+                        <input type="text" class="w-floatleft w-placeholder-color333" id="input_select_where" value="@ViewBag.sGoodsName">
+                        <b id="btn_select"></b>
+                    </div>
+                    <h4 class="w-height06 w-colorfe8285 w-font14 w-textalignR" id="btn_cancle_return_home" style="width:.7rem;">取消</h4>
+                </div>
+
+                <!--tab 民宿-0 票务-1 周边-2-->
+                <div class="nav_choice flex_dom border-b-eee" data-type="@ViewBag.Type">
+                    <a href="javascript:">
+                        <label>
+                            <input type="radio" name="nav1" value="0" checked="checked">
+                            <span>民宿</span>
+                        </label>
+                    </a>
+                    <a href="javascript:">
+                        <label>
+                            <input type="radio" value="1" name="nav1">
+                            <span>票务</span>
+                        </label>
+                    </a>
+                    <a href="javascript:">
+                        <label>
+                            <input type="radio" value="2" name="nav1">
+                            <span>周边</span>
+                        </label>
+                    </a>
+                </div>
+
+                <div class="filter_box  border-b-eee">
+                    <input type="radio" name="filter" class="hide" id="filter_close" />
+                    <div class="flex_dom ">
+
+                        <a href="javascript:" class="flex_1">
+                            <label>
+                                <input type="radio" name="filter">
+                                <span>地区选择</span>
+                                <label for="filter_close"></label>
+                                <div class="filter_show addressDiv">
+                                    <label for="filter_close" id="selectAddress_div">
+
+
+                                        <!--地区选择模板-->
+                                        <script type="text/html" id="selectAddress_script">
+                                            <ul>
+                                                <li data-addressID="-1" class="active">全部</li>
+                                                {{each list as item index}}
+                                                <li data-addressID="{{item.ID}}">{{item.sCounty}}</li>
+                                                {{/each}}
+                                            </ul>
+
+                                        </script>
+
+                                    </label>
+                                </div>
+                            </label>
+                        </a>
+                        <a href="javascript:" class="flex_1">
+                            <label>
+                                <input type="radio" name="filter">
+                                <span>距离优先</span>
+                                <label for="filter_close"></label>
+                                <div class="filter_show others">
+                                    <label for="filter_close">
+                                        <ul>
+                                            <li class="active" data-othersType="0">距离优先</li>
+                                            <li data-othersType="1">好评优先</li>
+                                            <li data-othersType="2">价格从高到底</li>
+                                            <li data-othersType="3">价格从低到高</li>
+                                        </ul>
+                                    </label>
+                                </div>
+
+                            </label>
+                        </a>
+                        <a href="javascript:" class="flex_1">
+                            <label>
+                                <input type="radio" name="filter">
+                                <span>筛选</span>
+                                <label for="filter_close"></label>
+                                <div class="filter_show" style="overflow-y:auto;padding-bottom:3rem;">
+                                    <label for="filter_close">
+                                        <div class="price pad10 border-b-eee p-b-15">
+                                            <h4 class="m-b-5">价格筛选</h4>
+                                            <div class="price_list ">
+                                                <label>
+                                                    <input type="radio" name="price1" value="-1&-1" checked="checked" />
+                                                    <span>不限</span>
+                                                </label>
+                                                <label>
+                                                    <input type="radio" name="price1" value="0&200" />
+                                                    <span>0-200</span>
+                                                </label>
+                                                <label>
+                                                    <input type="radio" name="price1" value="200&500" />
+                                                    <span>200-500</span>
+                                                </label>
+                                                <label>
+                                                    <input type="radio" name="price1" value="500&1000" />
+                                                    <span>500-1000</span>
+                                                </label>
+                                                <label>
+                                                    <input type="radio" name="price1" value="1000&2000" />
+                                                    <span>1000-2000</span>
+                                                </label>
+                                                <label>
+                                                    <input type="radio" name="price1" value="2000&2000" />
+                                                    <span>2000以上</span>
+                                                </label>
+                                            </div>
+                                            <div class="price_span font12 l-h-25 color-666">
+                                                自定义区间：<input type="text" id="customer_start_price" /> - <input type="text" id="customer_end_price" />
+                                            </div>
+                                        </div>
+
+                                        <div class="room_style pad10">
+                                            <h4 class="m-b-5">房型筛选</h4>
+                                            <div class="room_list">
+                                                <label id="roomTypeContent_div">
+
+                                                    <!--房型模板-->
+                                                    <script type="text/html" id="roomTypeContent_script">
+                                                        <label>
+                                                            <input type="radio" name="room" data-id="-1" checked="checked" />
+                                                            <span>不限</span>
+                                                        </label>
+                                                        {{each list as item list}}
+                                                        <label>
+                                                            <input type="radio" name="room" data-id="{{item.ID}}" />
+                                                            <span>{{item.sRoomTypeName}}</span>
+                                                        </label>
+                                                        {{/each}}
+                                                    </script>
+
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="ok_btn">
+                                            <span>确定</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </label>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <section class="m-t-10" id="selectList_div"></section>
+
+        <!--店铺搜索结果模板-->
+        <script type="text/html" id="storeList_script">
+            {{each list as item index}}
+            <div class="w-padding02  w-houseBox  back-fff " data-id="{{item.sShopID}}">
+                <div class="w-borderBeee w-position" style="padding-bottom: .2rem">
+                    <div class="img_show">
+                        {{if item.sImagePath==null||item.sImagePath==""}}
+                        <img src="/Areas/Client/Content/images/noimg.png" alt="" class="w-marginBottom02" />
+                        {{/if}}
+                        {{if item.sImagePath!=null||item.sImagePath!=""}}
+                        <img src="{{item.sImagePath}}" alt="" class="w-marginBottom02" />
+                        {{/if}}
+                        <span>&yen;{{item.dGoodsPrice.toFixed(2)}}起</span>
+                    </div>
+                    <h4 class="w-font18 w-color333 w-marginBottom01">{{item.sShopName}}</h4>
+                    <h4 class="w-marginBottom01">
+                        <span class="w-floatleft w-font14 w-colorfe8285 w-marginRight01">{{item.iCommentScore | setDefalutScore}}分</span>
+                        <div class="w-PLstar">
+                            <input type="hidden" value="{{item.iCommentScore | setBlingScore}}" />
+                        </div>
+                    </h4>
+                    <h4 class="w-font12 w-color999 w-dingwei">{{item.sAddress}}</h4>
+                </div>
+            </div>
+            {{/each}}
+        </script>
+
+        <!--票务搜索结果模板-->
+        <script type="text/html" id="ticketeList_script">
+            {{each list as item index}}
+            <div class="w-padding02  w-houseBox  back-fff " data-id="{{item.ID}}">
+                <div class="w-borderBeee w-position" style="padding-bottom: .2rem">
+                    <div class="img_show">
+                        <img src="{{item.sImagePath | formatPic}}" alt="" class="w-marginBottom02" />
+                        <span>&yen;{{item.dGoodsPrice.toFixed(2)}}</span>
+                    </div>
+                    <h4 class="w-font18 w-color333 w-marginBottom01">{{item.sGoodsName}}</h4>
+                    <div class="ininin">{{item.sHouseOrTicketDetail}}</div>
+                    <h4 class="w-marginBottom01">
+                        <span class="w-floatleft w-font14 w-colorfe8285 w-marginRight01">{{item.iCommentScore | setDefalutScore}}分</span>
+                        <div class="w-PLstar">
+                            <input type="hidden" value="{{item.iCommentScore | setBlingScore}}" />
+                        </div>
+                    </h4>
+                    <h4 class="w-font12 w-color999 w-dingwei">{{item.sAddress}}</h4>
+                </div>
+            </div>
+            {{/each}}
+        </script>
+
+        <!--周边搜索结果模板-->
+        <script type="text/html" id="arroundList_script">
+            {{each list as item index}}
+            <div class="w-padding02  w-houseBox  back-fff " data-id="{{item.ID}}">
+                <div class="w-borderBeee w-position" style="padding-bottom: .2rem">
+                    <div class="img_show">
+                        <img src="{{item.sImagePath | formatPic}}" alt="" class="w-marginBottom02" />
+                        <span>&yen;{{item.dGoodsPrice.toFixed(2)}}</span>
+                    </div>
+                    <h4 class="w-font18 w-color333 w-marginBottom01">{{item.sGoodsName}}</h4>
+                    <h4 class="w-marginBottom01">
+                        <span class="w-floatleft w-font14 w-colorfe8285 w-marginRight01">{{item.iCommentScore | setDefalutScore}}分</span>
+                        <div class="w-PLstar">
+                            <input type="hidden" value="{{item.iCommentScore | setBlingScore}}" />
+                        </div>
+                    </h4>
+                    <h4 class="w-font12 w-color999 w-dingwei">{{item.sAddress}}</h4>
+                </div>
+            </div>
+            {{/each}}
+        </script>
+
+
+    </div>
+</body>
+</html>
+
+<script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+<script src="~/scripts/lib/template.js"></script>
+<script src="~/scripts/lib/client.common.js"></script>
+
+<script>
+
+    function HomeDomain() { }
+
+    HomeDomain.prototype = new function () {
+
+        /**
+        * 初始化
+        */
+        function init() {
+
+            // 前端的事件
+            initFrontEvent();
+
+            // 獲取入口類型 0：民宿 1：票務 2：周邊
+            var type = $(".nav_choice.flex_dom.border-b-eee").attr("data-type");
+
+            // 加载地区选择
+            loadAddress();
+
+            //设置头部选中的选项卡
+            $(".nav_choice.flex_dom.border-b-eee").find("input[value='{0}']".format(type)).prop("checked", true);
+
+            loadSelectWhere(type);
+
+            //绑定加载查询结果数据
+            initBindSelect(type);
+            return this;
+        }
+
+        /**
+        *初始化前端的事件
+        */
+        function initFrontEvent() {
+
+            //#region 绑定【搜索图标】进行搜索
+            $("#btn_select").on("click", function () {
+                debugger
+                //获取当前选中的选项卡类型
+                var type = $(":radio[name=nav1]:checked").val();
+
+                //初始化相应数据
+                initBindSelect(type);
+            });
+            //#endregion
+
+            //绑定【取消按钮】返回首页事件
+            $("#btn_cancle_return_home").on("click", function () {
+                //common.history.setBackURL("/Client/ClientHome");
+                window.location.href = "/Client/ClientHome";
+            });
+
+            //切换【距离优先】【好评优先】【价格】的排序
+            $(".filter_show.others >label ul li").click(function () {
+
+                //#region 样式变化
+                $(this).addClass("active").siblings().removeClass("active");
+                $(this).parents(".flex_1").find(">label>span").text($(this).text());
+                //#endregion
+
+                //選項卡類型
+                var type = $(':radio[name=nav1]:checked').val();
+
+                //加载对应查询数据
+                initBindSelect(type);
+            });
+
+            //选项卡切换 【名宿 票务 周边】
+            $(".nav_choice.flex_dom.border-b-eee input").on("click", function () {
+
+                var type = $(this).val();
+                loadSelectWhere(type);//加载【筛选】条件
+                initBindSelect(type);//加载对应查询数据
+            });
+
+            //【筛选】确定
+            $(".ok_btn").on("click", function () {
+
+                var type = $(':radio[name=nav1]:checked').val();
+                initBindSelect(type);
+            });
+        }
+
+        /**
+        * 加載篩選房型數據
+        */
+        function loadSelectWhere(value) {
+
+            // 民宿才去查
+            if (value === "0") {
+
+                //显示房型选择
+                $(".room_style.pad10").css({ "display": "block" });
+
+                common.post("/Client/ClientHome/GetRoomTypeList", null, function (res) {
+
+                    // 獲取html
+                    var html = template("roomTypeContent_script", { list: res.Data });
+
+                    $("#roomTypeContent_div").html(html);
+
+                }, function (res) {
+                    alert(res.Msg);
+                });
+            } else {
+
+                //由于价格区间固定 无需加载
+                $(".room_style.pad10").css({ "display": "none" });//隐藏房型选择
+            }
+        }
+
+        /**
+        * 加载地区数据
+        */
+        function loadAddress() {
+
+            var scity = window.localStorage.getItem("_locationInfo");
+            if (null == scity) {
+                scity = '';
+            } else {
+                scity = JSON.parse(window.localStorage.getItem("_locationInfo")).city;
+            }
+
+            // 加载地区数据(**--sCity为当前定位的城市--**)
+            common.post("/Client/ClientHome/GetCountryByCityList", { sCity: scity }, function (res) {
+
+                // 渲染模板
+                var html = template("selectAddress_script", { list: res.Data });
+
+                // 生成html
+                $("#selectAddress_div").html(html);
+
+                // 綁定切換地區事件
+                $(".filter_show.addressDiv >label ul li").click(function () {
+
+                    $(this).addClass("active").siblings().removeClass("active");
+                    $(this).parents(".flex_1").find(">label>span").text($(this).text());
+
+                    var type = $(":radio[name=nav1]:checked").val();
+
+                    // 加载对应查询数据
+                    initBindSelect(type);
+                });
+            }, function (res) {
+                alert(res.Msg);
+            });
+        }
+
+        /**
+        * 初始化綁定數據方法
+        */
+        function initBindSelect(type) {
+
+            // 设置默认评分5分
+            template.helper("setDefalutScore", function (score) {
+                if (score == null || score == "" || Number(score) <= 0)
+                { return 5; } else { return score; };
+            });
+            template.helper("setBlingScore", function (score) {
+                if (score == null || score == "" || Number(score) <= 0)
+                { return 5; } else { return parseInt(score); };
+            });
+
+            //清空之前的数据
+            $("#selectList_div").html("");
+
+            switch (type) {
+
+                // 民宿
+                case "0":
+
+                    common.page.initDropLoad(loadStoreDataCallback);
+                    var flag = loadStoreDataCallback();
+                    if (flag == false) return alert("请输入数字");
+
+                    break;
+
+                    // 票务
+                case "1":
+
+                    //生成模板輔助方法
+                    template.helper("formatPic", function (pic) { return pic.split(",")[0]; });
+
+                    common.page.initDropLoad(loadTicketDataCallback);
+                    var flag = loadTicketDataCallback();
+                    if (flag == false) return alert("请输入数字");
+
+                    break;
+
+                case "2"://周边
+
+                    //生成模板輔助方法
+                    template.helper("formatPic", function (pic) { return pic.split(",")[0]; });
+
+                    common.page.initDropLoad(loadAroundDataCallback);
+                    var flag = loadAroundDataCallback();
+                    if (flag == false) return alert("请输入数字");
+
+                    break;
+            }
+        }
+
+        /**
+        *載入民宿數據
+        */
+        function loadStoreDataCallback() {
+
+            //获取查询条件
+            var param = getSelectWhere();
+
+            if (param == null) return false;
+
+            //房型
+            var type = $(":radio[name=room]:checked").attr("data-id");
+
+            param.iRoomType = type === undefined ? "" : type;
+
+            //执行查询
+            common.post("/Client/ClientHome/GetStoreSelectResult", param, function (res) {
+
+                if (res.Data.MaxCount === 0) {
+
+                    //无数据
+                    window.noData("#selectList_div");
+                } else {
+
+                    //判断是否显示过【无数据】，如果有则就清空html内容
+                    if ($("#selectList_div #allOrder_havaNoData").length > 0) $("#selectList_div").html("");
+
+                    //有数据
+                    common.page.calculationPage(res.Data.MaxCount);
+
+                    //渲染模板
+                    var storeHtml = template("storeList_script", { list: res.Data.Result });
+
+                    $("#selectList_div").append(storeHtml);
+
+                    //解绑事件
+                    $("#selectList_div .w-padding02.w-houseBox.back-fff").unbind("click");
+                    //绑定进入店铺详情事件
+                    $("#selectList_div .w-padding02.w-houseBox.back-fff").bind("click", function () {
+                        var id = $(this).attr("data-id");
+                        window.location.href = "/Client/ShopHome/Index?ID=" + id;
+                    });
+
+                    //生成星星
+                    var img_url = { filled: "/Areas/Client/Content/images/slice/fillStar.png", empty: "/Areas/Client/Content/images/slice/hurfStar.png" };
+
+                    set_stars($(".w-PLstar"), img_url, 5, 25, "onlyread");
+                }
+            }, function (res) {
+                alert(res.Msg);
+            });
+        }
+
+        /**
+        *獲取查詢條件
+        */
+        function getSelectWhere() {
+
+
+           // alert(window.localStorage.getItem("_locationInfo"));
+            // 分頁條件
+            var param = common.page.pagerParam;
+
+            //【搜索框】
+            param.name = $("#input_select_where").val();
+
+            //【当前定位城市】
+            var locationInfo = window.localStorage.getItem("_locationInfo");
+
+           // alert(locationInfo);
+            if (null == locationInfo || locationInfo.length <= 0) {
+                param.sCity = '成都';// "成都";// JSON.parse(window.localStorage.getItem("_locationInfo")).city;
+                param.latitude = "";
+                param.longitude = "";
+            } else {
+                var _location = JSON.parse(locationInfo);
+                param.sCity = _location.city;// "成都";// JSON.parse(window.localStorage.getItem("_locationInfo")).city;
+                param.latitude = _location.latitude;
+                param.longitude = _location.longitude;
+              
+            }
+
+            //【地区选择】
+            var temp = $(".filter_show.addressDiv ul > li[class='active']").text();
+
+            param.sCounty = temp == "全部" ? "-1" : temp;
+
+            //【排序规则】0:距离优先 1:好评优先 2:价格从高到底 3:价格从低到高
+            param.orderType = $(".filter_show.others ul > li[class='active']").attr("data-othersType");
+            //【排序规则】0:距离优先 1:好评优先 2:价格从高到底 3:价格从低到高
+            param.orderType = $(".filter_show.others ul > li[class='active']").attr("data-othersType");
+
+
+            //【价格区间】
+            var startPriceTemp = $("#customer_start_price").val();
+            var endPriceTemp = $("#customer_end_price").val();
+
+            if (startPriceTemp == "" && endPriceTemp == "") {
+
+                var price = $(":radio[name=price1]:checked").val();
+                param.iPriceStart = price.split("&")[0];
+                param.iPriceEnd = price.split("&")[1];
+
+            } else {
+
+                //验证输入的是否是数字
+                var textTemp = /^[0-9]*$/;
+                var sFlag = true;//验证开始价格是否为数字的标志
+                var eFlag = true;//验证结束价格是否为数字的标志
+                if (startPriceTemp != "") {
+                    sFlag = textTemp.test(startPriceTemp);
+                }
+                if (endPriceTemp != "") {
+                    eFlag = textTemp.test(endPriceTemp);
+                }
+                if (sFlag == false || eFlag == false) {
+                    $("#customer_end_price").val("");
+                    $("#customer_start_price").val("");
+                    return null;
+                };
+
+                //获取价格
+                param.iPriceStart = startPriceTemp;
+                param.iPriceEnd = endPriceTemp;
+            }
+
+            return param;
+        }
+
+        /**
+        *加載票務數據
+        */
+        function loadTicketDataCallback() {
+            //查詢條件
+            var param = getSelectWhere();
+            if (param == null) return false;
+
+            //請求數據
+            common.post("/Client/ClientHome/GetTiketSelectResult", param, function (res) {
+                if (res.Data.MaxCount === 0) {
+
+                    //无数据
+                    window.noData("#selectList_div");
+
+                } else {
+
+                    //判断是否显示过【无数据】，如果有则就清空html内容
+                    if ($("#selectList_div #allOrder_havaNoData").length > 0) $("#selectList_div").html("");
+
+                    //有数据
+                    common.page.calculationPage(res.Data.MaxCount);
+
+                    //设置模板可以输出html
+                    template.config("escape", false);
+
+                    //獲取html
+                    var html = template("ticketeList_script", { list: res.Data.Result });
+
+                    $("#selectList_div").append(html);
+
+                    //解绑事件
+                    $("#selectList_div .w-padding02.w-houseBox.back-fff").unbind("click");
+                    //绑定进入商品详情事件
+                    $("#selectList_div .w-padding02.w-houseBox.back-fff").bind("click", function () {
+                        var id = $(this).attr("data-id");
+                        window.location.href = "/Client/ShopHome/RoomDetail?ID=" + id;
+                    });
+
+
+                    //生成星星
+                    var img_url = { filled: "/Areas/Client/Content/images/slice/fillStar.png", empty: "/Areas/Client/Content/images/slice/hurfStar.png" };
+                    set_stars($(".w-PLstar"), img_url, 5, 25, "onlyread");
+                }
+            }, function (res) {
+                alert(res.Msg);
+            });
+        }
+
+        /**
+        *加載周邊數據
+        */
+        function loadAroundDataCallback() {
+            //查詢參數
+            var param = getSelectWhere();
+            if (param == null) return false;
+
+            //請求數據
+            common.post("/Client/ClientHome/GetAroundSelectResult", param, function (res) {
+                if (res.Data.MaxCount === 0) {
+
+                    //无数据
+                    window.noData("#selectList_div");
+
+                } else {
+
+                    //判断是否显示过【无数据】，如果有则就清空html内容
+                    if ($("#selectList_div #allOrder_havaNoData").length > 0) $("#selectList_div").html("");
+
+                    //有数据
+                    common.page.calculationPage(res.Data.MaxCount);
+
+                    //设置模板可以输出html
+                    template.config("escape", false);
+
+                    //添加Html
+                    var html = template("arroundList_script", { list: res.Data.Result });
+                    $("#selectList_div").append(html);
+
+                    //解绑事件
+                    $("#selectList_div .w-padding02.w-houseBox.back-fff").unbind("click");
+                    //绑定进入商品详情事件
+                    $("#selectList_div .w-padding02.w-houseBox.back-fff").bind("click", function () {
+                        var id = $(this).attr("data-id");
+                        window.location.href = "/Client/ShopHome/RoomDetail?ID=" + id;
+                    });
+
+                    //生成星星
+                    var img_url = { filled: "/Areas/Client/Content/images/slice/fillStar.png", empty: "/Areas/Client/Content/images/slice/hurfStar.png" };
+                    set_stars($(".w-PLstar"), img_url, 5, 25, "onlyread");
+                }
+            }, function (res) {
+                alert(res.Msg);
+            });
+        }
+
+        //向外提供
+        return {
+            init: init
+        };
+
+    };
+
+    var homeDomain;
+
+    !function () {
+        homeDomain = new HomeDomain().init();
+    }(window.jQuery);
+
+</script>

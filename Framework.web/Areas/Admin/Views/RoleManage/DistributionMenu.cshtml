@@ -1,0 +1,15 @@
+﻿@{
+    var treeData = ViewBag.TreeData;
+}
+
+<ul id="distribut_all_menu" data-options=""></ul>
+
+<script>
+    var data = @(new HtmlString(treeData));   
+    
+    $("#distribut_all_menu").tree(
+        {
+            checkbox:true,
+            data:data
+        });
+</script>

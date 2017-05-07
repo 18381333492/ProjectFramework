@@ -1,0 +1,30 @@
+﻿@model Framework.DTO.EHECD_ShopSetDTO
+
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+
+<script src="~/Areas/Admin/Scripts/HoseterStory/Index.js"></script>
+<script src="~/scripts/plug-in/qrcode/jquery.qrcode.min.js"></script>
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form id="hoster_story_index_form" style="width:800px;height:500px;text-align:center">
+        <table class="styletable" style="">
+            <tr>
+                <td>
+                    店主故事:
+                    <input type="hidden" id="hostory_story"  name="sHeadStory" value="@Model.sHeadStory" />
+                    <input type="hidden" id="host_id_story" name="sShopID" value="@Model.sShopID"/>
+                </td>
+                <td>
+                    <script type="text/plain"  id="hoster_story_sContent_script" style="height:400px;width:700px">
+                    </script>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <a id="hoster_story_btn_look" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">预览</a>
+                <a id="hoster_story_btn_save" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+

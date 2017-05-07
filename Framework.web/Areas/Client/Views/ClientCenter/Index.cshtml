@@ -1,0 +1,206 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>个人中心</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+    <style>
+        .w-header-text{width:calc(100% - 1.2rem)}
+        .w-header-text h4{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:.2rem;}
+        .w-classBody{height:auto;overflow:visible;}
+    </style>
+</head>
+<body>
+    <div class="w-classBody">
+        <div class="w-padding0203 w-flex" style="padding-top: .4rem;">
+            <span class="w-home"></span>
+            <div class="w-header-text"><span style="background-image: url('@(ViewBag.Img)');"></span><h4 id="sNickName"></h4></div>
+            <span id="Message" class="w-news"></span>
+        </div>
+        <div class="w-paddingLeftRight02 w-marginBottom02" style="margin-top:.1rem;">
+            <div class="w-padding02 w-bgcolorFFF w-forebox w-overflowH">
+                <div class="order" param="0" style="background-image: url('/Areas/Client/Content/images/slice/order01.png');background-size: .41rem .45rem;"><span id="payCount"></span><h4 class="w-font14 w-color666 w-textalignC">待付款</h4></div>
+                <div class="order" param="1" style="background-image: url('/Areas/Client/Content/images/slice/order02.png');background-size: .45rem .41rem;"><span id="useCount"></span><h4 class="w-font14 w-color666 w-textalignC">待使用</h4></div>
+                <div class="order" param="2" style="background-image: url('/Areas/Client/Content/images/slice/order03.png');background-size: .39rem .39rem;"><span></span><h4 class="w-font14 w-color666 w-textalignC">已核销</h4></div>
+                <div class="order" param="3" style="background-image: url('/Areas/Client/Content/images/slice/order04.png');background-size: .42rem .42rem;"><span></span><h4 class="w-font14 w-color666 w-textalignC">维权订单</h4></div>
+            </div>
+        </div>
+        <div class="w-paddingLeftRight02 w-position w-marginBottom02 " style="padding-bottom:.01rem;">
+            <div class="w-padding02 w-bgcolorFFF w-linebox w-marginBottom03" style="padding-bottom:.5rem;">
+                <div class="w-height06 w-borderBeee order"  param="-1"  style="background-image: url('/Areas/Client/Content/images/slice/orderlist01.png');background-size: .31rem .35rem;"><h4 class="w-font14 w-color666">全部订单</h4></div>
+                <div id="PersonInfo" class="w-height06 w-borderBeee" style="background-image: url('/Areas/Client/Content/images/slice/orderlist02.png');background-size: .3rem .34rem;"><h4 class="w-font14 w-color666">个人信息</h4></div>
+                <div id="Collection" class="w-height06 w-borderBeee" style="background-image: url('/Areas/Client/Content/images/slice/orderlist03.png');background-size: .33rem .28rem;"><h4 class="w-font14 w-color666">收藏夹</h4></div>
+                <div id="Coupon"     class="w-height06 w-borderBeee" style="background-image: url('/Areas/Client/Content/images/slice/orderlist04.png');background-size: .33rem .28rem;"><h4 class="w-font14 w-color666">我的优惠券</h4></div>
+                <div id="HelpCenter" class="w-height06 w-borderBeee" style="background-image: url('/Areas/Client/Content/images/slice/orderlist05.png');background-size: .33rem .36rem;"><h4 class="w-font14 w-color666">帮助中心</h4></div>
+                @if (ViewBag.iClientType ==0)
+                {
+                <div class="w-height06" style="background-image: url('/Areas/Client/Content/images/slice/orderlist07.png');background-size: .31rem .29rem;"><a class="sMallPhone" href="tel:9"><h4 class="w-font14 w-color666">客服电话</h4></a></div>
+                }
+                else
+                { 
+                    <div class="w-height06 w-borderBeee" style="background-image: url('/Areas/Client/Content/images/slice/orderlist07.png');background-size: .31rem .29rem;"><a class="sMallPhone" href="tel:9"><h4 class="w-font14 w-color666">客服电话</h4></a></div>
+                    <div id="ShareCenter" class="w-height06" style="background-image: url('/Areas/Client/Content/images/slice/orderlist06.png');background-size: .35rem .38rem;"><h4 class="w-font14 w-color666">分享中心</h4></div>
+                }
+            </div>
+            <input id="Quit" type="button" value="退出登录" class="w-inputA" style="position: absolute;bottom:0;left:50%;margin-left: -1.5rem;" />
+        </div>
+        <div class="w-threebox w-overflowH w-textalignC w-font0 w-marginBottom01">
+            @if (ViewBag.iClientType == 1)
+            {<!--分享客-->
+                <span id="Partner" class="w-font13 w-color666" style="border-right: 1px solid #999;">成为合伙人</span>
+                <span id="Business" class="w-font13 w-color666">商家入驻</span>
+            }
+            else
+            {<!--普通会员-->
+                <span id="ShareClient" class="w-font13 w-color666">成为分享客</span>
+                <span id="Partner" class="w-font13 w-color666" style="border-right: 1px solid #999;border-left: 1px solid #999;">成为合伙人</span>
+                <span id="Business" class="w-font13 w-color666">商家入驻</span>
+            }
+        </div>
+        @if (ViewBag.iClientType == 0)
+        {
+            <div class="w-textalignC">
+                <span class="w-iphone"></span>
+            </div>
+        }
+    </div>
+</body>
+</html>
+<script src="~/scripts/lib/client.common.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //加载用户相关信息
+        scope.GetClientInfo();
+        scope.bingEvent();
+        scope.Quit();
+    });
+
+    var scope = (function (obj) { return obj; })(new function () {
+
+        /*!
+        * 获取会员昵称sNickName
+        */
+        function GetClientNickName() {
+            common.post("/Client/ClientCenter/GetClientNickName", null, function (r) {
+                $('#sNickName').text(r.Data.sNickName);
+                $('.sMallPhone').attr("href", "tel:" + r.Data.sMallPhone + "");
+                $('.w-iphone').text(r.Data.sMallPhone);
+            });
+        }
+
+        /*!
+        * 获取待付款和待使用订单未读数目和获取站内信未读条数
+        */
+        function GetClientInfo() {
+            common.post("/Client/ClientCenter/GetClientInfo", null, function (r) {
+                for (var key in r.Data) {
+                    if (Number(r.Data[key]) == 0) {
+                        $('#' + key).hide();
+                    }
+                    else {
+                        if (key == "infoCount") {
+                            $('#Message').html("<b>"+r.Data[key]+"</b>");
+                            
+                        }
+                        else {
+                            $('#' + key).addClass('w-Sactive');
+                            $('#' + key).text(r.Data[key]);
+                          
+                        }
+                    }
+                }
+                GetClientNickName();
+            });
+        }
+
+        //退出登录
+        function Quit() {
+            $('#Quit').on("click", function () {
+                confirm("确定要退出?", {
+                    "text": "确定", fn: function () {
+                        common.post("/Client/ClientCenter/Quit", null, function (r) {
+                            location.href = "/Client/ClientCenter/Index";
+                        })
+                    }
+                }, {
+                    "text": "取消", fn: function () {
+                        return;
+                    }
+                });
+            });
+        }
+
+        //绑定点击事件
+        function bingEvent() {
+
+            // 返回首页
+            $(".w-home").on("click", function () {
+
+                window.location.href = "/Client/ClientHome";
+
+            });
+            
+            $('.order').on("click", function () {
+                var iState = $(this).attr("param");
+                location.href = "/Client/ClientCenter/Order?iState=" + iState;
+            })
+
+            $('#Message').on("click", function () { location.href = "/Client/ClientCenter/Message"; }); //站内信
+            $('#HelpCenter').on("click", function () { location.href = "/Client/ClientCenter/HelpCenter"; });//帮助中心
+            $('#PersonInfo').on("click", function () { location.href = "/Client/ClientCenter/PersonInfo"; });//个人信息
+            $('#Collection').on("click", function () { location.href = "/Client/ClientCenter/Collection"; });//收藏夹
+            $('#Coupon').on("click", function () { location.href = "/Client/ClientCenter/Coupon"; });//我的优惠券
+            $('#ShareCenter').on("click", function () { location.href = "/Client/ShareCenter/Index"; });//分享中心
+
+            $('#ShareClient').on("click", function () { location.href = "/Client/ClientCenter/Protocol?sTitle=关于分享客"; });//成为分享客
+            $('#Partner').on("click", function () { location.href = "/Client/ClientCenter/Protocol?sTitle=关于合伙人"; });//成为合伙人
+            $('#Business').on("click", function () { location.href = "/Client/ClientCenter/Protocol?sTitle=商家入驻须知"; });//商家入驻
+
+        }
+
+        return {
+            GetClientInfo: GetClientInfo,
+            bingEvent: bingEvent,
+            Quit: Quit
+        }
+
+    });
+</script>

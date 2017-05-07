@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>游记列表</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link href="~/Content/dropload.css" rel="stylesheet" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+    <script src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+    <script src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+    <script src="~/Areas/Client/Content/lib/date-choice.js"></script>
+    <script src="~/Areas/Client/Content/lib/judge.js"></script>
+    <script src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+    <script src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+    <script src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+    <script src="~/Areas/Client/Content/script/page.js"></script>
+    <script src="~/Areas/Client/Content/script/malong.js"></script>
+    <script src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+    <script src="~/Areas/Client/Content/script/goujia.js"></script>
+    <script src="~/Areas/Client/Content/script/qinliang.js"></script>
+    <script src="~/Areas/Client/Content/script/wangqixin.js"></script>
+    <script src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+    <script src="~/scripts/lib/client.common.js"></script>
+    <script src="~/scripts/lib/template.js"></script>
+    <style>
+        .w-PJIMG{height:auto;}
+        .w-PJIMG img{width:1rem;height:1rem;margin-bottom:.1rem;}
+        #travel-list .w-PJTX a{background-position:right .05rem;padding-right:.4rem;}
+        #travel-list .w-PJTX span{width:30%;display:inline-block;}
+        .w-PJIMG img{margin:0 auto .1rem}
+        .w-PJIMG{width:72px;margin-right:5px;}
+        .w-PJTX{margin-left:0;}
+    </style>
+</head>
+<body>
+    <div class="w-notDATA" style="display:none;" id="shop_travellist_havaNoData"><b></b><h4 class="w-font14 w-colorccc w-textalignC">暂时没有数据</h4></div>
+    <div id="travel-list">
+        <!--1-->
+        <script type="text/html" id="sectionTemplate">
+            {{each list as item index}}
+            <div class="w-EEEline w-positionRE-Z30 w-borderbottom flex_dom"  style="padding:.2rem .2rem .2rem .1rem">
+                <div class="w-PJIMG"><img src="{{item.sHeadImges}}"><p class="text-center" style="width:72px;overflow:hidden;white-space:nowrap;font-size:12px;">{{item.sAuthor}}</p></div>
+                <div class="w-PJTX flex_1">
+               <a href="javascript:;" class="fc-333" onclick="travel.detail_travel('{{item.ID}}')">{{item.sTitle}}</a>
+              {{if item.image!=null && item.image!="" }}
+                    <div class="img_list flex_dom m-t-10">
+                        {{each item.image.split(',') as photo index}}
+                        <span class=""><em><img src="{{photo}}"></em></span>
+                        {{/each}}
+                    </div>
+              {{/if}}
+                 
+                    <div class="answer font12 fc-666" >{{item.sContent.substr(0,49)}}</div>
+                   
+                </div>
+
+            </div>
+
+            {{/each}}
+
+        </script>
+    </div>
+</body>
+
+</html>
+
+<script>
+    
+    $(function () {
+        travel.init();
+       
+    });
+    //定义构造函数
+    
+    var travel = (function (obj) { return obj; })(new function () {
+        function init() {
+            window.common.page.initDropLoad(loadDataCallBack());
+        }
+        function loadDataCallBack() {
+            var url = location.search.split('=')[1];
+            pageSize = window.common.page.pagerParam.pageSize = 10;
+            pageIndex = window.common.page.pagerParam.pageIndex = 1;
+            window.common.post("/Client/ShopHome/GetTravel", { pageSize: pageSize, pageIndex: pageIndex, ID: url },
+                function (r) {
+                    window.common.page.calculationPage(r.Data.MaxCount);//重新计算页码
+                    debugger
+                    template.config("escape", false);
+                    var json = r.Data.Result;
+                    if (json.length == 0) {
+                        $("#shop_travellist_havaNoData").css("display", "block");
+                        $("#travel-list").css("display", "none");
+                    }
+                    else {
+                   
+                    var html = template("sectionTemplate", { list: json });
+                    $("#travel-list").html(html);
+                    }
+
+                  
+                }, function (r) { });
+        }
+        function detail_travel(id) {
+            window.location.href = '/Client/ShopHome/TravelDetail?ID=' + id;
+        }
+        return {
+            init: init,
+            detail_travel:detail_travel
+        }
+
+    });
+    
+   
+  
+
+</script>

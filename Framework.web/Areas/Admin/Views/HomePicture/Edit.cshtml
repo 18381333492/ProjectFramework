@@ -1,0 +1,45 @@
+﻿
+@model Framework.DTO.EHECD_ImagesDTO
+
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form id="edit_homepicture_form" style="width:99%;height:99%">
+        <table class="styletable">
+            <tr>
+                <td>排序编号</td>
+                <td><input type="hidden" value="@Model.ID" name="ID"/>
+                <input class="easyui-textbox" data-options="width:180,type:'text',missingMessage:'请输入排序编号',required:true,validType:['isNumber']" name="iOrder" value="@Model.iOrder"/></td>
+            </tr>
+            <tr>
+                <td>
+                    首页展示<br />Bannar图<br />(391px*253px)
+                </td>
+                <td>
+                    <input type="hidden" id="home_edit_picture_banner" name="sImagePath" value="@Model.sImagePath"/>
+                    <div id="home_edit_picture_banner_upload" class="uploader">
+                        <div class="queueList">
+                            <div id="dndArea" class="placeholder">
+                                <div id="filePicker"></div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>标题</td>
+                <td><input id="sTitle" value="@Model.sTitle" class="easyui-textbox" type="text" name="sTitle" data-options="validType:['isHtmlValidate','maxLength[200]','notEmptyCharter'],required:true,missingMessage:'不能为空'" /></td>
+            </tr>
+            <tr>
+                <td>文章内容</td>
+                <td>
+                    <input type="hidden" name="sContent" id="homepicture_edit_sContent" value="@Model.sContent"/>
+                    <script type="text/plain" id="homepicture_edit_sContent_script" style="height:400px;width:700px">
+                    </script>
+                </td>
+            </tr>
+        </table>
+
+    </form>
+</div>

@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>领取优惠劵</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link href="~/Content/dropload.css" rel="stylesheet" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+    <style>
+        #coupons .bigbox .box .middle{border-bottom: 1px solid #eee;}
+    </style>
+</head>
+<body class="bg-f2f2f2">
+    <div id="coupons">
+        <div class="bigbox" id="coupon_div">
+        </div>
+
+        <!--优惠劵模板-->
+        <script type="text/html" id="coupon_script">
+            {{each list as item index}}
+            <div class="box bg-fff mt1r" data-couponID="{{item.ID}}">
+                <div class="top clearfix fc-fff">
+                    <div class="fl"><p class="fs-12">{{item.iUsePrice | fomatUseLimit}}</p><p class="fs-24">&yen;<span class="ml1r">{{item.iCoiCouponPrice}}</span></p></div>
+                    <div class="fr"><p class="fs-14">使用期限</p><p class="fs-14 mt1r">{{item.dValidDateStart | formatDate}}至{{item.dValidDateEnd | formatDate}}</p></div>
+                </div>
+                <div class="middle">
+                    <span class="fc-666">全平台通用，不可叠加使用。</span>
+                </div>
+                <a href="javascript:;" class="bottom fc-fe8285">点击领取</a>
+            </div>
+            {{/each}}
+        </script>
+
+    </div>
+</body>
+</html>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+<script src="~/scripts/lib/client.common.js"></script>
+<script src="~/scripts/lib/template.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var couponObj = new GetCouponDomain();
+        couponObj.getCouponList();//获取数据
+    });
+    //构造函数对象
+    function GetCouponDomain() { }
+    var flag=true;
+    //定义原型
+    GetCouponDomain.prototype = {
+        //获取优惠劵列表
+        getCouponList: function () {
+            var _this = this;
+
+            //初始化template的辅助方法
+            template.helper("fomatUseLimit", _this.formatUseLimit);
+            template.helper("formatDate", _this.formatDate);
+
+            //初始化数据
+            _this.loadDataCallback();
+            window.common.page.initDropLoad(_this.loadDataCallback);
+        },
+        //数据加载回调
+        loadDataCallback: function () {
+            var _this = this;
+            common.post("/Client/ClientHome/GetCouponList", common.page.pagerParam, function (res) {
+                
+                if (res.Data.MaxCount <= 0) {
+
+                    // 无数据
+                    window.noData("");
+
+                } else {
+
+                    //判断是否显示过【无数据】，如果有则就清空html内容
+                    if ($("#coupon_div #allOrder_havaNoData").length > 0) $("#coupon_div").html("");
+
+                    //渲染模板
+                    var html = template("coupon_script", { list: res.Data.Result });
+
+                    $("#coupon_div").append(html);
+
+                    window.common.page.calculationPage(res.Data.MaxCount);
+
+                    $(".bottom.fc-fe8285").unbind("click");
+                    //绑定事件【领取优惠劵】
+                    $(".bottom.fc-fe8285").bind("click", function () {
+                   
+                        common.post("/Client/ClientHome/GetCoupon", { sCouponID: $(this).parent().attr("data-couponid") }, function (res) {
+                            alert("领取成功！");
+                            //重新加载数据
+                            //_this.loadDataCallback();
+                            window.location.href = "/Client/ClientHome/GetCouponView";
+                        }, function (res) {
+                            if (res.Msg === "1") {
+                                window.location.href = "/Client/ClientLogin";
+                            } else {
+                                alert(res.Msg);
+                            }
+                        });
+                    });
+                }
+            }, function (res) {
+                alert(res.Msg);
+            });
+                
+        },
+        //格式化 使用条件（template.helper）
+        formatUseLimit: function (price) {
+            if(parseFloat(price)<=0){
+                return "无使用门槛";
+            }else{
+                return "满"+price+"元可用";
+            }
+        },
+        //格式化 日期
+        formatDate: function (dateStr) {
+            return new Date(dateStr.replace(/-/g, "/")).Format("yyyy-MM-dd");
+        }
+    }
+</script>

@@ -1,0 +1,90 @@
+﻿
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form id="add_keyword_reply_form" style="width:100%;height:100%">
+        <div id="reply_content_set" style="width:100%">
+            <table class="styletable">
+                <tr>
+                    <td>
+                        关键字：
+                    </td>
+                    <td>
+                        <input type="hidden" id="ex_keyword_apply_key" />
+                        <input id="keyword_apply_key" class="easyui-textbox" style="width:150px" data-options="missingMessage:'请输入关键字',required:true,validType:['isHtmlValidate','maxLength[1000]']" name="sKeyword" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>回复内容设置</td>
+                    <td>
+                        <label><input type="radio" value="0" name="sReplyStateType" id="add_keyword_reply_on" checked="checked" />文本</label>
+                        <label><input type="radio" value="1" name="sReplyStateType" id="add_keyword_reply_down" />图文</label>
+                    </td>
+                </tr>
+                </table>
+        </div>
+        <div>
+            <div style="height: 440px;" id="text_content_div">
+                <table class="styletable">
+                    <tr>
+                        <td>
+                            <textarea name="sContent1" style="height: 340px; width: 99%;" id="text_scontent_add"></textarea>
+                        </td>
+                    </tr>
+                   
+                </table>
+            </div>
+        </div>
+        <div style="display: none;" id="picture_text_content_div" >
+            <table class="styletable" style="width:100%;height: 440px;">
+                <tr>
+                    <td> 图片外链</td>
+                    <td >
+                        <div id="picture_text_images">
+                            <div id="picture_text_upload" class="uploader">
+                                <div class="queueList" style="">
+                                    <div id="dndArea" class="placeholder">
+                                        <div id="filePicker"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </td>
+                    </tr>
+               
+               
+            </table>
+            <table style="background-color:white;width:100%;text-align:left">
+                <tr>
+                    <td colspan="2" style="width:620px">
+                        标&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;题 
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="keyword_reply_title"></div><br />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="width:620px">
+                        备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注 <div id="keyword_reply_shopurl"></div>
+                        <br />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="width:620px">
+                        链接地址  <div id="keyword_reply_content"></div><br />
+                    </td>
+                </tr>
+
+                
+               
+                
+            </table>
+            <input  type="hidden" id="keyword_type_ex" />
+        </div>
+    </form>
+</div>
+

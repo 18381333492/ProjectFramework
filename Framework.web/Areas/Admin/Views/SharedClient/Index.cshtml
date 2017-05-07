@@ -1,0 +1,28 @@
+﻿<link href="~/scripts/plug-in/date/laydate-master/need/laydate.css" rel="stylesheet" />
+<link href="~/scripts/plug-in/date/laydate-master/skins/molv/laydate.css" rel="stylesheet" />
+<script src="~/scripts/plug-in/date/laydate-master/laydate.dev.js"></script>
+<script src="~/Areas/Admin/Scripts/SharedClient/Index.js"></script>
+@*<script src="~/Areas/Admin/Scripts/ClientManager/Index.js"></script>*@
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px;">
+    <form id="shared_client_form" style="width:100%;height:100%;">
+        <table id="shared_client_grid"></table>
+        <div id="shared_client_grid_tool" style="padding:15px;display:none;">
+            状态：<input class="easyui-combobox" data-options="valueField: 'id',
+                                                                   textField: 'text',
+                                                                   panelHeight:'auto',
+                                                                   data:[{'id':9,'text':'全部',selected:true},
+                                                                   {'id':1,'text':'冻结'},
+                                                                    {'id':0,'text':'正常'}]" name="iState" />            
+            &emsp;
+            成为本店分享客时间：<input onclick="modules.get('cache').getCache('laydate').laydate({ istime: true,format: 'YYYY-MM-DD hh:mm' })" class="textbox" style="height:22px;" name="sTime">&emsp;至&emsp;
+            <input onclick="modules.get('cache').getCache('laydate').laydate({ istime: true, format: 'YYYY-MM-DD hh:mm' })" class="textbox" style="height:22px;" name="eTime">
+
+            &emsp;
+            <input class="easyui-textbox" name="sName" data-options="width:160,validType:['maxLength[30]'],prompt:'昵称、手机号'" />
+
+            @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
+
+        </div>
+    </form>
+</div>

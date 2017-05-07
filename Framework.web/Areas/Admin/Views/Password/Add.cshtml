@@ -1,0 +1,39 @@
+﻿<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form id="add_scanner_form" style="width:99%;height:99%">
+        <table class="styletable">
+            <tr>
+                <td>登录名</td>
+                <td>
+                    <input id="add_scanner_name" class="easyui-textbox" data-options="width:180,type:'text',missingMessage:'请输入登录名',required:true,validType:['chartLengthBetween[3,15,\'登录名\']','isHtmlValidate']" name="sLoginName" />
+                </td>
+            </tr>
+            <tr>
+                <td>真实姓名</td>
+                <td>
+                    <input class="easyui-textbox" data-options="width:180,type:'text',missingMessage:'请输入真实姓名',required:true,validType:['chartLengthBetween[2,15,\'真实姓名\']','isHtmlValidate']" name="sReallyName" />
+                </td>
+            </tr>
+            <tr>
+                <td>电话</td>
+                <td >
+                    <input class="easyui-textbox"  name="sPhone" style="width:180px" data-options="validType:['isPhoneNum']"/>
+                </td>
+            </tr>
+            <tr>
+                <td>密码</td>
+                <td>
+                    <input class="easyui-textbox" data-options="height:25,width:180,required:true,missingMessage:'请输入登录密码',iconCls:'icon-lock',iconAlign:'left',type:'password',validType:['chartLengthBetween[6,15,\'密码\']']" name="sPassWord" />
+                </td>
+            </tr>
+            <tr>
+                <td>确认密码</td>
+                <td><input class="easyui-textbox" data-options="height:25,width:180,required:true,missingMessage:'请输再次入登录密码',iconCls:'icon-lock',iconAlign:'left',type:'password',validType:['chartLengthBetween[6,15,\'密码\']']" name="sPassWord2" /></td>
+            </tr>
+        </table>
+
+    </form>
+</div>
+
+

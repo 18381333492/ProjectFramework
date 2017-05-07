@@ -1,0 +1,231 @@
+﻿
+
+
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form style="width:99%;height:99%;" id="add_goods_form">
+        <table class="styletable">
+                <tr>
+                    <td colspan="2" style="text-align:center">
+                        <label><input type="radio" name="sGoodsCategory" value="1" checked="checked" />客房</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label><input type="radio" name="sGoodsCategory" value="2" />票务</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label><input type="radio" name="sGoodsCategory" value="3" />周边</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td id="sGoodsName">民宿名称：</td>
+                    <td>
+                        <input class="easyui-textbox" name="sGoodsName"
+                               data-options="missingMessage:'请输入商品名称',width:300,required:true,validType:['chartLengthBetween[1,30,\'种类名称\']','isHtmlValidate']" />
+                    </td>
+                </tr>
+                <tr class="ticket">
+                    <td>票务简介：</td>
+                    <td>
+                        <input class="easyui-textbox" id="sHouseOrTicketDetail" name="sHouseOrTicketDetail"
+                               data-options="missingMessage:'请输入票务简介',width:300,height:80,multiline:true,validType:['chartLengthBetween[1,25,\'种类名称\']','isHtmlValidate']" />
+                    </td>
+                </tr>
+                <tr class="house">
+                    <td>此类房间数量：</td>
+                    <td>
+                        <input class="easyui-numberbox" id="iHouseCount" name="iHouseCount"
+                               data-options="missingMessage:'请输入此类房间数量',min:1" />
+                    </td>
+                </tr>
+                <tr class="house">
+                    <td>房型：</td>
+                    <td>
+                        <input id="sHouseSize"  name="sHouseSize" />
+                    </td>
+                </tr>
+                <tr class="houseAndticket">
+                    <td id="houseAndticket">设置满房时间段：</td>
+                    <td>
+                        <!---设置满房时间段或者设置时间段票务数量--->
+                        <div id="FullHouseTime">
+
+                        </div>
+                        <a id="AddFullHouseTime" class="easyui-linkbutton" data-options="iconCls:'icon-add'">增加时间段</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>价格设置：</td>
+                    <td>
+                        <label>
+                            最低价：<input class="easyui-numberbox" name="dGoodsFisrtPrice"
+                                       data-options="missingMessage:'请输入价格1',min:0.01,precision:2,width:120,required:true" />(元)
+                        </label>&nbsp;&nbsp;
+                        <label>
+                            中间价：<input class="easyui-numberbox" name="dGoodsSecPrice"
+                                       data-options="missingMessage:'请输入价格2',min:0.01,precision:2,width:120,required:true" />(元)
+                        </label>&nbsp;&nbsp;
+                        <label>
+                            最高价：<input class="easyui-numberbox" name="dGoodsThirdPrice"
+                                       data-options="missingMessage:'请输入价格3',min:0.01,precision:2,width:120,required:true" />(元)
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>图片展示：<br />
+                    规格：(360px*230px)</td>
+                    <td>
+                        <div id="sGoodsPictures" class="uploader">
+                            <div class="queueList">
+                                <div id="dndArea" class="placeholder">
+                                    <div id="filePicker"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="house">
+                    <td>客房概述：</td>
+                    <td>
+                        <label>
+                            适宜人数：<input class="easyui-numberbox" id="iHousePerson" name="iHousePerson"
+                                        data-options="missingMessage:'请输入适宜人数',min:1,width:120" />(人)
+                        </label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label>
+                            睡床数量：<input class="easyui-numberbox" id="iHouseBedCount" name="iHouseBedCount"
+                                        data-options="missingMessage:'请输入睡床数量',min:1,width:120" />
+                        </label>
+                        <br /><br />
+                        <!--房间配置设施-->
+                        <div id="houseFacilities"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>分销佣金：</td>
+                    <td>
+                        <label><input type="radio" name="iCommissionType" value="1" checked="checked" />固定金额</label>
+                        <input class="easyui-numberbox" id="first_dMoney" name="dMoney"
+                               data-options="missingMessage:'固定金额',min:0,precision:2,required:true" />元&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label><input type="radio" name="iCommissionType" value="2" />商品金额比例</label>
+                        <input class="easyui-numberbox" id="sec_dMoney" name="dMoney"
+                               data-options="missingMessage:'请输入金额比例',min:0,precision:2,max:100" />%
+                    </td>
+                </tr>
+                <tr>
+                    <td>商品介绍：</td>
+                    <td>
+                        <script type="text/plain" id="sGoodsIntroduce" style="height:400px;width:700px"></script>
+                    </td>
+                </tr>
+        </table>
+    </form>
+</div>
+<script type="text/javascript">
+    $(function () {
+
+        /*
+        * 房型的数据绑定
+        */
+        $('#sHouseSize').combobox({
+            url: '/Admin/Goods/GetHouseSize',
+            valueField: 'ID',
+            textField: 'sRoomTypeName',
+            editable: false,
+            onLoadSuccess: function (data) {
+                if (data.Succeeded) {
+                    var array = JSON.parse(data.Data);
+                    array[0].selected = true;
+                    $('#sHouseSize').combobox('loadData',array);
+                }
+                
+            }
+        });
+
+
+        var facilities = ["空调", "卫生间", "Wi-Fi", "电视", "冰箱", "电水壶", "毛巾", "免费洗浴用品", "24小时热水", "早餐", "吹风机", "洗衣机", "浴室", "浴缸",
+                    "淋浴", "拖鞋", "浴袍", "电话", "熨斗", "书桌"];
+        var html = [];
+
+        $(facilities).each(function () {
+            html.push('<label><input type="checkbox" value="' + this + '">' + this + '</label>&nbsp;')
+        });
+        $('#houseFacilities').append(html.join(''));
+
+        //佣金类型的选择
+        $('input:radio[name=iCommissionType]').click(function () {
+            if ($(this).val() === "1") {
+                $('#first_dMoney').textbox({ required: true });
+                $('#sec_dMoney').textbox({ required: false });
+            } else {
+                $('#first_dMoney').textbox({ required: false });
+                $('#sec_dMoney').textbox({ required: true });
+            }
+        });
+
+        //添加满房时间段
+        $('#AddFullHouseTime').click(function () {
+            var html = [];
+            html.push('<div style="margin-bottom:5px;">');
+            html.push('<input  onclick="laydate({ istime: false , format:\'YYYY-MM-DD\'})" class="textbox start"  readonly="readonly">至');
+            html.push('<input  onclick="laydate({ istime: false , format:\'YYYY-MM-DD\'})" class="textbox end"  readonly="readonly">');
+            html.push('<span>数量:</span><input class="addrequried" /> &nbsp;&nbsp;');
+            html.push('<a>删 除</a>')
+            html.push('</div>');
+            $('#FullHouseTime').append(html.join(''));
+            $('#FullHouseTime .addrequried').numberbox({ missingMessage: "请输入数量", min: 0, width: 80 });
+            $('#FullHouseTime a').linkbutton({ iconCls: 'icon-cancel' });
+            //绑定删除事件
+            $('#FullHouseTime').on('click', 'a', function () {
+                $(this).parent().remove();
+            })
+        });
+
+        //切换商品分类
+        $('input:radio[name=sGoodsCategory]').click(function () {
+            switch ($(this).val()) {
+                case "1":
+                    $('.ticket').hide();
+                    $('.house').show();
+                    $('.houseAndticket').show();
+                    $('#houseAndticket').text("设置满房时间段：");
+                    $('#sGoodsName').text("民宿名称：");
+                    house();
+                    break;
+                case "2":
+                    $('.ticket').show();
+                    $('.house').hide();
+                    $('.houseAndticket').show();
+                    $('#houseAndticket').text("设置时间段票务数量：");
+                    $('#sGoodsName').text("票务名称：");
+                    ticket();
+                    break;
+                case "3":
+                    $('.ticket').hide();
+                    $('.house').hide();
+                    $('.houseAndticket').hide();
+                    $('#sGoodsName').text("周边名称：");
+                    around();
+                    break;
+            }
+        });
+
+        //房客信息必须字段
+        function house() {
+            $('#iHouseCount').textbox({ required: true });
+            $('#iHousePerson').textbox({ required: true });
+            $('#iHouseBedCount').textbox({ required: true });
+            //票务相关
+            $('#sHouseOrTicketDetail').textbox({ required: false });
+        }
+        //票务信息必须字段
+        function ticket() {
+            $('#sHouseOrTicketDetail').textbox({ required: true });
+            //客房相关
+            $('#iHouseCount').textbox({ required: false });
+            $('#iHousePerson').textbox({ required: false });
+            $('#iHouseBedCount').textbox({ required: false });
+        }
+        //周边信息必须字段
+        function around() {
+            $('#iHouseCount').textbox({ required: false });
+            $('#iHousePerson').textbox({ required: false });
+            $('#iHouseBedCount').textbox({ required: false });
+            $('#sHouseOrTicketDetail').textbox({ required: false });
+        }
+    });
+</script>

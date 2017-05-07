@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>查看评价</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+    <style>
+        .w-PJTX p{height:auto;}
+        #see-evaluation .w-PJTX span{width:30%;display:inline-block;margin-right:3.3%;}
+        .w-PJTX .img_list span+span{margin-left:0;}
+    </style>
+</head>
+@model Dictionary<string,object>
+<body>
+    <div id="see-evaluation">
+        <div class="w-EEEline w-padding0203 w-positionRE-Z30 w-borderbottom flex_dom">
+            <div class="w-PJIMG"><img src="@ViewBag.sHeadPic"></div>
+            <div class="w-PJTX flex_1">
+                <h4>@ViewBag.sNickName</h4>
+                <h4>@Model["sGoodsName"]</h4>
+                <div class="w-PLstar">
+                    <input type="hidden" value="@Model["iCommentScore"]">
+                </div>
+                <p class="fc-999">@Model["sCommentContent"]</p>
+                @if (Model["sCommentImgPath"]!=null&& Model["sCommentImgPath"].ToString()!=string.Empty)
+                {
+                <div class="img_list m-t-10 swiper_clickLook" style="font-size:0;">
+                    @foreach (var m in Model["sCommentImgPath"].ToString().Split(','))
+                    {
+                    <span class=""><em class=""><img src="@m"></em></span>
+                    }
+                </div>
+                }
+                @if (Convert.ToBoolean(Model["bIsReplay"]))
+                {
+                <div class="answer fc-666 mt1r">店家回复:@Model["sReplayContent"]</div>
+                <span class="text-left fs-16" style="width:100%;">@Model["dReplayTime"]</span>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="~/scripts/lib/client.common.js"></script>
+<script>
+    $(function(){
+        /*五星图初始化*/
+        var img_url={ filled: "/Areas/Client/Content/images/slice/fillStar.png", empty: "/Areas/Client/Content/images/slice/hurfStar.png" };
+        set_stars($(".w-PLstar"),img_url,5,25,"onlyread");
+    })
+</script>
+<script src="~/Areas/Client/Content/lib/click_lookImg.js"></script>

@@ -1,0 +1,34 @@
+﻿@model Framework.DTO.EHECD_CouponDTO
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form style="width:99%;height:99%;" id="coupon_edit_form">
+        <input type="hidden" name="ID" id="coupon_edit_ID" value="@Model.ID"/>
+        <table class="styletable" style="height:100%">
+            <tbody>
+                <tr>
+                    <td>优惠劵金额（元）：</td>
+                    <td><span>@Model.iCoiCouponPrice</span></td>
+                </tr>
+                <tr>
+                    <td>使用条件:</td>
+                    <td>
+                        <span>满&emsp;</span>
+                        <span>@Model.iUsePrice</span>
+                        <span>&emsp;元 可用，（无门槛限制填0）</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>投放数量：</td>
+                    <td><input class="easyui-textbox" value="@Model.iCouponCount" id="coupon_edit_input_iCouponCount" name="iCouponCount" missingMessage="不能为空" data-options="required:true,validType:['isNumber']"></td>
+                </tr>
+                <tr>
+                    <td>有效期：</td>
+                    <td>
+                        <span>@Model.dValidDateStart</span>
+                        &emsp;&emsp;至&emsp;&emsp;
+                        <span>@Model.dValidDateEnd</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>

@@ -1,0 +1,33 @@
+﻿<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form id="mail_add_form" style="width:900px;height:100%">
+          <div id="sendmail_tool" style="padding:15px;">
+            收信人<input id="iRecevierType_mail" class="easyui-combobox"/>
+             
+            <input class="easyui-textbox" style="width:150px" data-options="prompt:'请输入昵称查询',validType:['isHtmlValidate','maxLength[50]']"id="search_vipname_mail"/>
+              <input type="button" value="查找" id="searchMail_button"/>
+            </div>
+            <table id="vip_Message_part"></table>
+            <table class="styletable">
+                <tr>
+                    <td style="width:50px">
+                        文章标题：
+                    </td>
+                    <td>
+                        <input class="easyui-textbox" style="width:150px" data-options="missingMessage:'请输入文章标题',required:true,validType:['isHtmlValidate','maxLength[1000]']" name="sMsgTitle" id="add_sMsgTitle_mail"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>文章内容</td>
+                    <td style="width:600px;height:100px">
+                        <textarea name="sMsgContent" style="width:600px;height:100px" id="add_sMsgContent_mail"></textarea>
+                        @*<input type="text" style="width:600px;height:100px" id="sMsgContent" name="sMsgContent" />*@
+                        
+                    </td>
+                </tr>
+            </table>
+
+</form>
+</div>
+

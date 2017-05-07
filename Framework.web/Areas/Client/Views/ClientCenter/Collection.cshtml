@@ -1,0 +1,263 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>收藏夹</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+    <link href="~/Content/dropload.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+    <style>
+        .favoriteShop .content-each .content-each-right .shopName{line-height:.4rem;}
+        .favoriteShop .content-each .content-each-right{padding-bottom:.1rem;}
+        .favoriteShop .content-each .content-each-right .placeBox img{
+            margin-right:.1rem;
+        }
+    </style>
+</head>
+<body>
+    <!--favoriteShop-->
+    <div class="favoriteShop">
+        <div class="favoriteShop-nav">
+            <div class="navBox">
+                <a data-iCollectType="0" href="javascript:void (0)" class="each-nav has" style="font-size:14px;">店铺 <span class="redBottom"></span></a>
+                <a data-iCollectType="1" href="javascript:void (0)" class="each-nav"  style="font-size:14px;">客房 <span class="redBottom"></span></a>
+                <a data-iCollectType="2" href="javascript:void (0)" class="each-nav"  style="font-size:14px;">票务 <span class="redBottom"></span></a>
+                <a data-iCollectType="3" href="javascript:void (0)" class="each-nav"  style="font-size:14px;">周边 <span class="redBottom"></span></a>
+            </div>
+        </div>
+        <div class="ChoiseDele">
+            <div class="choiseChangeBox checkedBox allChoise">
+                <img src="/Areas/Client/Content/images/slice/choiseChangeBox.png" alt="">
+            </div>
+            全选
+            <a href="javascript:void(0)" class="deleBtns"><img src="~/Areas/Client/Content/images/slice/deleLogo.png" alt="">删除</a>
+        </div>
+        <!--内容-->
+        <div id="CollectionList" class="favorite-content">
+            <script type="text/html" id="Collection">
+                {{each list as m index}}
+                <div id="{{m.ID}}" class="content-each">
+                    <div class="choiseChangeBox checkedBox posmid">
+                        <img src="/Areas/Client/Content/images/slice/choiseChangeBox.png" alt="">
+                    </div>
+                    <div class="content-each-right">
+                        <div class="imgageBox">
+                            {{if m.iCollectType==0}}
+                            <a href="/Client/ShopHome?ID={{m.sGoodsId}}">
+                            <img src="{{m.sImagePath}}" alt="">
+                            </a>
+                            {{/if}}
+                            {{if m.iCollectType>0}}
+                            <a href="/Client/ShopHome/RoomDetail?ID={{m.sGoodsId}}">
+                                <img src="{{m.sImagePath}}" alt="">
+                            </a>
+                            {{/if}}
+                            {{if m.iCollectType==0}}
+                            <div class="noMoney">&yen;{{m.dPrice.toFixed(2)}}起</div>
+                            {{/if}}
+                        </div>
+                        <div class="shopName" style="margin-top:.1rem;">{{m.sShopName}}</div>
+                        <!--店铺-->
+                        {{if m.iCollectType==0}}
+                        <div class="topStarBox">
+                            {{m.iCommentScore}}分
+                            <input  type="hidden" />
+                        </div>
+                        <div class="placeBox"><img src="/Areas/Client/Content/images/slice/greenCap.png" alt="">{{m.sAddress}}</div>
+                        {{/if}}
+                        <!--商品-->
+                        {{if m.iCollectType>0}}
+                        <div class="shopName" style="color: #fe8285;font-size: 16px">&yen;{{m.dGoodsFisrtPrice.toFixed(2)}}</div>
+                        {{/if}}
+                    </div>
+                </div>
+             {{/each}}
+           </script>
+        </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".favorite-content").delegate(".choiseChangeBox","click",function(){
+            if ($(this).hasClass("checkedBox")) {
+                $(this).removeClass("checkedBox");
+                choiseAll();
+            }else{
+                $(this).addClass("checkedBox");
+                choiseAll();
+            }
+        })
+    })
+    var conNo =0;
+    $(".allChoise").bind("click",function(){
+        if(conNo==0){
+            $(".choiseChangeBox").removeClass("checkedBox");
+            conNo=1;
+        }else{
+            $(".choiseChangeBox").addClass("checkedBox");
+            conNo=0;
+        }
+    })
+</script>
+<script src="~/scripts/lib/template.js"></script>
+<script src="~/scripts/lib/client.common.js"></script>
+<script type="text/javascript">
+    $(function () {
+        scope.InitCollectionData();
+        scope.bingPage();
+        scope.ChangeiCollectType();
+        scope.CancelCollect();
+    });
+
+    var scope = (function (obj) { return obj; }(new function () {
+
+        var iCollectType = 0;
+
+        //绑定分页控件
+        function bingPage() {
+            common.page.initDropLoad(InitCollectionData);
+        }
+
+        //初始化收藏夹数据
+        function InitCollectionData() {
+            common.post("/Client/ClientCenter/LoadCollectionList",
+                {
+                    pageIndex: common.page.pagerParam.pageIndex,
+                    pageSize: common.page.pagerParam.pageSize,
+                    iCollectType: iCollectType//收藏类型:0-店铺，1-客房，2-票务，3-周边
+                },
+                function (r) {
+                    var json = r.Data.Result;
+                    //收藏类型为商品图片字段的处理
+                    $(json).each(function () {
+                        if (iCollectType!=0)
+                        this.sImagePath=this.sGoodsPictures.split(',')[0];
+                    });
+                    for(var i=0;i<json.length;i++){
+                        if(json[i].iCommentScore==null){
+                            json[i].iCommentScore=5;
+                        }
+                        else {
+                            json[i].iCommentScore = json[i].iCommentScore.toFixed(1);
+                        }
+                    }
+                    var html = template("Collection", { list: json });
+                    $('#CollectionList').append(html);
+                    if (iCollectType == 0) {
+                        //设置评论星星
+                        var i = 0;
+                        $('#CollectionList .content-each').each(function () {
+                            var $this = $(this);
+                            var score = 0;
+                            if (json[i].iCommentScore == null) {
+                                score = 5;
+                            }
+                            else {
+                                score =parseInt(json[i].iCommentScore);
+                            }
+                            /*五星图初始化*/
+                            $('input', $this).val(score);
+                            var img_url = { filled: "/Areas/Client/Content/images/slice/fillStar.png", empty: "/Areas/Client/Content/images/slice/hurfStar.png" };
+                            set_stars($(".topStarBox", $this), img_url, 5, 25, "onlyread");
+                            i++;
+                        });
+                    }
+
+                    //没有数据展示
+                    if ($('#CollectionList div').length == 0) {
+                        window.noData('#CollectionList');
+                    }
+
+                    common.page.calculationPage(r.Data.MaxCount);
+                });
+        }
+
+        /**
+        * 改变收藏类型的事件处理
+        */
+        function ChangeiCollectType() {
+            $(".each-nav").bind("click", function () {
+                $(".navBox").find(".each-nav").removeClass("has");
+                $(this).addClass("has");
+                iCollectType = Number($(this).attr("data-iCollectType"));
+                common.page.pagerParam.pageIndex = 1;
+                common.page.pagerParam.pageSize = 10;
+                //重新初始化数据
+                $('#CollectionList').html("");
+                InitCollectionData();
+            })
+        }
+
+        /**
+        * 删除收藏夹的商品
+        */
+        function CancelCollect() {
+            $(".deleBtns").bind("click", function () {   
+                var Ids = [];
+                var roup = $(".favorite-content").find(".choiseChangeBox");
+                for (var i = 0; i < roup.length; i++) {
+                    if (!$(roup[i]).hasClass("checkedBox")) {
+                        Ids.push("'"+$(roup[i]).parent().attr("id")+"'");
+                    }
+                }
+                if (Ids.length > 0) {
+                    common.post("/Client/ClientCenter/CancelCollect", { Ids: Ids.join() }, function (r) {
+                        for (var i = 0; i < roup.length; i++) {
+                            if (!$(roup[i]).hasClass("checkedBox")) {
+                                $(roup[i]).parent().remove();
+                            }
+                        }
+                    });
+                }
+                else {
+                    alert("请选择要删除的收藏!", null, 1000);
+                }
+            })
+        }
+
+
+        return {
+            InitCollectionData:InitCollectionData,
+            bingPage: bingPage,
+            ChangeiCollectType:ChangeiCollectType,
+            CancelCollect:CancelCollect
+        }
+    }));
+</script>

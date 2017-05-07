@@ -1,0 +1,237 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>分享中心</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+    <link href="~/Content/dropload.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+</head>
+<body class="bg-f2f2f2">
+    <div id="share-store">
+        <div class="head">
+            <div class="search bg-f2f2f2 clearfix">
+                <span class="input-box bg-fff">
+                    <input id="sKeyWord" type="text" placeholder="店铺名字" />
+                </span>
+                <a  href="javascript:;" class="fr sKeyWord">搜索</a>
+            </div>
+            <div class="title bg-fff">
+                <a data-bIsDeleted="1" href="javascripe:;" class="share t50 text-center active">已分享的店铺<b class="bg-fe8285 l50"></b></a>
+                <a data-bIsDeleted="0" href="javascripe:;" class="share t50 text-center">未分享的店铺<b class="bg-fe8285 l50"></b></a>
+            </div>
+        </div>
+        <div id="ShopManagementList" class="share-on">
+            <script id="ShopManagement" type="text/html">
+            {{each list as m index}}
+            <div class="order_center bg-fff mb1r">
+                <div class="order_pred flex_dom flex_item_stretch">
+                    <a href="javascript:;" class="pred_img wid2rem">
+                        <span>
+                            <img src="{{m.sImagePath}}">
+                        </span>
+                    </a>
+                    <div class="pred_con  p_relative flex_1">
+                        <h4 class="fs-14 text-ellipsis-2line fc-333"><span>{{m.sShopName}}</span></h4>
+                        <p class="fc-999 height6">店铺商品数量:<span class="fs-16">{{m.GoodsCount}}</span></p>
+                    </div>
+                </div>
+                <div class="price">
+                    {{if m.bIsDeleted==1}}
+                    <div class="btn fr">
+                        <a sShopID="{{m.sShopID}}" href="javascript:;" class="ml1r fc-fe8285 CancelShare">取消分享</a>
+                        <a sShopID="{{m.sShopID}}" href="javascript:;" class="ml1r bg-fe8285 fc-fff ShopDetail" >此店商品</a>
+                    </div>
+                    {{/if}}
+                    {{if m.bIsDeleted==0}}
+                    <div class="btn fr">
+                        <a sShopID="{{m.sShopID}}" href="javascript:;" class="ml1r fc-fe8285 ShopDetail">此店商品</a>
+                        <a sShopID="{{m.sShopID}}" href="javascript:;" class="ml1r bg-fe8285 fc-fff ShareShop">分享此店</a>
+                    </div>
+                    {{/if}}
+                </div>
+            </div>
+            {{/each}}
+           </script>            
+        </div>
+    </div>
+</body>
+</html>
+<script src="~/scripts/lib/template.js"></script>
+<script src="~/scripts/lib/client.common.js"></script>
+<script type="text/javascript">
+    $(function () {
+        scope.InitShopManagementData();
+        scope.bingPage();
+        scope.ChangeType();
+        scope.Search();
+    });
+
+    var scope = (function (obj) { return obj; }(new function () {
+
+
+        var bIsDeleted = 1;// 1-已分享店铺,0-未分享店铺
+        var sKeyWord="";
+        /*!
+         * 绑定滑动分页
+         */
+        function bingPage() {
+            common.page.initDropLoad(InitShopManagementData);
+        }
+
+        /*!
+        * 加载店铺数据列表
+        */
+        function InitShopManagementData() {
+            common.post("/Client/ShareCenter/LoadShopManagementList",
+               {
+                   pageIndex: common.page.pagerParam.pageIndex,
+                   pageSize: common.page.pagerParam.pageSize,
+                   bIsDeleted: bIsDeleted , // 1-已分享店铺,0-未分享店铺
+                   sKeyWord: sKeyWord
+               }, function (r) {
+                  
+                   var json = { list: r.Data.Result };
+
+                   var html = template("ShopManagement", json);
+                   $('#ShopManagementList').append(html);
+                   //绑定事件
+                   bingEvent()
+
+                   //没有数据展示
+                   if ($('#ShopManagementList div').length == 0) {
+                       window.noData('#ShopManagementList');
+                   }
+                   common.page.calculationPage(r.Data.MaxCount);
+               });
+        }
+
+        /**
+        * 改变会员店铺是或否分享的数据
+        */
+        function ChangeType() {
+            $(".text-center").on("click", function () {
+                $(".text-center").removeClass("active");
+                $(this).addClass("active");
+                bIsDeleted = Number($(this).attr("data-bIsDeleted"));
+                common.page.pagerParam.pageIndex = 1;
+                common.page.pagerParam.pageSize = 10;
+                //重新初始化数据
+                $('#ShopManagementList').html("");
+                InitShopManagementData();
+            })
+        }
+
+
+        //按店铺名字搜索
+        function Search() {
+            $('.sKeyWord').on("click", function () {
+                common.page.pagerParam.pageIndex = 1;
+                common.page.pagerParam.pageSize = 10;
+                sKeyWord = $('#sKeyWord').val();
+                $('#ShopManagementList').html("");
+                InitShopManagementData();
+            });
+        }
+
+        //分享店铺
+        function ShareShop(obj) {
+            var sShopID = $(obj.target).attr("sShopID");
+            common.post("/Client/ShareCenter/ShareShop", {
+                sShopID: sShopID
+            }, function (r) {
+                alert("分享成功,请到已分享的店铺中查看", null, 500);
+                $(obj.target).parents(".order_center").remove();
+            }, function (r) {
+                if (Number(r.Data) == -1) {
+                    alert("申请失败，您已被此店冻结",null,1000);
+                }
+                else {
+                    alert("分享店铺失败", null, 1000);
+                }
+            });
+        }
+
+        //取消分享
+        function CancelShare(obj) {
+            confirm("确定取消分享此店铺吗",
+                {
+                    "text": "确定", fn: function () {
+                        var sShopID = $(obj.target).attr("sShopID");
+                        common.post("/Client/ShareCenter/CancelShare", {
+                            sShopID: sShopID
+                        }, function (r) {
+                            alert("取消分享店铺成功!", null, 500);
+                            $(obj.target).parents(".order_center").remove();
+                        }, function (r) {
+                            alert("取消分享店铺失败", null, 1000);
+                        });
+                    }
+                }, {
+                    "text": "取消", fn: function () {
+                        return;
+                    }
+                }
+                );
+        }
+
+        //绑定单击事件
+        function bingEvent() {
+            //分享店铺
+            $('.ShareShop').on("click", ShareShop);
+            //取消分享
+            $('.CancelShare').on("click", CancelShare);
+
+            $('.ShopDetail').on("click", function () {
+                var sShopID = $(this).attr("sShopID");
+                common.setStorageItem("_sShopID_", sShopID);
+                location.href = "/Client/ShareCenter/ShopDetail?IsShared="+bIsDeleted;
+            })
+
+        }
+
+        return {
+            InitShopManagementData: InitShopManagementData,
+            bingPage: bingPage,
+            ChangeType: ChangeType,
+            Search: Search,
+        }
+
+    }));
+</script>

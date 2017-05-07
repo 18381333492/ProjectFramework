@@ -1,0 +1,111 @@
+﻿@{ Layout = null; }
+@model Framework.DTO.EHECD_SystemUserDTO
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <!--bootstrap-->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+    <!--主题样式：可选-->
+    <link id="them" href="~/Content/themes/ui-sunny/easyui.css" rel="stylesheet" />
+
+    <link href="~/Content/themes/icon.css" rel="stylesheet" />
+    <link href="~/Content/themes/color.css" rel="stylesheet" />
+    <link href="~/Content/themes/mobile.css" rel="stylesheet" />
+    <link href="~/Content/backload.css" rel="stylesheet" />
+
+    <!--滚轮插件cs-->
+    <link href="~/scripts/plug-in/scroll-bar/jquery.mCustomScrollbar.css" rel="stylesheet" />
+    <!--滚轮插件cs-->
+
+    <!--图片上传插件css-->    
+    <link href="~/scripts/plug-in/ueditor/webuploader/uploader.css" rel="stylesheet" />    
+    <!--图片上传插件css-->
+    
+    <script src="~/scripts/jquery-1.11.3.min.js"></script>
+    <script src="~/scripts/plug-in/scroll-bar/jquery.mousewheel.min.js"></script>
+    <script src="~/scripts/plug-in/scroll-bar/jquery.mCustomScrollbar.js"></script>
+    <script src="~/scripts/jquery.easyui-1.4.5.min.js"></script>
+
+    <!--图片上传插件js-->
+    <script src="~/scripts/plug-in/ueditor/webuploader/webuploader.min.js"></script>
+    <script src="~/scripts/plug-in/ueditor/webuploader/imgupload.js"></script>
+    <!--图片上传插件js-->
+
+    <!--UEditor插件-->
+    <script src="~/scripts/plug-in/ueditor/ueditor.config.js"></script>
+    <script src="~/scripts/plug-in/ueditor/ueditor.all.js"></script>
+    <!--UEditor插件-->
+
+    <script src="~/scripts/lib/modules.manager.js"></script>
+    <script src="~/scripts/lib/dateHelper.module.js"></script>
+    <script src="~/scripts/lib/emuns.module.js"></script>
+    <script src="~/scripts/lib/md5.module.js"></script>
+    <script src="~/scripts/lib/base64.module.js"></script>
+    <script src="~/scripts/lib/version.module.js"></script>
+    <script src="~/scripts/lib/object.module.js"></script>
+    <script src="~/scripts/lib/tool.module.js"></script>
+    <script src="~/scripts/lib/array.module.js"></script>
+    <script src="~/scripts/lib/func.module.js"></script>
+    <script src="~/scripts/lib/easyui.module.js"></script>
+    <script src="~/scripts/lib/global.variable.module.js"></script>
+    <script src="~/scripts/lib/baidu.ueditor.module.js"></script>
+    <script src="~/Areas/Admin/Scripts/Main/index.js"></script>
+
+    <title>友客商城后台管理系统</title>
+</head>
+<body>
+    <div id="layout" class="easyui-layout" data-options="fit:true">
+        <!--上布局-->
+        <div data-options="region:'north',title:'',split:false" style="height:40px;">
+            <div style="height:100%;width:100%;position:relative;" class="tabs-header">
+                <span style="font-size:22px;line-height:30px;margin-left:30px">友客分享微信旅游商城后台</span>
+                <div style="width:auto;height:20px;right:15px;position:absolute;bottom:10px">
+                    切换主题：
+                    <select class="easyui-combobox" data-options="editable:false,onSelect: function(rec){$('#them').attr('href',rec.value);}" style="width:100px;">
+                        <option value="/Content/themes/default/easyui.css">默认</option>
+                        <option value="/Content/themes/bootstrap/easyui.css">bootstrap</option>
+                        <option value="/Content/themes/gray/easyui.css">灰阶</option>
+                        <option value="/Content/themes/ui-dark-hive/easyui.css">夜间</option>
+                        <option value="/Content/themes/material/easyui.css">质感</option>
+                        <option value="/Content/themes/metro-blue/easyui.css">磁帖(蓝)</option>
+                        <option value="/Content/themes/metro-gray/easyui.css">磁帖(灰)</option>
+                        <option value="/Content/themes/metro-green/easyui.css">磁帖(绿)</option>
+                        <option value="/Content/themes/metro-orange/easyui.css">磁帖(橙)</option>
+                        <option value="/Content/themes/metro-red/easyui.css">磁帖(红)</option>
+                        <option value="/Content/themes/ui-pepper-grinder/easyui.css">胡椒色</option>
+                        <option value="/Content/themes/ui-cupertino/easyui.css">Cupertino</option>
+                        <option value="/Content/themes/ui-sunny/easyui.css" selected>阳光</option>
+                    </select>
+                    当前登录用户：<span class="glyphicon glyphicon-user"><span style="margin-left:2px">@(Model.sUserName)&emsp;</span></span><a href="/Admin/Main/ExitSystem" class="glyphicon glyphicon-log-out"><span style="margin-left:2px">安全退出</span></a>
+                </div>
+            </div>
+        </div>
+
+        <!--下布局-->
+        <div data-options="region:'south',title:'',split:false" style="height:30px;">
+            <div style="height:100%;width:100%;line-height:25px;text-align:center" class="tabs-header">
+                友客分享微信旅游商城后台  技术支持-成都亿合科技
+            </div>
+        </div>
+
+        <!--左布局 菜单-->
+        <div class="tabs-header" data-options="region:'west',title:'菜单',split:false,width:280" id="menu_left">
+            <link href="~/Content/bootstrap-treeview.min.css" rel="stylesheet" />
+            <script src="~/scripts/bootstrap-treeview.min.js"></script>
+            <script src="~/Areas/Admin/Scripts/Menu/Index.js"></script>
+            <div id="tree" style="margin-left:5px;margin-top:5px;width:255px;"></div>
+        </div>
+
+        <!--中间面板-->
+        <div data-options="region:'center',title:''">
+            <div id="tabs" class="easyui-tabs" data-options="fit:true,border:false">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

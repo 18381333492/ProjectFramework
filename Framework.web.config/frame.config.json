@@ -1,0 +1,72 @@
+﻿{
+  //"connectionString": "server=42.96.138.74,4343;database=EHECD_YKSHARESTORE;User =ehecduser; Password =Ehecd@)!#;pooling=true;Min pool size = 1;Max pool size = 500;Connection lifetime = 0;Connection timeout = 15;",
+   "connectionString": "server=121.42.252.34;database=EHECD_YKSHARESTORE;User =sa; Password =ykfx@1234;pooling=true;Min pool size = 1;Max pool size = 500;Connection lifetime = 0;Connection timeout = 15;",
+  /*生成的图片验证码字符长度*/
+  "imgCodeLength": 4,
+  /*系统日志目录*/
+  "logPath": "SystemLogs/Log\\",
+  /*创蓝短信接口配置*/
+  "MessageInfo_Chuanglan": {
+    "account": "N7904576",
+    "MD5key": "eloangli",
+    "Msg_Registe": "您的注册验证码是{0}，一分钟后可重新发送。",
+    "Msg_ResetPassword": "您正在执行重置密码操作，您的验证码是{0},两分钟后可重新发送。",
+    "password": "Gors7U8tzW4f6e",
+    "postUrl": "http://sms.253.com/msg/send"
+  },
+  /*登录的随机图片字符旋转角度*/
+  "randomCodeAngle": 10,
+  /*图片服务器地址*/
+  "url": "http://115.28.48.78:8092/api/upload/controller?module=YKShareStore&field=YKShareStore&appKey=615MK4VF6PQE9T30L325W2UCA1SYIRXNJDBK",
+  /*是否启用菜单按钮绑定*/
+  "UseMenuBottn": 1,
+  /*是否启用角色绑定*/
+  "UseUserRole": 1,
+  /*生成随机图片的字符（逗号分隔）*/
+  "validateCodeRandomArray": "1,2,3,4,5,6,7,8,9,0",
+  /*规定时间内最多请求图片数量*/
+  "VImgCodeMaxCount": 3,
+  /*规定的图片验证码请求时间延迟*/
+  "VImgCodeTimeOut": 10,
+  /*随机生成的短信验证码字符集合*/
+  "RandomMessagerCharArray": {
+    "numbers": "1,2,3,4,5,6,7,8,9,0",
+    "chsChars": "一,二,三,四,五,六,七,八,九,十,我,是,你,的,爸,爹,爷,妈,随,便,说,点,啥,子,嘛,堃,骉,犇",
+    "enChars": "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z",
+    "jpChars": "あ,い,う,え,お,か,き,く,け,こ,さ,し,す,せ,そ,た,ち,つ,て,と,な,に,ぬ,ね,の,は,ひ,ふ,へ,ほ,ま,み,む,め,も,ら,り,る,れ,ろ"
+  },
+  "weixin": {
+    /*微信公众号名称*/
+    "WeChatName": "亿合电子",
+    /*微信公众号*/
+    "WeChatNo": "ehecdpjb",
+    /*Token*/
+    "Token": "B250E213C6F14AF8BA4C1F1B17389DEF",
+    /*URL*/
+    "Url": "http://ykfx.server74.ehecd.com/WeixinResult/ResultFn",
+    /*应用密钥*/
+    "AppSecret": "aa6adc98c954b19fcc11f4103b39f475",
+    /*原始ID*/
+    "OriginalID": "gh_2ed5e29b1ce0",
+    /*商户号*/
+    "Mch_Id": "1312293101",
+    /*API秘钥*/
+    "APISignKey": "rdth456u45678987trghnhtbrrghnmnf",
+    /*AppID*/
+    "AppId": "wx5562fdbf0fd36458",
+    //发布网址路径
+    "LocalDomain": "http://ykfx.server74.ehecd.com",
+
+    //平台微信公众号的shopID,固定 不能修改
+    "WxKeyId": "893B8FA1-F002-4206-936B-1B357A478B34",
+
+    //微信异步回调地址
+    "notify_url": "http://ykfx.server74.ehecd.com/Client/Pay/AsyncCallBack"
+  },
+
+  //银联支付相关配置
+  "online": {
+    //银联异步回调地址
+    "online_notify_url": "http://ykfx.server74.ehecd.com/Client/Pay/OnlineNotify"
+  }
+}

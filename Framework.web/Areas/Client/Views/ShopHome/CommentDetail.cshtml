@@ -1,0 +1,313 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>评论列表</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link href="~/Content/dropload.css" rel="stylesheet" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+    <style type="text/css">
+        .imglist_box {
+            font-size: 0px;
+            margin: 5px 0 10px;
+        }
+
+            .imglist_box span {
+                position: relative;
+                width: 32%;
+                display: inline-block;
+            }
+
+                .imglist_box span + span {
+                    margin-left: 2%;
+                }
+
+                .imglist_box span em {
+                    height: 0px;
+                    padding-top: 100%;
+                    display: block;
+                }
+
+                .imglist_box span img {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    left: 0px;
+                    top: 0px;
+                }
+    </style>
+</head>
+<body>
+    <!--goodIn-->
+   
+    <div class="goodIn">
+        <div id="comment_score_div">
+            <script type="text/html" id="comment_score_Template">
+                <div class="topStarBox" id="total_score">
+                    <input type="hidden" value="{{start}}" />
+                    </div>
+                <div class="scoreAndTalk">
+
+                    <div class="scoreAndTalk-content">
+                        <div class="score-box">
+                            <p class="score">{{average}}</p>
+                            <div class="tip">评分</div>
+                        </div>
+                        <div class="scoreAndTalk-content-line"></div>
+                        <div class="score-box">
+                            <p class="score">{{comments}}</p>
+                            <div class="tip">点评</div>
+                        </div>
+                    </div>
+
+                </div>
+            </script>
+        </div>
+        <div class="w-notDATA" style="display:none;" id="goods_comment_havaNoData"><b></b><h4 class="w-font14 w-colorccc w-textalignC">暂时没有数据</h4></div>
+        <div class="goodInBox" id="comment_detail_div">
+            <script type="text/html" id="goods_comment_Template">
+                {{each list as item index}}
+                <div class="goodInBox-smallbox grayline">
+                    <img src="{{item.image}}" class="headerImg" alt="">
+                    <div class="goodInBox-smallbox-right">
+                        <div class="name">{{item.sNickName}}</div>
+                        <p class="starFloor">
+                         <span class="xyl"><input type="hidden" value="{{item.iCommentScore}}" /></span>
+                         <span class="scoreBox">{{item.iCommentScore}}分</span>
+                        </p>
+                        <p class="roomDescribe">{{item.sCommentContent}}</p>
+                        <p class="roomDescribe talkTime">{{item.dCommentTime}}</p>
+                        {{if item.sCommentImgPath!=null&&item.sCommentImgPath!=""}}
+                      
+                        <div class="imglist_box swiper_clickLook">
+                            {{each item.sCommentImgPath.split(',') as photo index}}
+                            {{if index===0||index===1||index===2 }}
+                            <span class="">
+                                <em class="">
+                                    <img src="{{photo}}" />
+                                </em>
+                            </span>
+                            {{/if}}
+                            {{/each}}
+                        </div>
+                       
+                        {{/if}}
+                        {{if item.bIsReplay===true}}
+                        <div class="bossReturn">
+                            <p class="bossReturn-floor">掌柜回复:</p>
+                            <p class="bossReturn-content">{{item.sReplayContent}}</p>
+                            <p class="bossReturn-time">{{item.dReplayTime}}</p>
+                        </div>
+                        {{/if}}
+                    </div>
+                </div>
+                {{/each}}
+            </script>
+          </div>
+    </div>
+</body>
+</html>
+
+<script src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+<script src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+<script src="~/Areas/Client/Content/lib/date-choice.js"></script>
+<script src="~/Areas/Client/Content/lib/judge.js"></script>
+<script src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+<script src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+<script src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+<script src="~/Areas/Client/Content/script/page.js"></script>
+<script src="~/Areas/Client/Content/script/malong.js"></script>
+<script src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+<script src="~/Areas/Client/Content/script/goujia.js"></script>
+<script src="~/Areas/Client/Content/script/qinliang.js"></script>
+<script src="~/Areas/Client/Content/script/wangqixin.js"></script>
+<script src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+<script src="~/scripts/lib/client.common.js"></script>
+<script src="~/scripts/lib/template.js"></script>
+<script>
+    $(function () {
+        comment.init();
+    });
+
+    var comment = (function (obj) { return obj; })(new function () {
+
+        function init() {
+            var url = location.search.split('=')[1];
+            common.post("/Client/ShopHome/GetCommentScore", { ID: url }, function (res) {
+                var score = template("comment_score_Template", res.Data);
+                $("#comment_score_div").html(score);
+                var img_url = { filled: "/Areas/Client/Content/images/slice/fillStar.png", empty: "/Areas/Client/Content/images/slice/hurfStar.png" };
+
+                set_stars($("#total_score"), img_url, 5, 25, "onlyread");
+            })
+
+            window.common.page.initDropLoad(loadDataCallBack(url));
+        }
+
+        function loadDataCallBack(url) {
+            pageSize = window.common.page.pagerParam.pageSize = 10;
+            pageIndex = window.common.page.pagerParam.pageIndex = 1;
+            window.common.post("/Client/ShopHome/GetAllComment", { pageSize: pageSize, pageIndex: pageIndex, ID: url },
+                function (r) {
+                    window.common.page.calculationPage(r.Data.MaxCount);//重新计算页码
+                    var json = r.Data.Result;
+                    if (json.length == 0) {
+                        $("#goods_comment_havaNoData").css("display", "block");
+                        $("#comment_detail_div").css("display", "none");
+                    }
+                    else { 
+                    //template.config("escape", false);
+                    var html = template("goods_comment_Template", { list: json });
+                    $("#comment_detail_div").html(html);
+                    var img = { filled: "/Areas/Client/Content/images/slice/fillStar.png", empty: "/Areas/Client/Content/images/slice/hurfStar.png" };
+                    set_stars($(".xyl"), img, 5, 25, "onlyread");
+                    }
+                    imgINit();
+                }, function (r) { });
+        }
+
+        function imgINit() {
+            if ($(".swiper_clickLook").length || $(".edit_area").length) {
+                var img_clickShow1 = function () {
+                    if ($(".swiper_clickLook").length) {
+                        $('body').append('<div class="detail_look" swiper_clickLook><em><b></b>/<i></i></em><div class="swiper-container"><div class="swiper-wrapper"></div></div><span class="close_btn" style=""><button href="javascript:" class="fa fa-times-circle-o color-fff font30" ></button></span></div>');
+                        $(".swiper_clickLook").each(function () {
+                            var dom_box = $(this);
+                            dom_box.click(function (e) {
+                                if ($(this).find("img").length == 0) return;
+                                var dom = $(this).children();
+                                while (dom.length != $(this).find("img").length) {
+                                    dom = dom.children()
+                                }
+
+                                $(".swiper-container .swiper-wrapper").empty();
+                                if (dom.has($(e.target)).length) {
+                                    var ind = dom.has($(e.target)).index();
+
+                                } else {
+                                    var ind = $(e.target).index();
+
+                                }
+
+                                var len = dom.length;
+                                dom.each(function () {
+                                    if ($(this).find("img").length) {
+                                        var src = $(this).find("img").prop("src");
+                                    } else {
+                                        var src = $(this).prop("src");
+                                    }
+                                    $(".swiper-container .swiper-wrapper").append('<div class="swiper-slide"><div class="look_box"><img src="' + src + '"/></div></div>')
+                                });
+
+                                $(".detail_look[swiper_clickLook] >em i").text(len);
+                                $(".detail_look[swiper_clickLook]").show();
+                                var mySwiper = new Swiper('.swiper-container', {
+                                    initialSlide: ind,
+                                    loop: true,
+                                    onInit: function () {
+                                        $(".detail_look[swiper_clickLook] >em b").text(ind + 1);
+
+                                    },
+                                    onSlideChangeEnd: function (mySwiper) {
+                                        $(".detail_look[swiper_clickLook] >em b").text(mySwiper.activeIndex == "0" ? len : (mySwiper.activeIndex == len + 1 ? 1 : mySwiper.activeIndex));
+                                    }
+
+
+
+                                })
+
+                                $('.look_box').each(function () {
+                                    new RTP.PinchZoom($(this), {});
+                                });
+
+                            });
+                            $(".detail_look[swiper_clickLook] .close_btn button").click(function () {
+                                $(".detail_look[swiper_clickLook]").hide();
+
+                            })
+
+                        })
+
+                    }
+
+
+
+                };
+
+
+
+                /*二种模式：（二），富文本编辑区模式*/
+                var img_clickShow2 = function () {
+                    $('body').append('<div class="detail_look" edit_area><em><b>2</b>/<i>4</i></em><div class="swiper-container2"><div class="swiper-wrapper"></div></div><span class="close_btn" style=""><button href="javascript:" class="fa fa-times-circle-o color-fff font30 back-999" ></button></span></div>');
+                    setTimeout(function () {
+                        var dom = $(".edit_area").find("img");
+                        var offsetTop;
+                        dom.click(function () {
+                            offsetTop = $(window).scrollTop();
+                            $("body").css("position", "fixed").css("top", -offsetTop + "px");
+                            $(".swiper-container2 .swiper-wrapper").empty();
+                            var ind = dom.index($(this));
+                            var len = dom.length;
+                            $(".detail_look[edit_area] >em i").text(len);
+                            dom.each(function () {
+                                var src = $(this).prop("src");
+                                $(".swiper-container2 .swiper-wrapper").append('<div class="swiper-slide"><div class="look_box"><img src="' + src + '"/></div></div>')
+                            });
+
+                            $(".detail_look[edit_area]").show();
+                            var mySwiper = new Swiper('.swiper-container2', {
+                                initialSlide: ind,
+                                loop: true,
+                                onSlideChangeEnd: function (mySwiper) {
+                                    $(".detail_look[edit_area] >em b").text(mySwiper.activeIndex == "0" ? len : (mySwiper.activeIndex == len + 1 ? 1 : mySwiper.activeIndex));
+                                },
+
+                            })
+                            $('.look_box').each(function () {
+                                new RTP.PinchZoom($(this), {});
+                            });
+
+                        });
+                        $(".detail_look[edit_area] .close_btn button").click(function () {
+                            $("body").css("position", "initial").scrollTop(offsetTop);
+                            $(".detail_look[edit_area]").hide();
+
+                        })
+
+                    }, 1000)
+
+                };
+
+                img_clickShow1();
+                img_clickShow2();
+            }
+        }
+
+
+        return {
+            init:init
+        }
+    });
+
+</script>

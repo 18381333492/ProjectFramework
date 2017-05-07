@@ -1,0 +1,53 @@
+﻿@model Framework.DTO.EHECD_RoleDTO
+
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+
+@{
+    if (Model != null)
+    {
+        <div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px">
+            <form style="width:100%;height:100%;" id="edit_role_form">
+                <table class="styletable" style="height:100%">
+                    <tbody>
+                        <tr>
+                            <td>角色名字</td>
+                            <td>
+                                <label>@Model.sRoleName</label>
+                              
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>排序号</td>
+                            <td>
+                                <input class="easyui-numberbox" value="@Model.iOrder" data-options="width:180,type:'text',missingMessage:'请输入排序号',required:true,validType:['isNumber','minInt[0]','maxInt[9999]']" name="iOrder" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>是否启用</td>
+                            <td style="padding:0px 0px 0px 40px">
+                                @{
+                                    if ((bool)Model.bEnable)
+                                    {
+                                        <input type="radio" name="bEnable" value="true" checked /><span style="color:darkgreen">启用</span>
+                                        <input type="radio" name="bEnable" value="false" /><span style="color:red">禁用</span>
+                                    }
+                                    else
+                                    {
+                                        <input type="radio" name="bEnable" value="true" /><span style="color:darkgreen">启用</span>
+                                        <input type="radio" name="bEnable" value="false" checked /><span style="color:red">禁用</span>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+      }
+      else
+      {
+          <div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px">
+              <div id="nodata">很抱歉，未找到对应的角色信息，请联系管理员</div>
+          </div>
+      }
+}

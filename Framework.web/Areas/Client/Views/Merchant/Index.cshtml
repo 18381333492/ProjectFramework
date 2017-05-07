@@ -1,0 +1,220 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>订单列表</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link href="~/Content/dropload.css" rel="stylesheet" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+</head>
+<body class="bg-f2f2f2">
+    <div id="order-list">
+        <div class="title df bg-fff">
+            <a href="javascript:;" class="df1 text-center active" id="allorder_menu"><p class="border-r">全部</p><b class="l50"></b></a>
+            <a href="javascript:;" class="df1 text-center" id="unPayorder_menu"><p class="border-r">待付款</p><b class="l50"></b></a>
+            <a href="javascript:;" class="df1 text-center" id="unUse_menu"><p class="border-r">待使用</p><b class="l50"></b></a>
+            <a href="javascript:;" class="df1 text-center" id="haveUse_menu"><p>已核销</p><b class="l50"></b></a>
+        </div>
+        <!--全部订单-->
+        <div class="w-notDATA" style="display:none" id="allOrder_havaNoData"><b></b><h4 class="w-font14 w-colorccc w-textalignC">暂时没有数据</h4></div>
+        <!--1-->
+        <script type="text/html" id="allorder_Template">
+            {{each list as item index}}
+            <div class="order_center bg-fff mb1r" onclick="order.detail('{{item.ID}}')">
+                <div class="order_pred flex_dom flex_item_stretch">
+                    <a href="javascript:;" class="pred_img wid2rem">
+                        <span>
+                            <img src="{{item.goodsImage.split(',')[0]}}">
+                        </span>
+                    </a>
+                    <div class="pred_con  p_relative flex_1">
+                        <h4 class="l-h-04rem fs-14 text-ellipsis-2line fc-333"><span>{{item.sGoodsName}}</span></h4>
+                        <span class="style fc-fe8285">{{item.sOrder}}</span>
+                        {{if item.iState==0}}
+                        <span class="num">应付金额:<span class="ml1r fs-16 fc-fe8285">&yen;{{item.iTotalPrice}}</span></span>
+                        {{/if}}
+                        {{if item.iState==1|| item.iState==2|| item.iState==3}}
+                        <span class="num">支付金额:<span class="ml1r fs-16 fc-fe8285">&yen;{{item.iTotalPrice}}</span></span>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </script>
+         <div class="pro-order" id="all_order_div">
+          
+        </div>
+
+       
+    </div>
+</body>
+
+</html>
+<script src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+<script src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+<script src="~/Areas/Client/Content/lib/date-choice.js"></script>
+<script src="~/Areas/Client/Content/lib/judge.js"></script>
+<script src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+<script src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+<script src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+<script src="~/Areas/Client/Content/script/page.js"></script>
+<script src="~/Areas/Client/Content/script/malong.js"></script>
+<script src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+<script src="~/Areas/Client/Content/script/goujia.js"></script>
+<script src="~/Areas/Client/Content/script/qinliang.js"></script>
+<script src="~/Areas/Client/Content/script/wangqixin.js"></script>
+<script src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+<script src="~/scripts/lib/client.common.js"></script>
+<script src="~/scripts/lib/template.js"></script>
+<script>
+    $(function () {
+        order.init();
+        order.bindEvent();
+    });
+
+    var order = (function (obj) { return obj; })(new function () {
+
+        function init() {//全部订单初始化
+            $("#all_order_div").empty();
+            loadDataCallBack();
+            window.common.page.initDropLoad(loadDataCallBack);
+        }
+
+        function loadDataCallBack() {//全部订单页面绑定
+            pageSize =10;
+            pageIndex = 1;
+            window.common.post("/Client/Merchant/GetAllOrder", { pageSize: pageSize, pageIndex: pageIndex},
+                function (r) {
+                    window.common.page.calculationPage(r.Data.MaxCount);//重新计算页码
+                    if (r.Data.Result.length != 0) {
+                        
+                        $("#allOrder_havaNoData").css('display', 'none');
+                        var html = template("allorder_Template", { list: r.Data.Result });
+                        
+                        $("#all_order_div").append(html);
+                    }
+                    else {
+                        $("#all_order_div").empty();
+                        $("#allOrder_havaNoData").css('display', 'block');
+                    }
+
+                }, function (r) {
+                   
+                });
+        }
+        //事件绑定
+        function bindEvent() {
+            $("#allorder_menu").bind('click', init);//全部订单
+            $("#unPayorder_menu").bind('click', unPay);//未付款订单
+            $("#unUse_menu").bind('click', unUse);//未使用
+            $("#haveUse_menu").bind('click', havaUse);//已核销
+        }
+        //未付款订单
+        function unPay() {
+            $("#all_order_div").empty();
+            unPayCallBack()
+            window.common.page.initDropLoad(unPayCallBack);
+        }
+        //未付款订单页面绑定
+        function unPayCallBack() {
+            pageSize = 10;
+            pageIndex = 1;
+            window.common.post("/Client/Merchant/GetNoPay", { pageSize: pageSize, pageIndex: pageIndex },
+                function (r) {
+                    window.common.page.calculationPage(r.Data.MaxCount);//重新计算页码
+                    if (r.Data.Result.length != 0) {
+                        $("#allOrder_havaNoData").css('display', 'none');
+                        var html = template("allorder_Template", { list: r.Data.Result });
+                       
+                        $("#all_order_div").append(html);
+                    }
+                    else {
+                      
+                        $("#allOrder_havaNoData").css('display', 'block');//当查找结果没有数据时显示没有数据的图片
+                    }
+                }, function (r) {});
+        }
+
+
+        function unUse() {
+            $("#all_order_div").empty();
+            window.common.page.initDropLoad(unUseCallBack());
+        }
+        function unUseCallBack() {
+            pageSize = window.common.page.pagerParam.pageSize = 10;
+            pageIndex = window.common.page.pagerParam.pageIndex = 1;
+            window.common.post("/Client/Merchant/GetNoUse", { pageSize: pageSize, pageIndex: pageIndex },
+                function (r) {
+                    window.common.page.calculationPage(r.Data.MaxCount);//重新计算页码
+                    if (r.Data.Result.length != 0) {
+                        $("#allOrder_havaNoData").css('display', 'none');
+                        var html = template("allorder_Template", { list: r.Data.Result });
+                        
+                        $("#all_order_div").append(html);
+                    }
+                    else {
+                      
+                        $("#allOrder_havaNoData").css('display', 'block');
+                }
+
+                }, function (r) { });
+        }
+
+
+        function havaUse() {
+            $("#all_order_div").empty();
+            window.common.page.initDropLoad(havaUseCallBack());
+        }
+
+        function havaUseCallBack() {
+            pageSize = window.common.page.pagerParam.pageSize = 10;
+            pageIndex = window.common.page.pagerParam.pageIndex = 1;
+            window.common.post("/Client/Merchant/GetHaveUsed", { pageSize: pageSize, pageIndex: pageIndex },
+                function (r) {
+                    window.common.page.calculationPage(r.Data.MaxCount);//重新计算页码
+                    if (r.Data.Result.length != 0) {
+                        $("#allOrder_havaNoData").css('display', 'none');
+                        var html = template("allorder_Template", { list: r.Data.Result });
+                       
+                        $("#all_order_div").append(html);
+                    }
+                    else {
+                        
+                        $("#allOrder_havaNoData").css('display', 'block');
+                    }
+
+                }, function (r) {  });
+        }
+
+        function detail(id) {
+            window.location.href="/Client/Merchant/Detail?id=" + id;
+        }
+        return {
+            init: init,
+            bindEvent: bindEvent,
+            detail: detail
+        }
+    });
+
+</script>

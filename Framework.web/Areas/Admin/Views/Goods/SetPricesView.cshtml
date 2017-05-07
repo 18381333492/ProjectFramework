@@ -1,0 +1,87 @@
+﻿
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form style="width:99%;height:99%;" id="add_goods_form">
+     <div id="time"></div>  
+   </form>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var time = $('#time')
+        //treegrid的数据绑定
+        time.treegrid({
+            url: '/Admin/Goods/GetTime',
+            idField: "ID",//必需的
+            treeField: "Date",
+            striped: true,
+            loadMsg: "正在加载...",
+            columns: [[
+                { field: 'Date', title: '日期', align: 'center', width: 100 },// formatter: sModuleName },
+                {
+                    field: 'first_prices', title: '<span style="color:red">价格1：</span>' + '(@ViewBag.dGoodsFisrtPrice)',
+                    align: 'center', width: 150, formatter: function (value, row, index) {
+                        if (value == undefined) {
+                            return '<span style="vertical-align:central">全选<input class="month" price="1" type="checkbox" value="' + row.Date + '"/></span>'
+                        }
+                        else
+                            return ' <input type="radio"  class="' + row.Month + '"  name="' + row.ID + '" value="' + value + '" date="' + row.Date + '" />'
+                    }
+                },
+                {
+                    field: 'sec_prices', title: '<span style="color:red">价格2：</span>' + '(@ViewBag.dGoodsSecPrice)',
+                    align: 'center', width: 150, formatter: function (value, row, index) {
+                        if (value == undefined) {
+                            return '<span style="vertical-align:central">全选<input class="month" price="2" type="checkbox" value="' + row.Date + '"/></span>'
+                        }
+                        return ' <input type="radio" class="' + row.Month + '"  name="' + row.ID + '" value="' + value + '" date="' + row.Date + '" />'
+                    }
+                },
+                {
+                    field: 'thrid_prices', title: '<span style="color:red">价格3：</span>' + '(@ViewBag.dGoodsThirdPrice)',
+                    align: 'center', width: 150, formatter: function (value, row, index) {
+                        if (value == undefined) {
+                            return '<span style="vertical-align:central">全选<input class="month" price="3" type="checkbox" value="' + row.Date + '"/></span>'
+                        }
+                        return ' <input type="radio" class="' + row.Month + '" name="' + row.ID + '" value="' + value + '" date="' + row.Date + '" />'
+                    }
+                }
+            ]],
+            onLoadSuccess: function (row, data) {
+                if (data.Succeeded) {
+                    var date = JSON.parse(data.Data);
+                    time.treegrid('loadData', date);
+                    time.treegrid('collapseAll');
+                    bingClick();
+                }
+            },
+        });
+     
+
+        //绑定checkbox单击事件
+        function bingClick (){
+            $('.month').on('click', function () {
+                var checked = $(this).prop("checked") == true ? true : false;
+                var value = $(this).val();
+                var price = $(this).attr("price");         
+                //清除同一行的checked
+                $('input:checkbox[value=' + value + ']').prop("checked", false);
+                $(this).prop("checked", checked);
+                //获取所有的根节点
+                var array = time.treegrid('getRoots');
+                $(array).each(function () {
+                    var item = this;
+                    if (item.Date == value) {
+                        $(item.children).each(function () {
+                            $('input:radio[value=' + price + '][class=' + value + ']').prop("checked", checked);
+                        });
+                    }
+                });
+             
+                
+            });
+        }
+
+        //$('#add_goods_form input:radio:checked')
+
+    });
+</script>

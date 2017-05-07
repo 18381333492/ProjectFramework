@@ -1,0 +1,43 @@
+﻿@model Framework.DTO.EHECD_CategoriesDTO
+
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    @if (Model != null)
+    {
+        <form style="width:99%;height:99%;" id="add_goods_category_form">
+            <table class="styletable" style="height:100%">
+                <tbody>
+                    <tr>
+                        <td>分类名称</td>
+                        <td>
+                            <input class="easyui-textbox" value="@Model.sCategoryName" data-options="width:180,type:'text',editable:true,missingMessage:'请输入种类名称',required:true,validType:['chartLengthBetween[2,255,\'种类名称\']','isHtmlValidate']" name="sCategoryName" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>分类简述</td>
+                        <td>
+                            <input class="easyui-textbox" value="@Model.sCategoryCaption" data-options="width:180,type:'text',editable:true,missingMessage:'请输入种类简述',required:true,validType:['chartLengthBetween[2,255,\'种类简述\']','isHtmlValidate']" name="sCategoryCaption" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>排序号</td>
+                        <td>
+                            <input class="easyui-numberbox" value="@Model.iOrder" data-options="width:180,type:'text',editable:true,missingMessage:'请输入排序号',required:true,validType:['isNumber','minInt[0]','maxInt[1000]']" name="iOrder" />
+                        </td>
+                    </tr>
+                    <tr style="height:160px;">
+                        <td>分类图片</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    }
+    else
+    {
+        <div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px">
+            <div id="nodata">很抱歉，未找到商品分类，请联系管理员</div>
+        </div>
+    }
+</div>

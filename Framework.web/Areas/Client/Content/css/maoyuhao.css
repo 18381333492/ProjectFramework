@@ -1,0 +1,43 @@
+/*友客分享*/
+/*.main_content{ background-color: #f2f2f2; position: fixed;height: 100%; width:100%; overflow: auto;}*/
+.top_erea{ height: 3rem;}
+.top_erea>div{ overflow: visible;}
+.top_erea .nav_choice >*+* label:before{ display: none;}
+.top_erea .nav_choice >* input:checked+span{color:inherit}
+.filter_box .flex_dom  a{ text-align: center;line-height: 1rem;color:#999}
+.filter_box .flex_dom > a >label{ display: block;position: relative;}
+.filter_box .flex_dom  a label input:checked+span{ color:#fe8285}
+.filter_box .flex_dom  a+a label span:before{display: inline-block;content: "";width:1px; height: 20px;
+position: absolute;left:0px; top:50%; margin-top: -10px; background-color: #eee;}
+.filter_box .flex_dom  a >label> label{ position: absolute;width:100%; height: 100%;left:0px;top:0px;display: none; }
+.filter_box .flex_dom  a >label >input:checked~label{ display: block;}
+.filter_box .flex_dom  a >label .filter_show{ position: fixed;width:100%; height: 100%;left:0;border-top:1px solid #eee;display: none; }
+.filter_box .flex_dom  a >label input:checked~.filter_show{ display: block;}
+.filter_box .flex_dom  a >label .filter_show >label{ width: 100%; height: 100%; left:0;display: block;background-color: rgba(68,68,68,0.6);;}
+.filter_box .flex_dom  a >label .filter_show >label>*{ background-color: #fff;}
+.filter_box .flex_dom  a >label .filter_show >label ul li{padding-left: 30px;padding-right: 20px; text-align: left;color:#666 }
+.filter_box .flex_dom  a >label .filter_show >label ul li.active{ color:#fe8285; background-image: url(../images/slice/ticked.png); background-position: 6px center;background-repeat:no-repeat; background-size: 16px auto;}
+.filter_box .flex_dom  a >label .filter_show >label ul li+li{ border-top:1px solid #eee;  }
+.filter_box .flex_dom  a >label .filter_show >label ul{ max-height: 5rem;overflow: auto;}
+.filter_box .flex_dom  a >label .filter_show >label>div{ text-align:left;line-height: initial; padding-bottom: 20px!important;}
+.filter_box .flex_dom  a >label .filter_show >label>div  h4{ line-height: 30px;color:#fe8285;}
+.filter_box .flex_dom  a >label .filter_show >label>div div{ font-size: 0;}
+.filter_box .flex_dom  a >label .filter_show >label>div div label{display:inline-block}
+.filter_box .flex_dom  a >label .filter_show >label>div div span{font-size: 12px;display: inline-block;color:#666;padding: 0px 15px; line-height: 25px;border:1px solid #ccc; border-radius: 4px; margin-right: 10px;margin-bottom: 10px;}
+.filter_box .flex_dom  a >label .filter_show >label>div div label input:checked+span{background-color:#ffe8e9; color:#666; border:1px solid #fe8689}
+.filter_box .flex_dom  a >label .filter_show >label>div .price_span input{ ;height: 25px;padding: 0px 10px; width:70px; border:1px solid #ccc; }
+.filter_box .flex_dom  a >label .filter_show >label .ok_btn{  text-align: center;padding: 15px 0 10px!important;background-color: #f7f7f7;}
+.filter_box .flex_dom  a >label .filter_show >label .ok_btn span{display: inline-block;width:154px;height: 26px; color:#fff; font-size: 14px;line-height: 30px;padding-bottom: 9px;  box-sizing: content-box;background-image: url(../images/slice/redBtnBottom.png); background-size: 100% 100%;}
+
+
+.guanzhu_us{ position: fixed;display: none;width:100%; height: 100%; background-color:rgba(68,68,68,0.6);z-index: 100;left:0px;top:0px; overflow: hidden;}
+.guanzhu_us .erweima{padding: 10px 0; position: absolute;left:50%; top:50%; transform: translateX(-50%) translateY(-50%);-webkit-transform: translateX(-50%) translateY(-50%);border-radius: 10px; background-color: #fff; display: inline-block; text-align: center;width:70%;;}
+.guanzhu_us .erweima img{ width: 60%;}
+.guanzhu_us .erweima  h4{font-size: 16px; line-height: 40px; font-weight: 600; color:#666}
+.guanzhu_us .erweima p{ padding:  10px;}
+
+
+
+
+
+

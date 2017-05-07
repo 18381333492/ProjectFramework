@@ -1,0 +1,112 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD *XHTML 1.0* Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <!--主题样式：可选-->
+    @*<link href="~/Content/themes/black/easyui.css" rel="stylesheet" />*@
+    <link href="~/Content/themes/bootstrap/easyui.css" rel="stylesheet" />
+    @*<link href="~/Content/themes/ui-pepper-grinder/easyui.css" rel="stylesheet" />*@
+    @*<link href="~/Content/themes/ui-cupertino/easyui.css" rel="stylesheet" />*@
+    <!--这个是粒子效果的插件
+    <script src="~/scripts/login-back/canvas-particle.js"></script>
+    -->
+    <link href="~/Content/themes/icon.css" rel="stylesheet" />
+    <link href="~/Content/themes/color.css" rel="stylesheet" />
+    <link href="~/Content/themes/mobile.css" rel="stylesheet" />
+
+    <!--这是现在用的背景的样式-->
+
+    <script src="~/scripts/jquery-1.11.3.min.js"></script>
+    <script src="~/scripts/lib/cookies.js"></script>
+    <script src="~/scripts/jquery.easyui-1.4.5.min.js"></script>
+    <script src="~/scripts/lib/modules.manager.js"></script>
+    <script src="~/scripts/lib/object.module.js"></script>
+    <script src="~/scripts/lib/emuns.module.js"></script>
+    <script src="~/scripts/lib/tool.module.js"></script>
+    <script src="~/scripts/lib/func.module.js"></script>
+    <script src="~/scripts/lib/global.variable.module.js"></script>
+    <script src="~/scripts/lib/easyui.module.js"></script>
+    <script src="~/Areas/Admin/Scripts/Login/Index.js"></script>
+
+    <!--[if IE]>
+    <script src="~/scripts/login-back/html5.js"></script>
+    <![endif]-->
+
+    <style type="text/css">
+        .title {
+            color: white;
+            width: 100px;
+            text-align: right;
+        }
+
+        .tdcontent {
+            vertical-align: central;
+            padding-left: 5px;
+        }
+
+        table {
+            border-collapse: separate;
+            border-spacing: 10px;
+        }
+
+        .vcode {
+            top: 5px;
+        }
+        html {            
+            background-image: url('../../../../scripts/login-back/login/img/1.jpg');
+            background-size: cover;
+            background-color: black;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+        }
+    </style>
+    
+    <title>友客商城后台登录</title>
+</head>
+<body>
+    <div id="lg_panel" class="easyui-panel"
+         style="width:450px;height:230px;padding-top:30px;background-color:rgba(255,255,245,0.3);border:0px;border-radius:5px"
+         data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,style:{position:'absolute'}">
+        <form id="lg_form" action="/Admin/Login/Login" method="post">
+            <table style="width:100%;">
+                <tbody>
+                    <tr>
+                        <td class="title">登录名：</td>
+                        <td class="tdcontent">
+                            <input id="uname" class="easyui-textbox"
+                                   data-options="height:25,width:180,required:true,missingMessage:'请输入登录名',iconCls:'icon-man',iconAlign:'left',type:'text',value:'请输入登录名',validType:['chartLengthBetween[3,12,\'账号\']','isHtmlValidate']" />
+                            &emsp;<input type="checkbox" style="vertical-align:middle" id="remember_ac_info"><span style="color:white;">记住登录信息</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="title">密  码：</td>
+                        <td class="tdcontent">
+                            <input id="upwd" class="easyui-textbox" data-options="height:25,width:180,required:true,missingMessage:'请输入登录密码',iconCls:'icon-lock',iconAlign:'left',type:'password',validType:['chartLengthBetween[3,15,\'密码\']','isHtmlValidate']" />
+                            &emsp;<a style="color:white" href="javascript:;" id="forget_psd">忘记密码？</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="title">验证码：</td>
+                        <td class="tdcontent">
+                            <img id="vcodepic" style="vertical-align: middle;border-radius:4px;width:85px;height:23px" />
+                            <input id="vcode" class="easyui-textbox" data-options="height:25,width:90,required:true,missingMessage:'请输入4位验证码',type:'text',value:'请输入验证码',validType:['chartLengthEquire[4,\'验证码\']','isHtmlValidate']" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="padding-left:117px;vertical-align:bottom">
+                            <a id="btn_reset" href="javascript:;" class="easyui-linkbutton" data-options="width:88">重置</a>
+                            <a id="btn_lgon" href="javascript:;" class="easyui-linkbutton" data-options="width:88">登录</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</body>
+</html>

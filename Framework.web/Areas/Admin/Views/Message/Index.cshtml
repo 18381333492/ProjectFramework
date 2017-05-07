@@ -1,0 +1,16 @@
+﻿@model Framework.DTO.EHECD_SystemUserDTO
+
+<script src="~/Areas/Admin/Scripts/Message/Index.js"></script>
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px;">
+    <form id="message_manage_form" style="width:100%;height:100%;">
+        <table id="message_manager_menu"></table>
+        <div id="message_manager_tool" style="padding:15px;display:none;">
+            <input type="hidden" id="send_message_system" value="@Model.sMessage " />
+            <span style="color:red">剩余短信：<label id="send_message_sy_system"></label> &nbsp; &nbsp;</span>
+            <input type="hidden" value="@Model.sMessage" id="message_form_overplus">
+            <input type="text" class="easyui-textbox" data-options="prompt:'短信内容 / 收件人',validType:['isHtmlValidate','maxLength[200]']" id="search_message_Name"/>
+            @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
+        </div>
+    </form>
+</div>

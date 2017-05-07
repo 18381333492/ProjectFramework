@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>申请成为合伙人</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+    <style>
+        .w-redStar{display:block;}
+    </style>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+</head>
+<body>
+    <div class="w-height07 w-font14 w-color333 w-textalignC w-borderBeee">填写合伙人申请</div>
+    <div class="w-height09 w-borderBeee w-padding02 w-laterlogo w-position w-flex" style="background-image: url('/Areas/Client/Content/images/slice/phone.png');background-size: .2rem .3rem;">
+        <b class="w-redStar"></b>
+        <input id="sPhone" name="sPhone" type="text" class="w-flexitem1 w-height05 w-font14 w-color333" placeholder="请输入手机号码" />
+    </div>
+    <div class="w-height09 w-borderBeee w-padding02 w-laterlogo w-position w-flex" style="background-image: url('/Areas/Client/Content/images/slice/verify.png');background-size: .29rem .32rem;">
+        <b class="w-redStar"></b>
+        <input  id="sCode" type="text" class="w-flexitem1 w-height05 w-font14 w-color333" placeholder="请输入验证码" />
+        <input type="button" id="btn" class="w-floatright" value="获取验证码" style="min-width:80px; width:auto !important;"/>
+    </div>
+    <div class="w-height09 w-borderBeee w-padding02 w-laterlogo w-position w-flex" style="background-image: url('/Areas/Client/Content/images/slice/personname.png');background-size: .3rem .24rem;">
+        <b class="w-redStar"></b>
+        <input id="sName" type="text" class="w-flexitem1 w-height05 w-font14 w-color333" placeholder="请输入真实姓名" />
+    </div>
+    <div class="w-height09 w-borderBeee w-padding02 w-laterlogo w-position w-flex" style="background-image: url('/Areas/Client/Content/images/slice/position02.png');background-size: .26rem .3rem;">
+        <b class="w-redStar"></b>
+        <h4 class="w-flexitem1 w-height05 w-font14 w-color333">意向城市</h4>
+    </div>
+    <div id="area"></div>
+    <div class="w-height09 w-padding02 w-laterlogo w-position w-flex" style="background-image: url('/Areas/Client/Content/images/slice/edit.png');background-size: .3rem .3rem;">
+        <b class="w-redStar"></b>
+        <h4 class="w-flexitem1 w-height05 w-font14 w-color333">个人描述</h4>
+    </div>
+    <div class="w-paddingLeftRight02 w-marginBottom06">
+        <textarea name="" id="sDescribe" cols="30" rows="10" class="w-textarea2 w-font14 w-color333 w-padding02" placeholder="请输入个人描述"></textarea>
+    </div>
+    <input type="button" id="commit" value="提交" class="w-inputA" style="margin: 0 auto .6rem" />
+</body>
+</html>
+<script src="~/scripts/plug-in/cityselect/jquery.cityselect.js"></script>
+<script src="~/scripts/lib/client.common.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#area").citySelect({
+            type: 2,
+            required: false,
+            city: null,
+            dist: null,
+            level: 3,
+        });
+        scope.bingEvent();
+    });
+
+    var scope = (function (obj) { return obj; })(new function () {
+
+        var json = {};
+        var i = 60;
+        var time;
+        /**
+        *获取手机短信验证码
+        */
+        function GetPartnerCheckCode() {
+            json.sMobileNum = $('#sPhone').val();
+            if (json.sMobileNum.length == 0) {
+                alert("请填写手机号码!", null, 500);
+                return ;
+            }
+            if (!common.isMobilePhone(json.sMobileNum)) {
+                alert("手机格式错误!", null, 500);
+                return ;
+            }
+            common.post("/Client/ClientCenter/GetPartnerCheckCode", { sPhone: json.sMobileNum }, function (r) {
+                countDown();
+            }, function (r) {
+                alert(r.Msg);
+            });
+        }
+
+        /*60s计时器*/
+        function countDown() {
+            $("#btn").attr("disabled", true)//.css('background-color', '#ccc').css('color', '#fff').css('border','none');
+            var val = $("#btn")[0].value;
+            $("#btn").attr('value', '获取验证码('+i + 's)');
+            if (i == 0) {
+                $("#btn").removeAttr("disabled");
+                $("#btn").attr('value', '获取验证码');//.css('background-color', '#fff').css('color', '#fe8285').css('border', '1px solid #fe8285');
+                clearTimeout(time);
+                i = 60;
+            } else {
+                time= setTimeout(countDown, 1000);
+            }
+            i--;
+        }
+
+        /**
+        *成为合伙人
+        */
+        function IntoPartner() {
+            if (Valiate()) {
+                json.sProvice = $('#area .prov').val();
+                json.sCity = $('#area .city').val();
+                json.sCounty = $('#area .dist').val();
+                json.sCode = $('#sCode').val();
+                if (json.sCode.length > 0) {
+                    common.post("/Client/ClientCenter/IntoPartner", json, function (r) {
+                        alert("申请成功!", null, 1000);
+                        setTimeout(function () { location.href = "/Client/ClientCenter/Success" },1000)
+                    }, function (r) {
+                        alert(r.Msg, null, 1000);
+                    });
+                }
+                else {
+                    alert("请输入短信验证码!", null, 500);
+                }
+            }
+        }
+
+        /**
+        *验证字段
+        */
+        function Valiate() {
+            json.sMobileNum = $('#sPhone').val();
+            if (json.sMobileNum.length == 0) {
+                alert("请填写手机号码!", null, 500);
+                return false;
+            }
+            if (!common.isMobilePhone(json.sMobileNum)) {
+                alert("手机格式错误!", null, 500);
+                return false;
+            }
+            json.sName = $('#sName').val();
+            if (json.sName.length == 0) {
+                alert("请填写真实姓名!", null, 500);
+                return false;
+            }
+            if (json.sName.length > 6) {
+                alert("姓名长度不能超过六个字!", null, 500);
+                return false;
+            }
+            json.sMainBusiness = $('#sDescribe').val();
+            if (json.sMainBusiness.length == 0) {
+                alert("请填写个人描述!", null, 500);
+                return false;
+            }
+            if ($('#area .prov').val().length = 0) {
+                alert("请选择合作省份!", null, 500);
+                return false;
+            }
+            return true;
+        }
+
+
+        /**
+        *绑定按钮事件
+        */
+        function bingEvent() {
+
+            $('#btn').on("click", GetPartnerCheckCode);
+
+            $('#commit').on("click", IntoPartner);
+        }
+
+
+        return {
+            bingEvent: bingEvent
+        }
+
+    });
+</script>

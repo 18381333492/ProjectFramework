@@ -1,0 +1,28 @@
+﻿
+该控件不用引入js和css，对该插件的引用在主页上已经引入
+
+上传控件的网页dom结构，请不要更改这个结构的任何内容，如果你要指定这个容器的大小，请在外面加一个容器并指定容器的大小
+
+<div id="容器的id" class="uploader">
+    <div class="queueList">
+        <div id="dndArea" class="placeholder">
+            <div id="filePicker"></div>                
+        </div>
+    </div>        
+</div>
+
+js初始化
+
+ var uploadImage = new UploadImage({
+                target: "uploader", maxFileCount: 5, imgLst: [
+                   { filePath: 'http://115.28.48.78:8092/upload/615MK4VF6PQE9T30L325W2UCA1SYIRXNJDBK/YKShareStore/YKShareStore/image/2016/10/11/6361180095387434925924889.png' },
+                   { filePath: 'http://115.28.48.78:8092/upload/615MK4VF6PQE9T30L325W2UCA1SYIRXNJDBK/YKShareStore/YKShareStore/image/2016/10/11/6361180095395150068182319.png'},
+                   { filePath: 'http://115.28.48.78:8092/upload/615MK4VF6PQE9T30L325W2UCA1SYIRXNJDBK/YKShareStore/YKShareStore/image/2016/10/11/6361180095406283308683086.png'},
+                   { filePath:'http://115.28.48.78:8092/upload/615MK4VF6PQE9T30L325W2UCA1SYIRXNJDBK/YKShareStore/YKShareStore/image/2016/10/11/6361180095419076765954607.jpg'},
+                   { filePath: 'http://115.28.48.78:8092/upload/615MK4VF6PQE9T30L325W2UCA1SYIRXNJDBK/YKShareStore/YKShareStore/image/2016/10/11/6361180095427963824982791.png' }
+                ]
+            });
+
+maxFileCount表示最大可上传文件数量,如果已有图片，请设置imgLst属性，格式请按照以上方式匹配
+
+可通过uploadImage.imageList 获取当前上传图片的信息

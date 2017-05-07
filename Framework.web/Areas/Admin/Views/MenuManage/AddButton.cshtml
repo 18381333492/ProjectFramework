@@ -1,0 +1,120 @@
+﻿<form id="add_button_form">
+    <style>
+        .tablestype {
+            width: 90%;
+            height: 90%;
+            margin-left: 10px;
+            margin-top: 5px;
+        }
+
+            .tablestype td {
+                text-align: right;
+                height: 30px;
+            }
+    </style>
+    <div>
+        <table class="gridtable tablestype">
+            <tr>
+                <td>按钮名称：</td>
+                <td style="text-align:left;padding-left:15px">
+                    <input type="text" name="sButtonName" class="easyui-textbox" data-options="required:true,validType:['maxLength[20]','isHtmlValidate']" missingmessage="请输入按钮名称" />
+                </td>
+            </tr>
+            <tr>
+                <td>唯一标识：</td>
+                <td style="text-align:left;padding-left:15px">
+                    <input type="text" name="sDataID" class="easyui-textbox" data-options="required:true,validType:['maxLength[50]','isHtmlValidate']" missingmessage="请输入唯一标识，请注意命名规范" />
+                </td>
+            </tr>
+            <tr>
+                <td>按钮图标：</td>
+                <td style="text-align:left;padding-left:15px">
+                    <input name="sIcon" class="easyui-combobox" data-options="valueField:'id',textField:'text',data:[                           
+                                                                                                                    {
+                                                                                                                        'id':'icon-clipboard',
+                                                                                                                        'text':'剪贴板'
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        'id':'icon-folder',
+                                                                                                                        'text':'文件夹'
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        'id':'icon-add',
+                                                                                                                        'text':'添加（绿+）'
+                                                                                                                    },{
+                                                                                                                        'id':'icon-edit',
+                                                                                                                        'text':'编辑图标',
+                                                                                                                        'selected':true
+                                                                                                                    },{
+                                                                                                                        'id':'icon-clear',
+                                                                                                                        'text':'清除（灰X）'
+                                                                                                                    },{
+                                                                                                                        'id':'icon-remove',
+                                                                                                                        'text':'删除（绿-）'
+                                                                                                                    },{
+                                                                                                                        'id':'icon-save',
+                                                                                                                        'text':'保存图标'
+                                                                                                                    },{
+                                                                                                                        'id':'icon-cut',
+                                                                                                                        'text':'剪切（剪刀）'
+                                                                                                                    },{
+                                                                                                                        'id':'icon-ok',
+                                                                                                                        'text':'OK（✔）'
+                                                                                                                    },{
+                                                                                                                        'id':'icon-no',
+                                                                                                                        'text':'否定（红X）'
+                                                                                                                    },{
+                                                                                                                        'id':'icon-cancel',
+                                                                                                                        'text':'取消（红X）'
+                                                                                                                    },{
+                                                                                                                        'id':'icon-reload',
+                                                                                                                        'text':'重载（绿色刷新）'
+                                                                                                                    },{
+                                                                                                                        'id':'icon-search',
+                                                                                                                        'text':'搜索图标'
+                                                                                                                    },{
+                                                                                                                        'id':'icon-print',
+                                                                                                                        'text':'打印图标'
+                                                                                                                    },{
+                                                                                                                        'id':'icon-help',
+                                                                                                                        'text':'帮助图标（？）'
+                                                                                                                    },{
+                                                                                                                        'id':'icon-undo',
+                                                                                                                        'text':'上一步（红☜）'
+                                                                                                                    },{
+                                                                                                                        'id':'icon-redo',
+                                                                                                                        'text':'下一步（黄☞）'
+                                                                                                                    },{
+                                                                                                                        'id':'icon-back',
+                                                                                                                        'text':'返回（蓝◁）'
+                                                                                                                    },{
+                                                                                                                        'id':'icon-sum',
+                                                                                                                        'text':'求和（灰∑）'
+                                                                                                                    },{
+                                                                                                                        'id':'icon-tip',
+                                                                                                                        'text':'提醒（黄灯泡）'
+                                                                                                                    },{
+                                                                                                                        'id':'icon-filter',
+                                                                                                                        'text':'过滤（灰Y）'
+                                                                                                                    },{
+                                                                                                                        'id':'icon-man',
+                                                                                                                        'text':'人物图标'
+                                                                                                                    },{
+                                                                                                                        'id':'icon-lock',
+                                                                                                                        'text':'锁图标'
+                                                                                                                    },{
+                                                                                                                        'id':'icon-more',
+                                                                                                                        'text':'更多（┇）'
+                                                                                                                    }]" />
+                </td>
+            </tr>
+            <tr>
+                <td>排序号：</td>
+                <td style="text-align:left;padding-left:15px">
+                    <input type="text" name="iOrder" class="easyui-numberbox" data-options="required:true,min:0,validType:['isNumber']" missingmessage="请输入按钮排序号" />
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+

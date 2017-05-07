@@ -1,0 +1,24 @@
+﻿
+
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form id="add_Article_form" style="width:99%;height:99%">
+        <table class="styletable">
+            <tr>
+                <td>标题</td>
+                <td><input  class="easyui-textbox" type="text" name="sTitle" data-options="validType:['isHtmlValidate','maxLength[200]','notEmptyCharter'],required:true,missingMessage:'不能为空'" /></td>
+            </tr>
+            <tr>
+                <td>文章内容</td>
+                <td style="width:600px;height:300px">
+                    <input type="hidden" style="width:600px;height:300px" name="sContent" />
+                   
+                     <script type="text/plain" id="add_Article_sContent_script" style="height:400px;width:700px">
+                    </script>
+                </td>
+            </tr>
+        </table>
+
+    </form>
+    </div>

@@ -1,0 +1,25 @@
+﻿@model Framework.DTO.EHECD_ArticleDTO
+
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form id="edit_Article_form" style="width:900px;height:100%">
+        <table class="styletable">
+            <tr>
+                <td>标题</td>
+                <td>
+                    <input type="hidden" name="ID" value="@Model.ID"/>
+                <label name="sTitle">@Model.sTitle</label>
+                  
+            </tr>
+            <tr>
+                <td>文章内容</td>
+                <td style="width:600px;height:300px">
+                    <input type="hidden" style="width:600px;height:300px" id="edit_articl_Content" name="sContent" value="@Model.sContent" />
+                    <script type="text/plain" id="edit_Article_sContent_script" style="height:400px;width:700px">
+                    </script>
+            </tr>
+        </table>
+
+    </form>
+</div>

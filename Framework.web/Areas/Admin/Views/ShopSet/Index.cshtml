@@ -1,0 +1,112 @@
+﻿
+@model Framework.DTO.EHECD_ShopSetDTO
+
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+<script src="~/Areas/Admin/Scripts/ShopSet/Index.js"></script>
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px;">
+    <form id="shopset_index_form" style="width:100%;height:100%" ;>
+        <table class="styletable" style="height:100%">
+            <tbody>
+                <!--商城设置-->
+                <tr>
+                    <td colspan="2" style="text-align:center">店铺设置</td>
+                </tr>
+                <tr>
+                    <td>店铺名称：</td>
+                    <td><input class="easyui-textbox" name="sShopName" value="@Model.sShopName" missingMessage="请输入店铺名称" data-options="required:true,validType:['isHtmlValidate']" style="width:300px"></td>
+                </tr>
+                <tr>
+                    <td>轮播图管理：<br />
+                    规格：(375px*250px)
+                    </td>
+                    <td>
+                        <div id="shopSet_index_carousel_images">
+                            <div id="shopSet_index_upload" class="uploader">
+                                <div class="queueList" style="">
+                                    <div id="dndArea" class="placeholder">
+                                        <div id="filePicker"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </td>
+                </tr>
+
+                <!--客服设置-->
+                <tr style="display:none">
+                    <td colspan="2" style="text-align:center">客服设置</td>
+                </tr>
+                <tr style="display:none">
+                    <td>客服设置：</td>
+                    <td>
+                        <div id="shopSet_index_customer_contenter_div">
+                            <ul>
+                                @foreach (var item in (ViewBag.CustomerList as IList<Framework.DTO.EHECD_CustomServiceDTO>))
+                                {
+                                    <li style='line-height:3'>
+                                        <span>客服：</span>
+                                        <span>QQ号：<input class="easyui-textbox" missingMessage="请输入QQ号" name="sQQ" value="@item.sQQ" data-options="required:true,validType:['isHtmlValidate','isNumber']" style="width:200px"></span>
+                                        &emsp;&emsp;&emsp;
+                                        <span>QQ昵称：<input class="easyui-textbox" missingMessage="请输入QQ昵称" name="sQQName" value="@item.sQQName" data-options="required:true,validType:['chartLengthBetween([1,6])','isHtmlValidate']" style="width:200px"></span>
+                                        <span><a data-id="shopSet_index_customer_delete" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'">删除</a></span>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                        <div>
+                            <a id="shopset_index_btn_add_customer" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加</a>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" style="text-align:center">基础设置</td>
+                </tr>
+                
+                <tr>
+                    <td>联系电话：</td>
+                    <td>
+                        <input class="easyui-textbox" name="sMobileNum" value="@Model.sMobileNum" missingMessage="请输入联系电话" data-options="required:true,validType:['isPhoneNum']" style="width:300px">
+                      
+                    </td>
+                </tr>
+                <tr>
+                    <td>民宿简介:</td>
+                    <td>
+                        <input type="hidden"  value="@Model.sIntroduce" id="shop_introduce_Content_hidden">
+                        <textarea style="width:400px;height:170px" id="shop_introduce_Content" placeholder="请输入介绍(不超过100字)"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>店铺地址：</td>
+                    <td>
+                        <input id="shop_set_sAddress" class="easyui-textbox" name="sAddress" value="@Model.sAddress" missingMessage="请输入地址" data-options="required:true,validType:['chartLengthBetween([1,100])','isHtmlValidate']" style="width:300px">
+                    </td>
+                </tr>
+                <tr>
+                    <td>选择位置</td>
+                    <td>
+                        <input name="sProvice" type="hidden"value="@Model.sProvice" id="shopset_ex_provice"/>
+                        <input name="sCity" type="hidden"value="@Model.sCity" id="shopset_ex_sCity"/>
+                        <input name="sCounty" type="hidden" value="@Model.sCounty" id="shopset_ex_sCounty"/>
+                        <input name="sLONG" type="hidden" value="@Model.sLONG" id="shopset_ex_sLONG"/>
+                        <input name="sLat" type="hidden" value="@Model.sLat" id="shopset_ex_sLat"/>
+                        @Html.Partial("~/Areas/Admin/Views/Shared/_BaiduAddressChoose.cshtml")
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align:center">
+                        <a id="shopSet_index_btn_save" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>

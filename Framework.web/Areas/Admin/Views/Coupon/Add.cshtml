@@ -1,0 +1,33 @@
+﻿
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form style="width:99%;height:99%;" id="coupon_add_form">
+        <table class="styletable" style="height:100%">
+            <tbody>
+                <tr>
+                    <td>优惠劵金额（元）：</td>
+                    <td><input name="iCoiCouponPrice" class="easyui-textbox" missingMessage="不能为空" data-options="required:true,validType:['isNumber']"></td>
+                </tr>
+                <tr>
+                    <td>使用条件:</td>
+                    <td>
+                        <span>满&emsp;</span>
+                        <input name="iUsePrice" class="easyui-textbox" style="width:60px;"  missingMessage="不能为空" data-options="required:true,validType:['isNumber']">
+                        <span>&emsp;元 可用，（无门槛限制填0）</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>投放数量：</td>
+                    <td><input class="easyui-textbox" name="iCouponCount"  missingMessage="不能为空" data-options="required:true,validType:['isNumber']"></td>
+                </tr>
+                <tr>
+                    <td>有效期：</td>
+                    <td>
+                        <input readonly="readonly" id="coupon_add_dValidDateStart" name="dValidDateStart" onclick="modules.get('cache').getCache('laydate').laydate({ istime: false, format: 'YYYY-MM-DD' })" class="textbox" style="height:20px;" />
+                        &emsp;&emsp;至&emsp;&emsp;
+                        <input readonly="readonly" id="coupon_add_dValidDateEnd" name="dValidDateEnd" onclick="modules.get('cache').getCache('laydate').laydate({ istime: false, format: 'YYYY-MM-DD' })" class="textbox" style="height:20px;" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>

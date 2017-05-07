@@ -1,0 +1,65 @@
+﻿<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form id="add_wechart_menu" style="width:100%;height:100%">
+        <table class="styletable">
+            <tr>
+                <td>
+                    所属菜单
+                </td>
+                <td><input id="weichart_belong_menu" name="sSubmenu">
+                    <input type="hidden" id="weichart_belong_menu_id" />
+                <input type="hidden" name="ID" id="wechart_menu_father_id">
+                <input type="hidden" id="menu_shop_id"/>
+                </td>
+               
+            </tr>
+            <tr>
+                <td>
+                    菜单名
+                </td>
+                <td>
+                    <input type="hidden" id="ex_title_wechart"/>
+                    <input id="wechart_menu_title" class="easyui-textbox" name="sMenuName"  missingMessage="请输入菜单名" data-options="required:true,validType:['isHtmlValidate']" style="width:300px">
+               
+                </td>
+            </tr>
+            <tr>
+                <td>触发类型</td>
+                <td>
+                    <label><input type="radio" value="0" checked="checked" id="iTouchType_check_on" name="iTouchType1" />关键字</label>
+                    <label><input type="radio" value="1" id="iTouchType_check_off" name="iTouchType1" />url</label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    关键词/url
+                </td>
+                <td>
+                    <input id="wechart_menu_url" class="easyui-textbox" name="sKeyword" missingMessage="请输入关键词/url" data-options="required:true,validType:['isHtmlValidate']" style="width:300px">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    排序编号
+                </td>
+                <td>
+                    <input  id="wechart_menu_no" class="easyui-textbox" name="iOrderNo" missingMessage="请输入排序编号" data-options="required:true,validType:['isNumber']" style="width:300px">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    是否显示
+                </td>
+                <td>
+                    <label><input type="radio" value="1" checked="checked" id="bIsVisible_check_on" name="Visible" />是</label>
+                    <label><input type="radio" value="0" id="bIsVisible_check_off" name="Visible" />否</label>
+
+                </td>
+            </tr>
+        </table>
+
+    </form>
+</div>
+
+

@@ -1,0 +1,607 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>商品详情</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+    <style>
+        .talkInform{
+            overflow: hidden;
+           text-overflow: ellipsis;
+           display: -webkit-box; 
+           -webkit-line-clamp: 2; 
+           -webkit-box-orient: vertical;
+        }
+        .romeIn .ImgAndTalk .footers .contentBox a{line-height:16px;}
+    </style>
+</head>
+<body style="display: flex;display: -webkit-flex;-webkit-flex-direction: column;flex-direction: column;">
+    <!--romeIn-->
+    <div class="romeIn">
+        <div class="w-height07 w-bgcolor1F1E1E w-paddingLeftRight02" style="position:relative;z-index:999999;">
+            <div class="w-floatright w-font0">
+                <b class="w-MyHome1" id="back_to_home_index_detail"></b>
+                <span class="w-MyLine"></span>
+                <b class="w-MyStar" id="collext_goods_start"></b>
+                <input type="hidden" id="goods_type">
+            </div>
+        </div>
+
+        <!--turn img-->
+        <div class="turnImg" style="top:-2px;">
+            <div class="swiper-container swiper-container-horizontal liujinwaka" id="detail_image_slide">
+                <script type="text/html" id="image_room_Template">
+                    <div class="swiper-wrapper ">
+                        {{each list.split(',') as item index}}
+                        <div class="swiper-slide swiper-slide-wqx" style="width: 500px;"><img src="{{item}}" class="image" alt=""></div>
+                        {{/each}}
+                    </div>
+                    <div class="dingwei swiper-pagination swiper-pagination-fraction"><span class="swiper-pagination-current">1</span>/<span class="swiper-pagination-total">10</span></div>
+                </script>
+               
+            </div>
+        </div>
+        <div id="detail_room_div" data-id="@ViewBag.sGoodsID">
+            <script type="text/html" id="room_name_Template">
+                <div class="romName">
+
+                    <div class="romName-content" data-id="{{ID}}" data-shopID="{{sStoreId}}" data-goodprice="{{dGoodsSecPrice}}" date-goodsName="{{sGoodsName}}" id="goods_info_id_div">
+                        <div class="romName-name blackss">{{sGoodsName}}</div>
+                        <input type="hidden" id="goods_price_hide" value="{{dGoodsSecPrice}}">
+
+
+                        {{if bSeckill==true}}
+                        <div class="romName-name grayline"> <span class="oldpice">&yen;{{dGoodsFisrtPrice}}</span>秒杀价:&yen;{{dGoodsSecPrice}}</div>
+                        {{/if}}
+
+                        {{if bSpecialSale==true}}
+                        <div class="romName-name grayline" id="aaa"> <span class="oldpice">&yen;{{dGoodsFisrtPrice}}</span>特价:&yen;{{dGoodsSecPrice}}</div>
+                        {{/if}}
+                        <input type="hidden" value="{{endtime}}" id="special_time_end" />
+                        {{if bSeckill===true}}
+                        <div class="orderSurnTip grayline" data-name="timeOut" id="special_time"><img src="/Areas/Client/Content/images/slice/grayBlock.png"><label id="timeout_label"></label></div>
+                        {{/if}}
+
+                        {{if  bSeckill===false&&bSpecialSale===false}}
+                        <div class="romName-name">&yen;{{dGoodsSecPrice}}</div>
+                        {{/if}}
+                        {{if sGoodsCategory===1}}
+                        <div class="orderSurnTip">下单前请与店主沟通确认是否有房</div>
+                        {{/if}}
+                        {{if sGoodsCategory===2}}
+                        <div class="orderSurnTip">下单前请与店主沟通确认是否有票</div>
+                        {{/if}}
+                    </div>
+
+                </div>
+                {{if sGoodsCategory===1}}
+                <div class="romTip"><span class="romTip-xian"></span> 客房概况 <span class="romTip-xian"></span></div>
+
+                <div class="serveBox">
+                    {{each sHouseOrTicketDetail.split(',') as item index}}
+                    <div class="serve-smallbox">
+                        <div class="ImgBox">
+                            {{if item=="Wi-Fi"}}
+                            <img src="/Areas/Client/Content/images/slice/serve1.png" class="img1" />
+                            {{/if}}
+                            {{if item==="24小时热水"}}
+                            <img src="/Areas/Client/Content/images/slice/serve2.png" class="img2" />
+                            {{/if}}
+                            {{if item==="电视"}}
+                            <img src="/Areas/Client/Content/images/slice/serve3.png" class="img3">
+                            {{/if}}
+                            {{if item==="空调"}}
+                            <img src="/Areas/Client/Content/images/slice/serve4.png" class="img4">
+                            {{/if}}
+                            {{if item==="冰箱"}}
+                            <img src="/Areas/Client/Content/images/slice/serve5.png" class="img5">
+                            {{/if}}
+                            {{if item==="电水壶"}}
+                            <img src="/Areas/Client/Content/images/slice/serve6.png" class="img6">
+                            {{/if}}
+                            {{if item==="毛巾"}}
+                            <img src="/Areas/Client/Content/images/slice/serve7.png" class="img7">
+                            {{/if}}
+                            {{if item==="浴袍"}}
+                            <img src="/Areas/Client/Content/images/slice/serve8.png" class="img8">
+                            {{/if}}
+                            {{if item==="卫生间"}}
+                            <img src="/Areas/Client/Content/images/slice/small-logo7.png" class="img8" />
+                            {{/if}}
+                            {{if item==="免费洗浴用品"}}
+                            <img src="/Areas/Client/Content/images/slice/small-logo6.png" class="img8" />
+                            {{/if}}
+                            {{if item==="早餐"}}
+                            <img src="/Areas/Client/Content/images/slice/small-logo5.png" class="img8" />
+                            {{/if}}
+                            {{if item==="吹风机"}}
+                            <img src="/Areas/Client/Content/images/slice/small-logo4.png" class="img8" />
+                            {{/if}}
+                            {{if item==="洗衣机"}}
+                            <img src="/Areas/Client/Content/images/slice/small-logo12.png" class="img8" />
+                            {{/if}}
+                            {{if item==="浴室"}}
+                            <img src="/Areas/Client/Content/images/slice/small-logo2.png" class="img8" />
+                            {{/if}}
+                            {{if item==="浴缸"}}
+                            <img src="/Areas/Client/Content/images/slice/small-logo9.png" class="img8" />
+                            {{/if}}
+                            {{if item==="淋浴"}}
+                            <img src="/Areas/Client/Content/images/slice/small-logo13.png" class="img8" />
+                            {{/if}}
+                            {{if item==="拖鞋"}}
+                            <img src="/Areas/Client/Content/images/slice/small-logo1.png" class="img8" />
+                            {{/if}}
+                            {{if item==="电话"}}
+                            <img src="/Areas/Client/Content/images/slice/small-logo10.png" class="img8" />
+                            {{/if}}
+                            {{if item==="熨斗"}}
+                            <img src="/Areas/Client/Content/images/slice/small-logo8.png" class="img8" />
+                            {{/if}}
+                            {{if item==="书桌"}}
+                            <img src="/Areas/Client/Content/images/slice/small-logo11.png" class="img8" />
+                            {{/if}}
+                        </div>
+                        <div class="serveName">{{item}}</div>
+                    </div>
+                    {{/each}}
+                </div>
+                {{if sHouseOrTicketDetail.split(',').length>8}}
+                <div class="allBtn">
+                    <div class="inallBtn"><span>全部</span><img src="/Areas/Client/Content/images/slice/moreLogo.png" alt=""></div>
+                </div>
+               {{/if}}
+                {{/if}}
+
+            </script>
+        </div>
+        <div class="scoreBox">
+            <div class="scoreAndTalk" id="comment_total_detail">
+                <script type="text/html" id="room_commentTotal_Template">
+                    <div class="scoreAndTalk-content">
+                        <div class="score-box">
+                            <p class="score">{{score}}</p>
+                            <div class="tip">评分</div>
+                        </div>
+                        <div class="scoreAndTalk-content-line"></div>
+                        <div class="score-box">
+                            <p class="score">{{comments}}</p>
+                            <div class="tip">点评</div>
+                        </div>
+                    </div>
+                </script>
+            </div>
+            <div class="talkInform" id="room_comment_detail">
+
+                <script type="text/html" id="room_comment_Template">
+                    {{sCommentContent}}
+                </script>
+            </div>
+            <div class="redAllBtnBox" id="read_all_content">
+                <script type="text/html" id="allcontent_Template">
+                    <div class="redAllBtn" onclick="roomDetail.commentAll('{{ID}}')">全部</div>
+                </script>
+            </div>
+        </div>
+
+        <div class="romTip"><span class="romTip-xian"></span> 图文详情 <span class="romTip-xian"></span></div>
+        <div class="ImgAndTalk">
+            <p class="talk">
+                <span id="content_room_detail">
+                    <script type="text/html" id="room_content_Template">
+                        {{sGoodsIntroduce}}
+                    </script>
+                </span>
+            </p>
+
+            <div class="footers">
+                <div class="contentBox clearfix">
+                    <a href="javascript:void (0)" class="shopIndex" id="to_shop_index">店铺首页</a>
+                    <div class="contentBox-line"></div>
+                    <a href="javascript:void (0)" class="shopIndex" id="to_client_center_div">个人中心</a>
+                    <div class="contentBox-line"></div>
+                    <a href="javascript:void (0)" class="shopIndex" id="follow_us_roomdetail">关注我们</a>
+                </div>
+            </div>
+
+            <div class="shareBottom">
+                <div class="bottomContent">
+                    <img src="/Areas/Client/Content/images/shareBottom.png" alt="">
+                    <span class="xian"></span>
+                    友客分享
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <input type="hidden" id="shop_room_detail_frist_photo"/>
+    <div class="guanzhu_us">
+        <div class="erweima">
+            <h4 class="">关注我们</h4>
+            <img src="/Areas/Client/Content/images/weimag.png" />
+            <p>一些提示文字</p>
+        </div>
+    </div>
+
+    <a href="javascript:void (0)" id="footBuyBtn"><p>立即购买</p></a>
+    <a href="tel:" id="redPhone"></a>
+
+</body>
+
+</html>
+
+<script src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+<script src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+<script src="~/Areas/Client/Content/lib/date-choice.js"></script>
+<script src="~/Areas/Client/Content/lib/judge.js"></script>
+<script src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+<script src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+<script src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+<script src="~/Areas/Client/Content/script/page.js"></script>
+<script src="~/Areas/Client/Content/script/malong.js"></script>
+<script src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+<script src="~/Areas/Client/Content/script/goujia.js"></script>
+<script src="~/Areas/Client/Content/script/qinliang.js"></script>
+<script src="~/Areas/Client/Content/script/wangqixin.js"></script>
+<script src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+<script src="~/scripts/lib/wx.js"></script>
+<script src="~/scripts/lib/client.common.js"></script>
+<script src="~/scripts/lib/template.js"></script>
+
+@using WeiXin.Base.JsApi
+@model jsapi_config
+
+<script>
+    template.config("escape", false);
+    $(function () {
+        roomDetail.init();
+        roomDetail.bindEvent();
+    });
+    var roomDetail = (function (obj) { return obj; })(new function () {
+
+        function init() {
+            var id = $("#detail_room_div").attr("data-id");
+            common.post("/Client/ShopHome/HomeDetail", { ID: id }, function (res) {
+
+                var html = template("image_room_Template", { list: res.Data.shopBanner });
+                $("#detail_image_slide").html(html);//店铺轮播图
+                
+                $("#shop_room_detail_frist_photo").val(res.Data.shopBanner.split(',')[0]);
+                var name = template("room_name_Template", res.Data.detail);
+                $("#detail_room_div").html(name);//商品名和价格
+                //template.helper("getTimes",countdown());
+                var allcontent = template("allcontent_Template", res.Data.detail);
+                $("#read_all_content").html(allcontent);//商品名和价格
+                $("#goods_type").val(res.Data.detail.sGoodsCategory);//商品类型
+                if (res.Data.collect != null) {
+                    $(".w-MyStar").addClass(" w-MyStar-img");
+                }
+               
+                var phone=res.Data.shopPhone;
+                $("#redPhone").prop("href",$("#redPhone").prop("href")+phone);//电话号码
+
+
+                $("#follow_us_roomdetail").click(function () {
+                    $(".guanzhu_us").show();
+                });
+
+                $(".guanzhu_us").click(function () {
+                    $(this).hide();
+                });
+
+                $(".guanzhu_us>div").click(function (e) {
+                    e.stopPropagation()
+                });
+                //前端
+                var mySwiper = new Swiper('.swiper-container', {
+                    autoplay: 4000,//可选选项，自动滑动
+                    loop: true,
+                    autoplayDisableOnInteraction: false,
+                    paginationType: 'fraction',
+                    pagination: '.swiper-pagination',
+                    paginationClickable: true
+                });
+                $(".inallBtn").bind("click",function (){
+                    if ($(".serve-smallbox").eq(8).hasClass("dis")){
+                        for(var i = 0;i<$(".serve-smallbox").length;i++){
+                            if (i>=8){
+                                $(".serve-smallbox").eq(i).removeClass("dis");
+                                $(".inallBtn span").html("收起")
+                                $(".inallBtn").find("img").addClass("rotates")
+                            }
+                        }
+                    }else{
+                        for(var i = 0;i<$(".serve-smallbox").length;i++){
+                            if (i>=8){
+                                $(".serve-smallbox").eq(i).addClass("dis");
+                                $(".inallBtn span").html("全部")
+                                $(".inallBtn").find("img").removeClass("rotates")
+
+                            }
+                        }
+                    }
+                });
+
+                var cc=res.Data.detail.sHouseOrTicketDetail.split(',');
+                if(cc.length>8){
+                    for(var i = 8;i<cc.length;i++){
+                        if (i>=8){
+                            $(".serve-smallbox").eq(i).addClass("dis");
+                            $(".inallBtn span").html("全部")
+
+                        }
+                    }
+                }
+                
+               
+                var comment = template("room_commentTotal_Template", res.Data.commentnum);
+                $("#comment_total_detail").html(comment);//评论总数
+                var total = template("room_comment_Template", res.Data.coment);
+                $("#room_comment_detail").html(total);//评论
+
+                var content = template("room_content_Template", res.Data.detail);
+                $("#content_room_detail").html(content);
+                //数据获取完成之后  初始化微信设置
+                InitWeiXin();                
+                setTimeout(countdown,0);
+            })
+        }
+        //评论
+        function commentAll(id) {
+            location = '/Client/ShopHome/CommentDetail?id=' + id;
+        }
+
+        function bindEvent() {
+            $("#collext_goods_start").bind('click', collect);
+            $("#to_shop_index").bind('click',toShopIndex);
+            $("#back_to_home_index_detail").bind('click',toShopIndex);
+            $("#footBuyBtn").bind('click',buyGoods);
+            $("#to_client_center_div").bind('click',ourHome)
+        }
+        //个人中心
+        function ourHome(){
+            location='/Client/ClientCenter/Index';
+        }
+        //下单
+        function buyGoods(){
+            //判断是否被冻结
+           
+                    //如果被冻结提示
+                    //如果没有冻结跳转到付款页面
+                    var order_info=window.common.getStorageItem("order_info");
+                    if(order_info==null){
+                        window.common.setStorageItem("order_info",{
+                            gid :$("#detail_room_div").attr("data-id"),
+                            price:$("#goods_info_id_div").attr("data-goodprice"),
+                            gname:$("#goods_info_id_div").attr("date-goodsName"),
+                            gtype:$("#goods_type").val(),
+                        });
+                    }
+                    else{
+                        if(order_info.stime==null||order_info.stime==""){
+                            order_info.price=$("#goods_info_id_div").attr("data-goodprice");
+                        }
+                        order_info.gid=$("#detail_room_div").attr("data-id");
+                        //  order_info.price=$("#goods_info_id_div").attr("data-goodprice");
+                        order_info.gname=$("#goods_info_id_div").attr("date-goodsName");
+                        order_info.gtype=$("#goods_type").val();
+                        window.common.setStorageItem("order_info",order_info);
+                    }
+                    //alert(JSON.stringify(window.common.getStorageItem("order_info")),null,1000);
+                    location='/Client/OrderConfirm/Index';
+               
+        }
+
+        //回到首页
+        function toClientHome(){
+            location = '/Client/ClientHome';
+        }
+
+        //回到店铺首页
+        function toShopIndex(){
+            var shopID=$(".romName-content").attr("data-shopID");
+            location = '/Client/ShopHome/Index?id=' + shopID;
+        }
+        //收藏商品
+        function collect() {
+
+            var id = $("#detail_room_div").attr("data-id");
+            var iCollectType = $("#goods_type").val();
+            common.post("/Client/ShopHome/CollectionIn", { iCollectType: iCollectType, iGoodsID: id }, function (res) {
+
+            }, function (res) {
+                location = '/Client/ClientLogin';
+            },false);
+        }
+
+
+        //======================= 分享 ===============================================
+
+        /**
+        * 初始化微信设置
+        */
+        function InitWeiXin () {
+
+            // 初始化微信接口配置
+            wx.config({
+                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId: '@Model.appId', // 必填，公众号的唯一标识
+                timestamp:@Model.timestamp , // 必填，生成签名的时间戳
+                nonceStr: '@Model.nonceStr', // 必填，生成签名的随机串
+                signature: '@Model.signature',// 必填，签名，见附录1
+                jsApiList:["onMenuShareTimeline","onMenuShareAppMessage"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            });
+
+            // 接口处理成功之后
+            wx.ready(function(){
+                  
+                // 获取商品的店铺ID
+                var shopID=$(".romName-content").attr("data-shopID");
+
+                // 判断是否已注册并且成为了这件商品所在的店铺的分销客
+                common.post("/Client/ShopHome/IsShareBelong",{shopID:shopID},function(res){
+                   
+                    // 返回结果
+                    // 1.【是否是这家店的分销客】 bIsShopShare 0否 1是
+                    // 2.【用户ID】      ID
+
+                    var title=$(".romName-name.blackss").text();//标题
+                    var goodsID=$(".romName-content").attr("data-id");//商品ID
+
+                    // 获取当前域名
+                    var realmName=location.href.split('/')[0]+"//"+location.href.split('/')[2];
+                    var link=realmName+"/Client/ShopHome/RoomDetail?ID="+goodsID;//链接 ?ID="+res.Data.ID
+
+                    var imgUrl= $("#shop_room_detail_frist_photo").val();//图片地址
+                    var ID="";//用户ID
+                    var bIsShopShare=res.Data.bIsShopShare;//是否是这家店的分销客
+
+                    // 是这家店的分销客，则带上分销客ID
+                    if(bIsShopShare===1){
+
+                        // 链接 （带上分享客的ID）
+                        link=link+"&sUserID="+res.Data.ID;
+
+                        // 用户ID
+                        ID=res.Data.ID;
+
+                    }
+                    // 分享参数
+                    var param={clientID:ID,shopID:shopID,goodsID:goodsID,price:$("#goods_price_hide").val()};
+
+                    // 分享商品
+                    shareGoods(title,link,imgUrl,bIsShopShare,param);
+
+                },function(res){
+
+                    // 弹出提示
+                    //window.location.href="/Client/ClientLogin";
+                    alert(res.Msg);
+
+                },false);
+            });
+        }
+
+        /**
+        * 分享商品
+        */
+        function shareGoods(title,link,imgUrl,bIsShopShare,param){
+
+            // 分享到朋友圈
+            wx.onMenuShareTimeline({
+                title: title, // 分享标题
+                link: link, // 分享链接
+                imgUrl: imgUrl, // 分享图标
+                success: function () {
+                    // 是这家店的分销客,分享成功
+                    if(bIsShopShare===1){
+                        common.post("/Client/ShopHome/IsShare",param,function(res){
+                            if(res.Data==2){
+                                //没有分享过此商品
+                                // 插入分享客和所分享的商品，店铺数据
+                                common.post("/Client/ShopHome/InsertShareGoods",param,function(res){},function(res){ alert(res.Msg); },false);
+                            }
+                            
+                        },function(res){},false);
+                       
+
+                    }
+                  
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                   
+                }
+            });
+
+            // 分享给朋友
+            wx.onMenuShareAppMessage({
+                title: title, // 分享标题
+                desc: '友客分享--给您想要体验的生活', // 分享描述
+                link: link, // 分享链接
+                imgUrl: imgUrl, // 分享图标
+                type: 'link', // 分享类型,music、video或link，不填默认为link
+                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                success: function () {
+                    // 是这家店的分销客,分享成功
+                    if(bIsShopShare===1){
+                        common.post("/Client/ShopHome/IsShare",param,function(res){
+                            if(res.Data==2){
+                                //没有分享过此商品
+                                // 插入分享客和所分享的商品，店铺数据
+                                common.post("/Client/ShopHome/InsertShareGoods",param,function(res){
+                                },function(res){ alert(res.Msg); },false);
+                            }
+                            
+                        },function(res){},false);
+                       
+
+                    }
+                  
+                    
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                  
+                }
+            });
+
+        }
+
+        //======================================================================
+
+        return {
+            InitWeiXin:InitWeiXin,
+            init:init,
+            commentAll: commentAll,
+            bindEvent: bindEvent
+        }
+    });
+    var Timer=null;
+    //倒计时
+    function countdown() {
+        if(null!=Timer){
+            clearInterval(Timer);
+        }
+        var endtime = $("#special_time_end").val()+" 23:59:59";
+        if (endtime != null || endtime != "" || endtime!=undefined) {
+
+            var times = new Date(endtime.replace(/-/g, "/")).getTime() - new Date().getTime();
+
+            var hours = Math.floor(times / 1000 / 60 / 60);//小时
+            var minutesTemp = Math.floor((times - (hours * 1000 * 60 * 60)) / 1000 / 60);//分钟
+            var minutes = parseInt(minutesTemp) < 10 ? "0" + minutesTemp : minutesTemp;
+            var secondsTemp = Math.floor((times - (hours * 1000 * 60 * 60) - minutesTemp * 1000 * 60) / 1000);//秒
+            var seconds = parseInt(secondsTemp) < 10 ? "0" + secondsTemp : secondsTemp;
+
+            //返回
+            // return "{0}时{1}分{2}秒".format(hours, minutes, seconds);
+            var tt = hours + "时" + minutes + "分" + seconds + "秒";
+            $("#timeout_label").text(tt);
+        }
+        Timer=setInterval(countdown,1000);
+
+    }
+</script>

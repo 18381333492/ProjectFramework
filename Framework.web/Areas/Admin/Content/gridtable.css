@@ -1,0 +1,59 @@
+﻿.styletable {
+    font-family: verdana,arial,sans-serif;
+    font-size: 13px;
+    color: #333333;
+    border-width: 1px;
+    border-color: #e4e4e4;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+    .styletable td {
+        border-width: 1px;
+        padding: 10px;
+        border-style: solid;
+        border-color: #ccc;
+        background-color: #ffffff;
+        height: auto;
+    }
+
+    .styletable tr td:nth-child(odd) {
+        border-width: 1px;
+        padding: 5px;
+        border-style: solid;
+        border-color: #ccc;
+        background-color: #FBFBFB;
+        text-align: right;
+        width: 150px;
+        color: blue;
+    }
+
+.styletable_title {
+    border-width: 1px;
+    padding: 5px;
+    border-style: solid;
+    border-color: #ccc;
+    background-color: #FBFBFB;
+    text-align: right;
+    width: 150px;
+    color: blue;
+}
+
+.styletable_content {
+    border-width: 1px;
+    padding: 10px;
+    border-style: solid;
+    border-color: #ccc;
+    background-color: #ffffff;
+    height: auto;
+}
+
+.styletable_table{
+    font-family: verdana,arial,sans-serif;
+    font-size: 13px;
+    color: #333333;
+    border-width: 1px;
+    border-color: #e4e4e4;
+    border-collapse: collapse;
+    width: 100%;
+}

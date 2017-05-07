@@ -1,0 +1,26 @@
+﻿@model Framework.DTO.EHECD_SendMeaasgeDTO
+
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form id="detail_Message_form" style="width:100%;height:100%">
+        <table class="styletable">
+            <tr>
+                <td>收件人</td>
+                <td>
+                    <span>@Model.sPeople</span>
+                   
+                </td>
+            </tr>
+            <tr>
+                <td>短信内容</td>
+                <td style="width:600px;height:300px">
+                    <span>@Model.sContent</span>
+                   
+                   
+            </tr>
+        </table>
+
+    </form>
+</div>
+

@@ -1,0 +1,63 @@
+#ml_background{background-color: #f2f2f2;}
+#ml_main .travel_box{width: 100%;height: auto;background-color: #fff;font-size: 0;}
+.travel_box+.travel_box{margin-top: 10px;}
+#ml_main .travel_box .ml_travel{padding: 0 10px;border: 1px solid #eeeeee;}
+#ml_main .travel_box .ml_travel .oder_num{height: 0.9rem;line-height: 0.9rem;}
+#ml_main .travel_box .ml_travel .oder_num span{font-size: 14px;color: #999;display: inline-block;width: 50px;}
+#ml_main .travel_box .ml_travel .oder_num i{font-size: 14px;color: #333;display: inline-block;}
+#ml_main .travel_box .ml_travel .fk_money{font-size:14px;color: #fe8285;line-height: 0.9rem; text-align: right;}
+#ml_main .travel_live{padding: 10px 10px;border: 1px solid #eeeeee;}
+#ml_main .travel_live .travel_pic{width: 2rem;height: 2rem;}
+#ml_main .travel_live .travel_pic img{display: block;width: 100%;height: 100%;}
+#ml_main .travel_live .travel_hotel{padding-left: 10px;}
+#ml_main .travel_live .travel_hotel .ml_hotel{font-size: 14px;color: #333333;line-height: 1.8;
+}
+#ml_main .travel_live .travel_hotel p{display: block;height: 0.7rem;width: 100%;}
+#ml_main .travel_live .travel_hotel p span{font-size: 14px;color: #999999;line-height: 0.7rem;display: inline-block;}
+#ml_main .travel_live .travel_hotel p i{display: inline-block;font-size: 14px;color: #999999;margin-left:10px;line-height: 0.7rem;}
+#ml_main .travel_btn {padding: 0 10px;}
+#ml_main .travel_btn .all_money{height: 0.9rem;}
+#ml_main .travel_btn .all_money span{font-size: 14px;color: #333;line-height: 0.9rem;display: inline-block;}
+#ml_main .travel_btn .all_money i{display: inline-block;line-height: 0.9rem;font-size: 16px;color: #fe9395;}
+#ml_main .travel_btn .money_btn .no_dingdan {width: 1.5rem;height: 0.6rem;border: 1px solid #fe9395;border-radius: 0.3rem;margin: auto 0;
+        color:#fe9395; font-size: 14px;text-align: center;line-height: 0.6rem;margin-left: 10px;
+}
+.travel_btn .money_btn .go_money{width: 1.5rem;height: 0.6rem;background-color:  #fe9395;border-radius: 0.3rem;margin: auto 0;font-size: 14px;
+        color: #fff;text-align: center;line-height: 0.6rem;margin-left: 10px;
+}
+#ml_main .travel_box .ml_travel .ml_urer{font-size:14px;color: #fe8285;line-height: 0.9rem; text-align: right;}
+#ml_main .travel_btn .money_btn .return_money{width: 1.5rem;height: 0.6rem;border: 1px solid #fe9395;border-radius: 0.3rem;margin: auto 0;
+    color:#fe9395; font-size: 14px;text-align: center;line-height: 0.6rem;}
+#ml_main .travel_box .ml_travel .travel_audit{font-size:14px;color: #fe8285;line-height: 0.9rem; text-align: right;}
+.travel_btn .money_btn  .pingjia{width: 1.5rem;height: 0.6rem;background-color:  #fe9395;border-radius: 0.3rem;margin: auto 0;font-size: 14px;
+    color: #fff;text-align: center;line-height: 0.6rem;}
+/*8-2-1订单详情*/
+#ml_main .travel_box .ml_travel .oder_num .dingdan_num{font-size: 14px;color: #999;display: inline-block;width: 70px;}
+#ml_main .travel_box .ml_travel .oder_num .xiadan_time{font-size: 14px;color: #999;display: inline-block;width: 70px;}
+#ml_main .travel_box .ml_travel .oder_num b{font-size: 14px;color: #333;display: inline-block;margin-left: 10px;}
+#ml_main .travel_box .ml_travel .oder_num .ml_name{font-size: 14px;color: #999;display: inline-block;width: 70px;}
+#ml_main .travel_box .ml_travel .oder_num .phon_num{font-size: 14px;color: #999;display: inline-block;width: 70px;}
+#ml_main .youhuijuan{background-color: #fff;margin-top: 10px;width: 100%;height: auto;}
+#ml_main .youhuijuan .oder_num{padding: 0 10px;}
+#ml_main .youhuijuan .ml_travel .oder_num{height: 0.9rem;line-height: 0.9rem;border-bottom: 1px solid #eeeeee;}
+#ml_main .youhuijuan .ml_travel .oder_num span{display: inline-block;font-size: 14px;color: #999999;width: 70px;}
+#ml_main .bot_btn{background-color: #fff;}
+#ml_main  .position_flex {height: 0.9rem;width: 100%;}
+#ml_main  .position_flex .bot_btn{position: fixed;bottom: 0;left: 0;width: 100%;}
+/*8-2-4已销核*/
+#ml_main .travel_btn .money_btn .ml_pingjia{width: 1.5rem;height: 0.6rem;background-color:  #fe9395;border-radius: 0.3rem;margin: auto 0;font-size: 14px;
+    color: #fff;text-align: center;line-height: 0.6rem;}
+#ml_main .travel_btn .money_btn .look_pingjia{width: 1.5rem;height: 0.6rem;background-color:  #fe9395;border-radius: 0.3rem;margin: auto 0;font-size: 14px;
+    color: #fff;text-align: center;line-height: 0.6rem;}
+#ml_main .travel_btn .money_btn  .m_pingjia{width: 1.5rem;height: 0.6rem;background-color:  #fe9395;border-radius: 0.3rem;margin: auto 0;font-size: 14px;
+    color: #fff;text-align: center;line-height: 0.6rem;}
+/*8-2-4-1*/
+#ml_main .electronic_num{width: 100%;height: auto;background-color: #fff;padding-top: 20px;}
+#ml_main .electronic_num .mid_electronic{width:50%;height:auto;margin: 0 auto;}
+#ml_main .electronic_num .mid_electronic .electronic_pic{width: 1.76rem;height: 1.76rem;margin: 0 auto;
+        background-image: url("../image/barcode.png");background-position: center;background-repeat: no-repeat;
+        background-size: 1.76rem auto;
+}
+#ml_main .electronic_num .mid_electronic p{width: 100%;height: 0.7rem;line-height: 0.7rem;font-size: 14px;
+        color: #666666;text-align: center;
+}

@@ -1,0 +1,263 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>写游记</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="travel">
+        <div class="title"><input type="text" placeholder="请输入标题，最多20字。" class="ipt fc-999" id="write_travel_title" /></div>
+        <div class="content">
+            <textarea class="fc-999" rows="10" placeholder="请输入游记内容，最多3000字。" id="write_travel_content"></textarea>
+        </div>
+        <div class="upload_inputfile" id="picture_travel_show"> 
+
+            <label>
+                <div class="file_box" id="add_travel_picture">
+                    <label class="dele"><img src="/Areas/Client/Content/images/blackDele.png"></label>
+                    <input type="file" disabled="disabled">
+                    <img src="/Areas/Client/Content/images/gratAddImg.png">
+                </div>
+            </label>
+
+        </div>
+      
+        <div class="btn text-center bg-fe8285">
+            <a href="javascript:;" class="fc-fff" id="add_travel">发布</a>
+    </div>
+</body>
+
+</html>
+@using WeiXin.Base.JsApi;
+@model jsapi_config
+<script src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+<script src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+<script src="~/Areas/Client/Content/lib/date-choice.js"></script>
+<script src="~/Areas/Client/Content/lib/judge.js"></script>
+<script src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+<script src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+<script src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+<script src="~/Areas/Client/Content/script/page.js"></script>
+<script src="~/Areas/Client/Content/script/malong.js"></script>
+<script src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+<script src="~/Areas/Client/Content/script/goujia.js"></script>
+<script src="~/Areas/Client/Content/script/qinliang.js"></script>
+<script src="~/Areas/Client/Content/script/wangqixin.js"></script>
+<script src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+<script src="~/scripts/lib/wx.js"></script>
+<script src="~/scripts/lib/client.common.js"></script>
+<script  type="text/javascript">
+    $(function () {
+        writeTravel.InitWeiXin();
+        writeTravel.bindEvent();
+    });
+
+    var writeTravel = (function (obj) { return obj; })(new function () {
+        var localImgIds = [];//本地图片Id数组
+        var serverImgIds = [];//服务器图片Id数组
+
+        var MaxImgCount = 6;//最大上传图片张数
+        var selected = 0;//已选择的图片张数
+
+        var json = {};
+
+        /**
+       * 初始化调用微信JS的API的配置
+       */
+        function InitWeiXin() {
+            wx.config({
+                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId: '@Model.appId', // 必填，公众号的唯一标识
+                timestamp:@Model.timestamp , // 必填，生成签名的时间戳
+                nonceStr: '@Model.nonceStr', // 必填，生成签名的随机串
+                signature: '@Model.signature',// 必填，签名，见附录1
+                jsApiList:["chooseImage","uploadImage"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            });
+        }
+
+        /**
+      * 选择手机上图片
+      */
+        function chooseImage(){
+
+            if(selected<6){
+                wx.chooseImage({
+                    count:MaxImgCount-selected, // 默认6
+                    sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+                    sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+                    success: function (res) {
+                        var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                        for(var i=0;i<localIds.length;i++)
+                        {
+                            $('#picture_travel_show').prepend('<label class="imgfile_show"><div class="file_box"><label class="dele" order="'+i+'"><img src="/Areas/Client/Content/images/blackDele.png" /></label><input type="file" disabled="disabled"><img src="'+localIds[i]+'" ></div> </label>');//预览图片
+                            localImgIds.push(localIds[i]);
+                            selected++;
+                        }
+                        $('#picture_travel_show .imgfile_show').on("click",function(){
+                            var order=Number($(this).children('label').attr("order"));
+                            $(this).remove();
+                            serverImgIds.splice(order,1);//删除图片的本地资源的Id
+                            localImgIds.splice(order,1);
+                            selected--;
+                        });
+                        //上传图片
+                        uploadImage();
+                    }
+                });
+            }
+            else{
+                alert("最多只能上传6张图片");
+            }
+        }
+
+       
+        /**
+       * 上传图片到微信服务器
+       */
+        function uploadImage(){
+            (function (localId) {//异步闭包 
+                //解决IOS无法上传的坑
+                if (localId.indexOf("wxlocalresource") != -1) {
+                    localId = localId.replace("wxlocalresource", "wxLocalResource");
+                }
+                wx.uploadImage({ //图片上传至微信服务器
+                    localId: localId,
+                    isShowProgressTips: 1,
+                    success: function (res) {
+                        serverImgIds.push(res.serverId);// 返回图片的服务器端ID
+                        if (serverImgIds.length != localImgIds.length) {
+                            uploadImage();
+                        }
+                    }
+                });
+            })(localImgIds[serverImgIds.length]);
+        }
+                
+
+        /**
+        * 从微信服务器上下载图片
+        */
+        function loadImage(){
+            if(Valiate()){
+                if(serverImgIds.length>0)
+                {//有图片的游记
+                    common.post("/Client/ClientCenter/LoadImageByWX",{serverId: serverImgIds.join()},
+                        function(r){
+                            //返回本地图片地址
+                            var sCommentImgPath=r.Data;
+                            //游记
+                            Appraise(sCommentImgPath);
+
+                        },function(r){
+                          
+                });
+                }
+                else
+                {//不传图片的游记
+                    Appraise("");
+                }
+            }
+        }
+
+        /**
+       * 发表游记
+       */
+        function Appraise(sCommentImgPath){
+            
+            if(isHtmlValidate($('#write_travel_title').val())&&isHtmlValidate($('#write_travel_content').val())){
+                common.post("/Client/ShopHome/WriteTravelNote",
+                   {
+                       sImgPath:sCommentImgPath,
+                       sStoreID:location.search.split('=')[1].split('&')[0],
+                       sTitle:$('#write_travel_title').val(),
+                       sContent:$('#write_travel_content').val(),
+                   },
+                       function(r){
+                           alert('发布成功!',null,1000);
+                           setTimeout(function(){
+                               history.back();
+                           },1000);
+
+                       },function(){
+                           window.location.href = '/Client/ClientLogin';
+                       });
+            }
+            else{
+                alert("输入内容不合法");
+            }
+           
+        }
+        //验证输入的文字中是够含有html
+        function isHtmlValidate(value){
+             
+            return $("<span/>").html(value).text() == value;
+              
+        }
+       
+
+        //绑定事件
+        function bindEvent() {
+            $('#add_travel_picture').on("click", chooseImage);
+            $('#add_travel').on("click",loadImage);
+           
+        }
+
+        //验证字段
+        function Valiate(){
+            json.title=$('#write_travel_title').val();
+            json.content=$('#write_travel_content').val();
+            if(json.title.length==0)
+            {
+                alert("请输入标题!");
+                return false;
+            }
+            if(json.title.length>20)
+            {
+                alert("标题最多20字!");
+                return false;
+            }
+            if(json.content.length==0)
+            {
+                alert("请输入游记内容!");
+                return false;
+            }
+            if(json.content.length>3000)
+            {
+                alert("游记内容最多3000字!");
+                return false;
+            }
+            return true;
+        }
+
+        return {
+            InitWeiXin:InitWeiXin,
+            bindEvent:bindEvent,
+        }
+
+
+    });
+
+</script>

@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>结算中心</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+</head>
+<body>
+    <div class="w-jiesuan w-position">
+        <div class="w-jiesuan-img"></div>
+        <h4 class="w-color999 w-font14 w-textalignC">可提现金</h4>
+        <h4 class="w-colorfe8285 w-font20 w-textalignC">&yen;<span class="dIncome">0.00</span></h4>
+        <input type="button" value="提现" class="w-inputA" style="position: absolute;bottom:-.3rem;left:50%;margin-left: -1.5rem;" />
+    </div>
+    <div class="" style="padding-top: .5rem;">
+        <div class="w-height09 w-padding02 w-bgcolorFFF w-borderBeee">
+            <h4 class="w-height05 w-color666 w-font14 w-floatleft">已结算金额</h4>
+            <h4 class="w-height05 w-color333 w-font14 w-floatright">&yen;<span class="WithdrawEd">0.00</span></h4>
+        </div>
+        <div class="w-height09 w-padding02 w-bgcolorFFF w-borderBeee">
+            <h4 class="w-height05 w-color666 w-font14 w-floatleft">待结算金额</h4>
+            <h4 class="w-height05 w-color333 w-font14 w-floatright">&yen;<span class="WithdrawING">0.00</span></h4>
+        </div>
+        <div class="w-height09 w-padding02 w-bgcolorFFF w-borderBeee w-position _PaymentDetail">
+            <h4 class="w-height05 w-color666 w-font14">收支明细</h4>
+            <b class="w-iconRight"></b>
+        </div>
+        <div class="w-height09 w-padding02 w-bgcolorFFF w-borderBeee w-position CashRecord">
+            <h4 class="w-height05 w-color666 w-font14">提现记录</h4>
+            <b class="w-iconRight"></b>
+        </div>
+    </div>
+</body>
+</html>
+<script src="~/scripts/lib/client.common.js"></script>
+<script type="text/javascript">
+    $(function () {
+        scope.bingEvent();
+        scope.GetAccountCenterInfo();
+    });
+
+    var scope = (function (obj) { return obj; })(new function () {
+
+        function GetAccountCenterInfo() {
+            common.post("/Client/ShareCenter/GetAccountCenterInfo", null, function (r) {
+                var json = r.Data;
+                $('.WithdrawEd').text(json.WithdrawEd.toFixed(2));
+                $('.WithdrawING').text(json.WithdrawING.toFixed(2));
+                $('.dIncome').text(json.dIncome.toFixed(2));
+            })
+            
+        }
+
+        //绑定点击事件
+        function bingEvent() {
+
+            $('.w-inputA').on("click", function () {
+                common.setStorageItem("_WithdrawCash", $('.dIncome').text());
+                location.href = "/Client/ShareCenter/WithdrawCash";
+            }); //提现
+
+            $('._PaymentDetail').on("click", function () { location.href = "/Client/ShareCenter/PaymentDetail"; }); //收支明细
+
+            $('.CashRecord').on("click", function () { location.href = "/Client/ShareCenter/CashRecord"; }); //提现记录
+          
+        }
+
+        return {
+            bingEvent: bingEvent,
+            GetAccountCenterInfo: GetAccountCenterInfo
+        }
+
+    });
+</script>

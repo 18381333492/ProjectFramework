@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>收支明细</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+    <link href="~/Content/dropload.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+</head>
+<body class="bg-f2f2f2">
+    <div id="favorites">
+        <div class="head-sum bg-fff">
+            <span class="fl fc-666">累计付款金额</span>
+            <span class="fr fc-fe8285 fs-16"><i class="mr1r"></i><span class="_dPriceCount">9273.00</span></span>
+        </div>
+        <div id="PaymentDetailList" class="bigbox">
+            <script id="PaymentDetail" type="text/html">
+                {{each list as m index}}
+                <div class="box bg-fff">
+                    <div class="lan df height9"><span class="fc-999 df1">店铺</span><span class="fc-333 df4">{{m.sShopName}}</span></div>
+                    <div class="lan df height9"><span class="fc-999 df1">订单号</span><span class="fc-333 df4 fs-16">{{m.sOrderNo}}</span></div>
+                    <div class="lan order_center bg-fff">
+                        <div class="order_pred flex_dom flex_item_stretch">
+                            <a href="javascript:;" class="pred_img wid16rem">
+                                <span>
+                                    <img src="{{m.sGoodsPictures}}">
+                                </span>
+                            </a>
+                            <div class="pred_con  p_relative flex_1">
+                                <h4 class="l-h-04rem fs-14 text-ellipsis-2line fc-333"><span>{{m.sGoodsName}}</span></h4>
+                                {{if m.iType==0}}
+                                <div class="l-h-03rem mt2r fc-999"><span class="fs-16">{{m.dStartTime}}-{{m.sEndTime}}</span><span class="ml2r">共{{m.Day}}晚</span></div>
+                                {{/if}}
+                                {{if m.iType==1}}
+                                <div class="l-h-03rem mt2r fc-999"><span class="fs-16">{{m.dStartTime}}</span></div>
+                                {{/if}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lan df height9"><span class="fc-999 df2">商品佣金额</span>
+                    <!--佣金类型(1--固定金额，2--商品价格比例)---->
+                    {{if m.iCommissionType==1}}
+                    <span class="fc-333 df5 fs-16">固定金额<span class="m-l-30">&yen;{{m.iCommission.toFixed(2)}}</span></span>
+                    {{/if}}
+                    {{if m.iCommissionType==2}}
+                        <span class="fc-333 df5 fs-16">{{m.dMoney.toFixed(2)}}%<span class="m-l-30">&yen;{{m.iCommission.toFixed(2)}}</span></span>
+                    {{/if}}
+                    </div>
+                    <div class="lan df height9"><span class="fc-999 df2">用户</span><span class="fc-333 df5 fs-16" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{m.sNickName}}</span></div>
+                    <div class="lan df height9"><span class="fc-999 df2 fs-16">{{m.dFinishTime}}</span></div>
+                </div>
+                {{/each}}
+            </script>
+        </div>
+    </div>
+</body>
+</html>
+<script src="~/scripts/lib/template.js"></script>
+<script src="~/scripts/lib/client.common.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('._dPriceCount').text(common.getStorageItem("_dPriceCount"));
+        scope.InitPaymentDetailData();
+        scope.bingPage();
+    });
+
+    var scope = (function (obj) { return obj; }(new function () {
+
+        /*!
+         * 绑定滑动分页
+         */
+        function bingPage() {
+            common.page.initDropLoad(InitPaymentDetailData);
+        }
+
+
+        /*!
+         * 加载收支明细数据
+         */
+        function InitPaymentDetailData() {
+            common.post("/Client/ShareCenter/LoadPaymentDetailList",
+               {
+                   pageIndex: common.page.pagerParam.pageIndex,
+                   pageSize: common.page.pagerParam.pageSize,
+               }, function (r) {
+                   $(r.Data.Result).each(function () {
+                       if (this.iCommissionType==2)
+                           this.iSinglePrice = (this.iSinglePrice * this.dMoney).toFixed(2);
+                       if (this.sGoodsPictures == null) {
+                           this.sGoodsPictures = "";
+                       }
+                       this.sGoodsPictures = this.sGoodsPictures.split(',')[0]
+                       //iType:0客房 1门票 2周边产品
+                       if (this.iType == 0) {
+                           var End = new Date(this.sEndTime).getTime();
+                           var Sta = new Date(this.dStartTime).getTime();
+                           this.Day = parseInt(Math.abs(End - Sta) / 1000 / 60 / 60 / 24)+1;
+                           this.dStartTime = new Date(this.dStartTime).Format("MM/dd");
+                           this.sEndTime = new Date(this.sEndTime).Format("MM/dd");
+                       }
+                       if (this.iType == 1) {
+                           this.dStartTime = new Date(this.dStartTime.replace(/-/g, "/")).Format("MM/dd");
+                       }
+                   });
+                   var json = { list: r.Data.Result }
+
+                   var html = template("PaymentDetail", json);
+                   $('#PaymentDetailList').append(html);
+
+                   //没有数据展示
+                   if ($('#PaymentDetailList .box').length == 0) {
+                       window.noData('#PaymentDetailList');
+                   }
+                   common.page.calculationPage(r.Data.MaxCount);
+               });
+        }
+
+        return {
+            InitPaymentDetailData: InitPaymentDetailData,
+            bingPage: bingPage,
+        }
+
+    }));
+</script>

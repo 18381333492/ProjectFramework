@@ -1,0 +1,51 @@
+﻿
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+<link href="~/scripts/plug-in/date/laydate-master/need/laydate.css" rel="stylesheet" />
+<link href="~/scripts/plug-in/date/laydate-master/skins/molv/laydate.css" rel="stylesheet" />
+<script src="~/scripts/plug-in/date/laydate-master/laydate.dev.js"></script>
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form style="width:99%;height:99%;" id="set_goodsSeckill_form">
+        <table class="styletable">
+
+            <tr>
+                <td id="sGoodsName">商品名称：</td>
+                <td>@ViewBag.sGoodsName</td>
+            </tr>
+            <tr>
+                <td>商品原价：</td>
+                <td>@ViewBag.dGoodsPrice</td>
+            </tr>
+            <tr>
+                <td>设置秒杀价为：</td>
+                <td>
+                    <input class="easyui-numberbox" name="dSeckillPrices"
+                           data-options="missingMessage:'请输入秒杀价格',min:0,precision:2,required:true" />元
+                </td>
+            </tr>
+            @if (ViewBag.sGoodsCategory != 3)
+            {
+            <tr>
+                <td>使用时间段</td>
+                <td>
+                    开始时间：<input id="sActivityUseStartTime" name="sActivityUseStartTime" onclick="laydate({ istime: true,format:'YYYY-MM-DD' })" class="textbox" style="height:25px;" readonly="readonly"/>
+                    <br />
+                    结束时间：<input id="sActivityUseEndTime" name="sActivityUseEndTime" onclick="laydate({ istime: true, format: 'YYYY-MM-DD' })" class="textbox" style="height:25px;" readonly="readonly"/>
+                </td>
+            </tr>
+            }
+            <tr>
+                <td>活动开始时间：</td>
+                <td>
+                    <input id="SecKillStartTime" name="SecKillStartTime" onclick="laydate({ istime: true, format: 'YYYY-MM-DD' })" class="textbox" style="height:25px;" readonly="readonly"/>
+                </td>
+            </tr>
+            <tr>
+                <td>活动结束时间：</td>
+                <td>
+                    <input id="SecKillEndTime" name="SecKillEndTime" onclick="laydate({ istime: true, format: 'YYYY-MM-DD' })" class="textbox" style="height:25px;" readonly="readonly"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+

@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<html style="height:100%">
+<head lang="en">
+    <meta charset="utf-8">
+    <title>订单支付</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <style>
+        body {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <link href="~/Content/home.css" rel="stylesheet" />
+
+
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+</head>
+<body style="height:100%">
+    <div class="pay_style lzxzhifu">
+        <div class="lzxpre co333 bgfff"><span class="co333">订单号：</span><i class="fz16 co333 sOrderNo"></i></div>
+        <div class="lzxpre  co333 bgfff"><span class="co333">支付金额：</span><i class="money"></i></div>
+        <div class="mt5 bgfff lzxpay">
+            <label class="check_btn2 radio_right">
+                <em style="background-image: url(/Areas/Client/Content/images/slice/wechatpay.png);"> </em><b class="co333">微信支付</b>
+                <input type="radio" name="pay1" value="1" checked="checked"><span><i></i></span>
+            </label>
+        </div>
+        <div class="bgfff lzxpay">
+            <label class="check_btn2 radio_right">
+                <em style="background-image: url(/Areas/Client/Content/images/slice/uppay.png);background-size: auto 0.5rem;"> </em><b class="co333">银联支付</b>
+                <input type="radio" name="pay1" value="2"><span><i></i></span>
+            </label>
+        </div>
+        <div id="OnlinePayHtml"></div>
+        <div class="lzxsure" style="margin-top:35px;border-top:none;"><button type="button">确认支付</button></div>
+    </div>
+</body>
+</html>
+<input  type="hidden" id="openid" value="@ViewBag.openid"/>
+<script src="~/scripts/lib/client.common.js"></script>
+<script type="text/javascript">
+    $(function () {
+        scope.bingEvent();
+        scope.initData();
+    });
+    var scope = (function (obj) { return obj; }(new function () {
+        
+        //支付的相关配置
+        var payConfig = {};
+        var openid = "";
+
+        var PayData = common.getStorageItem("_PayData");
+
+        //发起微信支付
+        function onBridgeReady(){
+            WeixinJSBridge.invoke(
+                'getBrandWCPayRequest', {
+                    "appId": payConfig.appId, //公众号名称，由商户传入     
+                    "timeStamp": payConfig.timeStamp,//时间戳，自1970年以来的秒数     
+                    "nonceStr": payConfig.nonceStr, //随机串     
+                    "package": payConfig.package,
+                    "signType": payConfig.signType,  //微信签名方式     
+                    "paySign": payConfig.paySign //微信签名 
+                },
+                function (res) {
+                    WeixinJSBridge.log(res.err_msg);
+                    if (res.err_msg == "get_brand_wcpay_request:ok")
+                    {// 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回 ok，但并不保证它绝对可靠。 
+                       // alert(res.err_msg, null, 10000);
+                        location.href = "/Client/Pay/Success";//?sOrderId=" + PayData.sOrderId;//跳转支付成功页面
+                    }
+                    if (res.err_msg == "get_brand_wcpay_request:fail") {// 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回 ok，但并不保证它绝对可靠。 
+                        alert(res.err_msg, null, 10000);
+                        $('.lzxsure button').prop("disabled", false);
+                    }
+                }
+            ); 
+        }
+
+        //检查订单状态
+        function CheckOrder() {
+            common.post("/Client/Pay/CheckOrder",
+                {
+                    sOrderId: PayData.sOrderId, //sOrderId,
+                    sOrderNo: PayData.sOrderNo,//sOrderNo,
+                    total_fee: PayData.iTotalPrice,
+                    sGoodsName:PayData.sGoodsName,
+                    openid:openid
+                }, function (r) {
+                    if (r.Data != null) {
+                        //获取微信支付配置信息
+                        payConfig = r.Data;
+                        if (typeof WeixinJSBridge == "undefined") {
+                            if (document.addEventListener) {
+                                document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+                            } else if (document.attachEvent) {
+                                document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+                            }
+                        } else {
+                            //发起微信支付
+                            onBridgeReady();
+                        }
+                    }
+                    else {
+                        $('.lzxsure button').prop("disabled", false);
+                        alert(r.Msg, null, 1000);
+                    }
+                }, function (r) {
+                    $('.lzxsure button').prop("disabled", false);
+                    alert(r.Msg, null, 1000);
+                });
+        }
+
+        //去掉html
+        function strContent(str) {
+            return (str && str.length > 0) ? str.replace(/&3D;/g, "=").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&apos;/g, "'").replace(/&quot;/g, "\"").replace(/&amp;/g, "&") : str;
+        };
+
+        //创建银联在线支付链接
+        function MakeOnlineUrl() {
+            common.post("/Client/Pay/OnlineUrl", {
+                sOrderId: 'fbaf6b25-d20f-4dbe-b311-1437ddf290c3', //sOrderId,
+                sOrderNo: '12312',//sOrderNo,
+                total_fee: 0.01,
+            }, function (r) {
+               // alert("支付跳转中.....", null, 2000);
+                $('#OnlinePayHtml').html(strContent(r.Data));
+            }, function (r) {
+                alert(r.Msg, null, 1000);
+                $('.lzxsure button').prop("disabled", false);
+            });
+        }
+
+        //初始化订单数据
+        function initData() {
+            if (PayData == null) {
+                alert("数据发生错误!", null, 1000);
+                return;
+            }
+            $('.money').text("¥"+parseFloat(PayData.iTotalPrice).toFixed(2));
+            $('.sOrderNo').text(PayData.sOrderNo);
+        }
+
+        //绑定支付事件
+        function bingEvent() {
+            openid = $('#openid').val();
+            //支付
+            $('.lzxsure button').on("click", function () {
+               // $(this).prop("disabled", true);
+                var pay =Number($('input:radio:checked').val());
+                if (pay == 1) {
+                    //微信支付
+                    CheckOrder();
+                }
+                else {
+                    //银联支付
+                 //   MakeOnlineUrl();
+                }
+            });
+        }
+      
+        return {
+            bingEvent: bingEvent,
+            initData: initData
+        }
+
+    }));
+</script>

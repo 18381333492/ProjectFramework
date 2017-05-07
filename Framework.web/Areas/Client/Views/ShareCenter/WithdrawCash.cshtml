@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>提现</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+    <style>
+        .lzxsureDisable button{
+            display:block;
+            width:3rem;
+            height:.6rem;
+            border-radius:.3rem;
+            font-size:14px;
+            color:#fff;
+            text-align:center;
+            line-height:.6rem;
+            background-color:#666;
+            margin:0 auto;
+        }
+        .lzxsureDisable{
+            margin: 28px auto;
+        }       
+    </style>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+</head>
+<body>
+    <section class="borbeee">
+        <div class="two_port_align ">
+            <div class="input_text co999">
+                可提现金额
+            </div>
+            <div>
+                <input type="text" placeholder="可提现金额" value="0.00" class="co333 WithdrawCash" />
+            </div>
+        </div>
+        <div class="two_port_align">
+            <div class="input_text co999">
+                提现金额
+            </div>
+            <div>
+                <input id="WithdrawCashing"  type="number" placeholder="输入提现金额" class="co333" />
+            </div>
+        </div>
+    </section>
+    <div id="cashoperate" class="lzxsure"><button type="button">确认提现</button></div>
+    @*<div class="lzxsureDisable"><button type="button">确认提现</button></div>*@
+</body>
+</html>
+<script src="~/scripts/lib/client.common.js"></script>
+<script type="text/javascript">
+    $(function () {
+        scope.init();
+        scope.bingEvent();
+    });
+
+    var scope = (function (obj) { return obj; }(new function () {
+
+        var cash = 0;
+        var WithdrawCash;//提现金额
+        
+        //初始化体现金额
+        function init() {
+            cash = Number(common.getStorageItem("_WithdrawCash")).toFixed(2);
+            $('.WithdrawCash').val(cash);
+            if (cash <= 0) {
+                $('#cashoperate').removeClass('lzxsure').addClass('lzxsureDisable');
+                $('#cashoperate button').prop("disabled", true);
+            }
+        }
+        //提现时间处理
+        function WithdrawCashHandle(obj) {
+            var element = $(obj.target);
+            if (Valiate()) {//数据的验证
+                common.post("/Client/ShareCenter/WithdrawCashHandle", {
+                    iWithdrawMoney: WithdrawCash
+                }, function (r) {
+                    location.href = "/Client/ShareCenter/WithdrawCashSuccess";
+                }, function (r) {
+                    alert(r.Msg, null, 1000);
+                });
+            }
+        }
+
+
+        //数据的验证
+        function Valiate() {
+            WithdrawCash = $('#WithdrawCashing').val().trim();
+            if (WithdrawCash.length == 0) {
+                alert("请输入提现金额!", null, 500);
+                return false;
+            }
+            if (isNaN(Number(WithdrawCash))) {
+                alert("提现金额数据格式错误!", null, 500);
+                return false;
+            }
+            if (Number(WithdrawCash) > cash) {
+                alert("提现金额超过可提现金额!", null, 500);
+                return false;
+            }
+            if (Number(WithdrawCashing) <= 0) {
+                alert("请输入正确的提现金额",null,500);
+                return false;
+            }
+            return true;
+        }
+
+        //绑定事件
+        function bingEvent() {
+            $('#cashoperate button').on("click", WithdrawCashHandle)//提现
+        }
+
+        return {
+            init:init,
+            bingEvent: bingEvent,
+        }
+    }));
+</script>

@@ -1,0 +1,38 @@
+﻿
+@model Framework.DTO.EHECD_TravelsNotesDTO
+
+<script src="~/scripts/lib/jquery.lightbox/js/lightbox.js"></script>
+<link href="~/scripts/lib/jquery.lightbox/css/lightbox.css" rel="stylesheet" />
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form style="width:99%;height:99%;" id="coupon_edit_form">
+        <input type="hidden" name="ID" id="coupon_edit_ID" value="@Model.ID" />
+        <table class="styletable" style="height:100%">
+            <tbody>
+                <tr>
+                    <td>标题：</td>
+                    <td><span>@Model.sTitle</span></td>
+                </tr>
+                <tr>
+                    <td>附加图片：</td>
+                    <td>
+                        @if ((ViewBag.ImageList as List<Framework.DTO.EHECD_ImagesDTO>) == null || (ViewBag.ImageList as List<Framework.DTO.EHECD_ImagesDTO>).Count == 0)
+                        {
+                            <span>暂无图片</span>
+                        }
+                        else
+                        {
+                            foreach (var item in (ViewBag.ImageList as List<Framework.DTO.EHECD_ImagesDTO>))
+                            {
+                                <a href="@item.sImagePath" data-lightbox="novel-set"><img src="@item.sImagePath" style="width:60px;height:60px;float:left;margin-right:10px;" /></a>
+                            }
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>内容：</td>
+                    <td><span>@Html.Raw(Model.sContent)</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>

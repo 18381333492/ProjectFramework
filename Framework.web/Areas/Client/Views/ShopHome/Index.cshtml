@@ -1,0 +1,1012 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>店铺详情</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link rel="stylesheet" href="~/Areas/Client/Content/css/mobiscroll.custom-2.17.0.min.css" />
+    <link href="~/Content/dropload.css" rel="stylesheet" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+    <style>
+        .youji_list .person_img p {
+            width: 72px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .youji_list .youjia_con {
+            margin-left: 78px;
+        }
+        
+       .swiper-container{top:-2px;}
+       .youji_list .youjia_con a span{
+           width: 16px;
+           height: 16px;
+           top:.25rem;
+       }
+       .youji_list .youjia_con a span:before{
+           margin-top: 0px;
+           margin-left: 1px;
+       }
+       .w-btn1{width:1.8rem;padding:0;white-space:nowrap;}
+       .w-pinkLine{
+           height: .24rem;
+            width: .04rem;
+       }
+       .w-jianzhu-text{
+           width:4rem;
+       }
+       .youji_list .youjia_con a span:before{line-height:14px;;margin-top:1px}
+    </style>
+</head>
+<body>
+    <div class="w-height07 w-bgcolor1F1E1E w-paddingLeftRight02 top " style="position:relative;z-index:999999;">
+        <h4 class="w-height07 w-colorFFF w-font14 w-floatleft" >关注我们</h4>
+        <div class="w-floatright w-font0">
+            <b class="w-MyHome" ></b>
+            <span class="w-MyLine"></span>
+
+            <b class="w-MyStar" id="collext_shop_start"></b>
+
+        </div>
+    </div>
+    <input type="hidden" id="shop_index_one_photo"/>
+    <div class="swiper-container" id="shopBanner" data-id="@ViewBag.shopID">
+        <script type="text/html" id="sectionTemplate">
+            <div class="swiper-wrapper">
+                {{if list==null||list==""}}
+                <div class="swiper-slide swiper-slide-wqx"><img src="/Areas/Client/Content/images/noimg.png" alt="" class="xyl_image" /></div>
+                {{/if}}
+                {{if list!=null||list!=""}}
+                {{each list as item index}}
+                <div class="swiper-slide swiper-slide-wqx"><img src="{{item.sImagePath}}" alt="" class="xyl_image"/></div>
+                {{/each}}
+                {{/if}}
+            </div>
+            <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets"style="font-size: 18px;color: #ffffff;font-family: inherit;font-weight: inherit;width: 50px;position: absolute;left: 5.4rem;bottom: .1rem;white-space:nowrap;"><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet swiper-pagination-bullet-active"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span></div>
+        </script>
+        <!-- Add Pagination -->
+       
+    </div>
+
+
+    <!--优惠券模板-->
+    <div class="swiper-container2" style="padding:.1rem .2rem;overflow-x:hidden;">
+        <div class="swiper-wrapper" id="shop_coupon_div">
+            <script type="text/html" id="couponTemplate">
+                {{each list as item index}}
+                <div class="swiper-slide">
+                    <div class="w-youhui" id="coupons_shop_get" onclick="shop.getShopCoupon('{{item.ID}}','{{item.iCoiCouponPrice}}','{{item.iUsePrice}}')">
+                        <h4 class="w-colorFFF w-textalignC w-marginBottom01" style="font-size: 24px;line-height: .4rem;white-space:nowrap;overflow:hidden;">&yen;{{item.iCoiCouponPrice}}</h4>
+                        {{if item.iUsePrice===0.00}}
+                        <h4 class="w-font13 w-colorFFF w-textalignC w-nowrap">无使用门槛</h4>
+                        {{/if}} 
+                        {{if item.iUsePrice!=0.00}}
+                        <h4 class="w-font13 w-colorFFF w-textalignC w-nowrap">满{{item.iUsePrice}}元可用</h4>
+                        {{/if}}
+                    </div>
+                </div>
+                {{/each}}
+            </script>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination2" style="display: none;"></div>
+    </div>
+    <div class="w-flex w-sibox">
+        <div class="w-flexitem1 w-color333 w-font15 w-si" style="color:#fe8083;" id="home_index">店铺首页 <b class="siB-active"></b></div>
+        <div class="w-flexitem1 w-color333 w-font15 w-si"  id="room_index">客房 <b class=""></b></div>
+        <div class="w-flexitem1 w-color333 w-font15 w-si"  id="ticket_index">票务 <b class=""></b></div>
+        <div class="w-flexitem1 w-color333 w-font15 w-si"  id="around_index">周边 <b class=""></b></div>
+    </div>
+
+
+    <!--店铺的首页的基本信息-->
+    <div id="shop_set_detail" data-id="@ViewBag.shopID">
+        <div id="shop_shop_detail">
+            <script type="text/html" id="shopTemplate">
+                <div class="w-paddingLeftRight02 w-jianjieBox" style="padding-top: .4rem;" data-shopname="{{sShopName}}">
+                    <h4 class="w-font18 w-color333 w-textalignC w-marginBottom01">{{sShopName}}</h4>
+                    <span class="w-font12 w-color999 w-renzheng">官方认证</span>
+                    <h4 style="line-height: .5rem" class="w-font14 w-color333">{{sIntroduce}}</h4>
+                    <h4 class="w-height05 w-font14 w-color333">联系电话：{{sMobileNum}}</h4>
+                    <h4 class="w-height05 w-font14 w-color333">店铺地址：{{sAddress}}</h4>
+                    
+                    <!--<img src="/Areas/Client/Content/images/map.png" alt="" />-->
+                    <div style="width:100%;height:3rem;border:#ccc solid 0px;" id="map_div"></div>
+
+                </div>
+                <div class="w-height08 w-padding02 w-onlyone">
+                    <b class="w-pinkLine"></b>
+                    <h4 class="w-font14 w-color333 w-height04">店主介绍</h4>
+                </div>
+                <div class="w-jianzhu">
+                    <div class="w-jianzhu-img" style="background-image: url('{{sHeadPicture}}')"></div>
+                    <h4 class="w-font14 w-color333 w-textalignC w-marginBottom01">{{sHeadName}}</h4>
+                    <div class="w-font13 w-color666 w-jianzhu-text">{{sAutograph}}</div>
+                    <div class="text-center"><a href="javascript:;" class="w-btn1" onclick="shop.detail_host_stoty('{{sShopID}}')" >店主故事</a></div>
+                </div>
+            </script>
+        </div>
+        <div class="w-height08 w-padding02 w-onlyone">
+            <b class="w-pinkLine"></b>
+            <h4 class="w-font14 w-color333 w-height04">游记</h4>
+        </div>
+        <div class="w-jianzhu" style="border-bottom:none;">
+            
+            <div class="text-center "><a href="javascript:;" class="w-btn1" onclick="shop.writeTravel()" >写游记</a></div>
+        </div>
+
+        <div class="w-notDATA" style="display:none;height:400px" id="shop_travel_havaNoData"><b></b><h4 class="w-font14 w-colorccc w-textalignC">暂时没有数据</h4></div>
+
+       
+        <div class="w-jianzhu" id="getShopTravel" style="padding-bottom:0">
+            <script type="text/html" id="shoptravelTemplate">
+                {{each list as item index}}
+                <div class="youji_list p_both10">
+                    <div class="person_img">
+                        <div>
+                            <div class="img" style="margin:0 auto;">
+                                <img src="{{item.sHeadImges}}" />
+                            </div>
+                        </div>
+                        <p>{{item.sAuthor}}</p>
+
+                    </div>
+                    <div class="youjia_con">
+                        <a href="javascript:;">{{item.sTitle}}<span class="fa fa-angle-right" onclick="shop.getDetailTravel('{{item.ID}}')"></span></a>
+                        {{if item.imageurl!=""}}
+                        <div class="swiper_clickLook flex_dom">
+                            {{each item.imageurl.split(',') as image x}}
+                            <span style="margin-right:2.3%;">
+                                <em><img src="{{image}}" /></em>
+                            </span>
+                            {{/each}}
+
+                        </div>
+                        {{/if}}
+                        <div class="youjia_txt text-ellipsis-3line">
+                            {{item.sContent.substr(0,49)}}
+                        </div>
+                    </div>
+
+                </div>
+                {{/each}}
+            </script>
+       
+               
+
+             </div>
+        </div>
+    <!--店铺的首页的基本信息结束-->
+    <!---店铺住宿--->
+    <div id="shop_home_detail_div" style="display:none">
+        <div class="w-paddingLeftRight02" style="padding-top:.3rem;padding-bottom: .3rem;">
+            <div class="w-Lineinput w-flex">
+                <input type="text" class="w-flexitem1" placeholder="店内客房" id="shop_romm_search_text"/>
+                <b  id="shop_romm_search"></b>
+            </div>
+        </div>
+
+        <div class="w-flex w-paddingLeftRight02 w-marginBottom01">
+            <div class="w-ruzhu w-flexitem1 w-marginRight01">
+                <input class="w-font14 w-color999" placeholder="请选择入住日期" id="demo_date" />
+            </div>
+            <div class="w-tuifang w-flexitem1">
+                <input class="w-font14 w-color999" placeholder="请选择退房日期" id="demo_date2" />
+            </div>
+        </div>
+        <div class="w-notDATA" style="display:none;height:400px" id="shopRoom_havaNoData"><b></b><h4 class="w-font14 w-colorccc w-textalignC">暂时没有数据</h4></div>
+
+    </div>
+    <!--店铺住宿结束-->
+    <!--票务开始-->
+    <div id="shop_ticket_div" style="display:none">
+        <div class="w-paddingLeftRight02" style="padding-top:.3rem;padding-bottom: .3rem;">
+            <div class="w-Lineinput w-flex">
+                <input type="text" class="w-flexitem1" placeholder="店内票务" id="ticket_search_text"/>
+                <b id="search_ticket"></b>
+            </div>
+        </div>
+        <div class="w-flex w-paddingLeftRight02 w-marginBottom01">
+            <div class="w-ruzhu w-flexitem1 w-marginRight01" id="select_tickte_date" >
+                <input class="w-font14 w-color999" placeholder="请选择票务日期" id="demo_date3" />
+                @*<h4 class="w-font14 w-color999" id="demo_date3">请选择票务日期 <b ></b></h4>*@
+            </div>
+        </div>
+        <div class="w-notDATA" style="display:none;height:400px" id="shopTicket_havaNoData"><b></b><h4 class="w-font14 w-colorccc w-textalignC">暂时没有数据</h4></div>
+    </div>
+
+    <!--票务结束-->
+    <!--周边-->
+    <div id="shop_around_div" style="display:none">
+        <div class="w-paddingLeftRight02" style="padding-top:.3rem;padding-bottom: .3rem;">
+            <div class="w-Lineinput w-flex">
+                <input type="text" class="w-flexitem1" placeholder="周边商品" id="around_search_text" />
+                <b id="around_search"></b>
+            </div>
+        </div>
+        <div class="w-notDATA" style="display:none;height:400px" id="shopHome_havaNoData"><b></b><h4 class="w-font14 w-colorccc w-textalignC">暂时没有数据</h4></div>
+       
+    </div>
+    <!--周边结束-->
+    <script type="text/html" id="aroundTemplateIndex">
+        {{each list as item index}}
+        {{if item.sGoodsCategory===3}}
+        <div class="w-padding02  w-houseBox" onclick="shop.goodsDetail('{{item.ID}}','{{item.sGoodsName}}','{{item.price}}')">
+            <div class="w-borderBeee w-position" style="padding-bottom: .2rem">
+                <img src="{{item.image}}" alt="" class="w-marginBottom02" />
+                <h4 class="w-font18 w-color333 w-marginBottom01">{{item.sGoodsName}}</h4>
+                <h4 class="w-font20 w-colorfe8285 w-marginBottom01">&yen;{{item.price}}</h4>
+                <h4 class="w-font12 w-color999 w-dingwei">{{item.address}}</h4>
+                {{if item.bSpecialSale==true}}
+                <input type="button" class="w-btn4" value="特价商品" style="position: absolute;bottom:.2rem;right:0;" />
+                {{/if}}
+                {{if  item.bSeckill==true}}
+                <input type="button" class="w-btn4" value="秒杀商品" style="position: absolute;bottom:.2rem;right:0;" />
+                {{/if}}
+
+            </div>
+        </div>
+        {{/if}}
+        {{if item.sGoodsCategory===2}}
+        <div class="w-padding02  w-houseBox" onclick="shop.ticketDetail('{{item.ID}}','{{item.sGoodsName}}','{{item.price}}')">
+            <div class="w-borderBeee" style="padding-bottom: .2rem">
+                <img src="{{item.image}}" alt="" class="w-marginBottom02" />
+                <h4 class="w-font18 w-color333 w-marginBottom01">{{item.sGoodsName}}</h4>
+                <h4 class="w-font20 w-colorfe8285 w-marginBottom01">
+                    &yen;{{item.price}}
+                    {{if item.bSeckill==true}}
+                    <input type="button" class="w-btn4" value="秒杀商品" />
+                    {{/if}}
+                    {{if item.bSpecialSale==true}}
+                    <input type="button" class="w-btn4" value="特价商品" />
+                    {{/if}}
+                </h4>
+                <h4 class="w-font12 w-color999 w-marginBottom01">{{item.sHouseOrTicketDetail}}</h4>
+
+            </div>
+        </div>
+        {{/if}}
+        {{if item.sGoodsCategory===1}}
+        <div class="w-padding02  w-houseBox" onclick="shop.roomDetail('{{item.ID}}','{{item.sGoodsName}}','{{item.priceTotal}}')">
+            <div class="w-borderBeee" style="padding-bottom: .2rem">
+                <img src="{{item.image}}" alt="" class="w-marginBottom02" />
+                <h4 class="w-font18 w-color333 w-marginBottom01">{{item.sGoodsName}}</h4>
+                <h4 class="w-font12 w-color666 w-marginBottom01">适宜人数：{{item.iHousePerson}}人</h4>
+                <div class="w-hejiBox w-overflowH">
+                    <h4 class="w-font18 w-colorfe8285 w-floatleft">合计：&yen;{{item.priceTotal}}</h4>
+                    {{if item.fullState=="满房"}}
+                    <input type="button" class="w-btn3" value="已满房" />
+                    {{/if}}
+                    {{if item.bSeckill==true}}
+                    <input type="button" class="w-btn4" value="秒杀商品" />
+                    {{/if}}
+                    {{if item.bSpecialSale==true}}
+                    <input type="button" class="w-btn4" value="特价商品" />
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        {{/if}}
+
+        {{/each}}
+    </script>
+        <div id="shop_around_list">
+
+        </div>
+   
+    <div class="w-threebox w-overflowH w-textalignC w-font0" style="margin: .25rem 0;">
+        <span class="w-font13 w-color666" id="backto_client_home">店铺首页</span>
+        <span class="w-font13 w-color666" style="border-right: 1px solid #999;border-left: 1px solid #999;" id="to_client_center">个人中心</span>
+        <span class="w-font13 w-color666" id="follow_us">关注我们</span>
+    </div>
+
+    <div class="shareBottom">
+        <div class="bottomContent">
+            <img src="/Areas/Client/Content/images/shareBottom.png" alt="">
+            <span class="xian"></span>
+            友客分享
+        </div>
+    </div>
+    <div class="w-markBox" >
+        <div class="w-mark">
+            <h4 class="w-colorfe8285 w-font20 w-textalignC" style="margin-bottom: .05rem;">&yen;<label id="shop_coupon_price"></label></h4>
+            <h4 class="w-color333 w-font14 w-textalignC" id="shop_coupon_userprice"></h4>
+            <input type="button" value="领取" id="shop_coupon_get"/>
+            <input type="hidden" id="shop_coupon_id"/>
+        </div>
+    </div>
+
+    <div class="guanzhu_us">
+        <div class="erweima">
+            <h4 class="">关注我们</h4>
+            <img src="/Areas/Client/Content/images/weimag.png" />
+            <p>一些提示文字</p>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+<script src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+<script src="~/Areas/Client/Content/lib/date-choice.js"></script>
+<script src="~/Areas/Client/Content/lib/judge.js"></script>
+<script src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+<script src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+<script src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+<script src="~/Areas/Client/Content/script/page.js"></script>
+<script src="~/Areas/Client/Content/script/malong.js"></script>
+<script src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+<script src="~/Areas/Client/Content/script/goujia.js"></script>
+<script src="~/Areas/Client/Content/script/qinliang.js"></script>
+<script src="~/Areas/Client/Content/script/wangqixin.js"></script>
+<script src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+<script type="text/javascript" src="~/Areas/Client/Content/lib/mobiscroll.custom-2.17.0.min.js"></script>
+@*<script src="~/Areas/Client/Content/lib/dropload.js"></script>*@
+<script src="~/scripts/plug-in/address/baiduaddress/scripts/baidu.map.js"></script>
+<script src="~/scripts/lib/client.common.js"></script>
+<script src="~/scripts/lib/template.js"></script>
+<script src="~/scripts/lib/wx.js"></script>
+
+@using WeiXin.Base.JsApi
+@model jsapi_config
+<script type="text/javascript">
+    $(function () {
+        var info=common.getStorageItem("order_info");
+        if(info!=null){
+            common.setStorageItem("order_info",{});
+        }
+        shop.init();
+        shop.bindEvent();
+        shop.InitWeiXin();
+       
+    });
+    var shop = (function (obj) { return obj; })(new function () {
+
+        //=======================================================百度地图============================================================================
+
+        //标注点数组
+        var markerArr = [];
+
+        // 根据经纬度设置店铺在地图上的地理坐标位置
+        function locationShopAddress(lon, lat) {
+            var map = new BMap.Map("map_div");         // 创建地图实例      
+            var point = new BMap.Point(lon, lat);  // 创建点坐标     
+            map.centerAndZoom(point, 13);                 // 初始化地图，设置中心点坐标和地图级别     
+            var traffic = new BMap.TrafficLayer();        // 创建交通流量图层实例      
+            map.addTileLayer(traffic);                    // 将图层添加到地图上
+
+            markerArr = [{ title: null, content: null, point: "{0}|{1}".format(lon, lat), isOpen: 0, icon: { w: 21, h: 21, l: 0, t: 0, x: 6, lb: 5 } }
+            ];
+            addMarker(lon, lat,map);
+        }
+
+        //创建marker
+        function addMarker(lon, lat,map) {
+            for (var i = 0; i < markerArr.length; i++) {
+                var json = markerArr[i];
+                var p0 = json.point.split("|")[0];
+                var p1 = json.point.split("|")[1];
+                var point = new BMap.Point(p0, p1);
+                var iconImg = createIcon(json.icon);
+                var marker = new BMap.Marker(point, { icon: iconImg });
+                var iw = createInfoWindow(i);
+                var label = new BMap.Label(json.title, { "offset": new BMap.Size(json.icon.lb - json.icon.x + 10, -20) });
+                
+                label.setStyle({
+                    border: "0px",
+
+
+                    cursor: "pointer"
+                });
+                marker.setLabel(label);
+                map.addOverlay(marker);
+               
+            }
+        }
+
+        //创建InfoWindow
+        function createInfoWindow(i) {
+            var json = markerArr[i];
+            var iw = new BMap.InfoWindow("<b class='iw_poi_title' title='" + json.title + "'>" + json.title + "</b><div class='iw_poi_content'>" + json.content + "</div>");
+            return iw;
+        }
+        //创建一个Icon
+        function createIcon(json) {
+            
+            var icon = new BMap.Icon("/Areas/Client/Content/images/slice/mapposition.png", new BMap.Size(json.w, json.h), { imageOffset: new BMap.Size(-json.l, -json.t), infoWindowOffset: new BMap.Size(json.lb + 5, 1), offset: new BMap.Size(json.x, json.h) })
+           
+            return icon;
+        }
+
+        //===================================================================================================================================
+
+       
+       
+        function init() {//店铺首页数据绑定
+            //var url = location.search.split('=')[1];
+            var url=$(".swiper-container").attr("data-id");
+           // var url = '95539652-B502-CA73-276D-08D414611DB6';
+            window.common.post("/Client/ShopHome/Shop", { ID: url}, function (res) {
+                template.config("escape", false);
+                
+                if(res.Data.shopBanner.length!=0){
+                    $("#shop_index_one_photo").val(res.Data.shopBanner[0].sImagePath);
+                }
+                
+                var html = template("sectionTemplate", { list: res.Data.shopBanner });
+                $("#shopBanner").html(html);//店铺轮播图
+               
+               
+                var shophtml = template("shopTemplate", res.Data.shopmessage);
+                $("#shop_shop_detail").html(shophtml);//店铺信息
+
+                // 设置店铺在地图上的地理坐标位置
+                locationShopAddress(res.Data.shopmessage.sLONG, res.Data.shopmessage.sLat);
+
+                // #region 店铺优惠券模板
+                var shopcoupon = template("couponTemplate", { list: res.Data.coupon });
+                $("#shop_coupon_div").html(shopcoupon);
+                //优惠券点击事件
+                /*点击优惠券弹出层*/
+                //$('.w-youhui').click(function () {
+                //    $('.w-markBox').show();
+                //});
+                // #endregion
+                
+                if (res.Data.tralver.length ==0) {
+                    $("#shop_travel_havaNoData").css("display", "block");
+                    $("#getShopTravel").css("display", "none");
+                }
+                else {
+                    var travel = template("shoptravelTemplate", { list: res.Data.tralver });
+                    $("#getShopTravel").html(travel);//店铺游记
+                  
+                    $("#getShopTravel").append('<div class="text-center p-v-15"  ><a href="javascript:;" class="w-btn1"  onclick="shop.getMoreTravel()" >查看更多游记</a></div> ');
+                    //<div class="text-center " style="margin-top: 0.3rem;"><a href="javascript:;" class="w-btn1" onclick="" /></a></div>
+                }
+                
+                //前端
+                var swiper = new Swiper('.swiper-container', {
+                    pagination: '.swiper-pagination',
+                    paginationClickable: true,
+                    autoplay: 3000,
+                    loop: true,
+                    paginationType: 'fraction'
+                });
+
+                var swiper2 = new Swiper('.swiper-container2', {
+                    pagination: '.swiper-pagination2',
+                    slidesPerView: 3,
+                    paginationClickable: true,
+                    spaceBetween: 5
+                });
+
+                $('#demo_date').mobiscroll().date({
+                    theme: 'mobiscroll',     // Specify theme like: theme: 'ios' or omit setting to use default
+                    mode: "date",       // Specify scroller mode like: mode: 'mixed' or omit setting to use default
+                    display: "modal", // Specify display mode like: display: 'bottom' or omit setting to use default
+                    minDate: new Date(new Date().setDate(new Date().getDate())),
+                    maxDate: new Date(new Date().setFullYear(new Date().getFullYear() + 5)),
+                    dateFormat: 'yy-mm-dd',
+                    lang: 'zh'        // Specify language like: lang: 'pl' or omit setting to use default
+                });
+                $('#demo_date2').mobiscroll().date({
+                    theme: 'mobiscroll',     // Specify theme like: theme: 'ios' or omit setting to use default
+                    mode: "date",       // Specify scroller mode like: mode: 'mixed' or omit setting to use default
+                    display: "modal", // Specify display mode like: display: 'bottom' or omit setting to use default
+                    minDate: new Date(new Date().setDate(new Date().getDate() + 1)),
+                    maxDate: new Date(new Date().setFullYear(new Date().getFullYear() + 5)),
+                    dateFormat: 'yy-mm-dd',
+                    lang: 'zh'        // Specify language like: lang: 'pl' or omit setting to use default
+                });
+                $('#demo_date3').mobiscroll().date({
+                    theme: 'mobiscroll',     // Specify theme like: theme: 'ios' or omit setting to use default
+                    mode: "date",       // Specify scroller mode like: mode: 'mixed' or omit setting to use default
+                    display: "modal", // Specify display mode like: display: 'bottom' or omit setting to use default
+                    minDate: new Date(new Date().setDate(new Date().getDate())),
+                    maxDate: new Date(new Date().setFullYear(new Date().getFullYear() + 5)),
+                    dateFormat: 'yy-mm-dd',
+                    lang: 'zh'        // Specify language like: lang: 'pl' or omit setting to use default
+                });
+                $(".top>h4").click(function () {
+                    $(".guanzhu_us").show();
+
+                })
+                $(".guanzhu_us").click(function () {
+                    $(this).hide();
+                })
+                $(".guanzhu_us>div").click(function (e) {
+                    e.stopPropagation()
+                })
+
+                $("#follow_us").click(function () {
+                    $(".guanzhu_us").show();
+                })
+                
+                //收藏的星星颜色
+                if (res.Data.collect != null) {
+                    $(".w-MyStar").addClass(" w-MyStar-img");
+                    
+                }
+            });
+            
+            
+        }
+        function detail_host_stoty(id) {//店主故事页面跳转
+            window.location.href = '/Client/ShopHome/HostStory?id=' + id;
+        }
+        //只显示住宿信息
+        function shophomeroom() {
+            $("#shop_set_detail").css('display', 'none');
+            $("#shop_home_detail_div").css('display', 'block');
+            $("#shop_around_div").css('display', 'none');
+            $("#shop_ticket_div").css('display', 'none');
+            $("#shopHome_havaNoData").css('display', 'none');
+            hotelList();
+
+        }
+        //只显示首页
+        function shophomeindex() {
+            $("#shop_set_detail").css('display', 'block');
+            $("#shop_home_detail_div").css('display', 'none');
+            $("#shop_around_div").css('display', 'none');
+            $("#shop_ticket_div").css('display', 'none');
+            $("#shopHome_havaNoData").css('display', 'none');
+            $("#shop_around_list").css('display', 'none');
+        }
+        //只显示周边商品
+        function shoparound() {
+            $("#shop_set_detail").css('display', 'none');
+            $("#shop_home_detail_div").css('display', 'none');
+            $("#shop_around_div").css('display', 'block');
+            $("#shop_ticket_div").css('display', 'none');
+            $("#shopHome_havaNoData").css('display', 'none');
+            abroudList();
+        }
+        //只显示票务信息
+        function shophometicket() {
+            
+            $("#shop_set_detail").css('display', 'none');
+            $("#shop_home_detail_div").css('display', 'none');
+            $("#shop_around_div").css('display', 'none');
+            $("#shop_ticket_div").css('display', 'block');
+            $("#shopHome_havaNoData").css('display', 'none');
+            ticketList();
+        }
+        //周边商品页面绑定
+        function abroudList() {
+            $("#shop_around_list").empty();
+            page();
+            window.common.page.initDropLoad(page);
+        }
+
+        function hotelList() {
+            
+            if ($("#demo_date").val() == "" && $("#demo_date2").val() != "") {
+                return alert("请选择入住时间");
+            }
+           
+                if ($("#demo_date").val() != "" && $("#demo_date2").val() == "") {
+                    return alert("请选择退房时间");
+                }
+
+                if ($("#demo_date").val() != "" && $("#demo_date2").val() != "") {
+                    if (new Date($("#demo_date").val().replace(/-/g, "/")) > new Date($("#demo_date2").val().replace(/-/g, "/"))) {
+                        return alert("入住时间不能大于退房时间");
+                    }
+                  
+                }
+          
+
+            $("#shop_around_list").empty();
+            hotel();
+            window.common.page.initDropLoad(hotel);
+        }
+        function page() {//周边商品页面绑定
+            //var url = location.search.split('=')[1];
+            var url=$(".swiper-container").attr("data-id");
+            var sKeyword = $("#around_search_text").val();
+           //var url = '95539652-B502-CA73-276D-08D414611DB6';
+            window.common.post("/Client/ShopHome/AroundHome", { pageSize: window.common.page.pagerParam.pageSize, pageIndex: window.common.page.pagerParam.pageIndex, ID: url, sKeyword: sKeyword },
+                function (r) {
+                    window.common.page.calculationPage(r.Data.MaxCount);//重新计算页码
+                    var json = r.Data.Result;
+                    if (json.length != 0) {
+                        $("#shop_around_list").css('display', 'block');
+                        $("#shopHome_havaNoData").css('display', 'none');
+                        var html = template("aroundTemplateIndex", { list: json });
+                        $("#shop_around_list").append(html);
+                    }
+                    else {
+                        $("#shopHome_havaNoData").css('display', 'block');
+                        $("#shop_around_list").css('display', 'none');
+                    }
+                }, function () {
+
+                });
+        }
+        //住宿页面绑定
+        function hotel() {
+            
+            var sKeyword = $("#shop_romm_search_text").val();
+            var intTime = $("#demo_date").val();
+            var outTime = $("#demo_date2").val();
+            
+            if ($("#demo_date").val() == "" && $("#demo_date2").val() == "") {
+                var d = new Date();
+                var date = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+                intTime = date;
+
+               
+                var s = d.setDate(d.getDate() + 1);
+                var no = new Date(s);
+
+                var dateend = no.getFullYear() + "-" + (no.getMonth() + 1) + "-" + d.getDate();
+                outTime = dateend;
+            }
+            //var url = location.search.split('=')[1];//店铺ID
+            var url=$(".swiper-container").attr("data-id");
+           // var url = '95539652-B502-CA73-276D-08D414611DB6';
+            window.common.post("/Client/ShopHome/GetShopHome", { pageSize: window.common.page.pagerParam.pageSize, pageIndex: window.common.page.pagerParam.pageIndex, ID: url, sKeyword: sKeyword, intTime: intTime, outTime: outTime },
+                function (r) {
+                    
+                    window.common.page.calculationPage(r.Data.MaxCount);//重新计算页码
+                    var json = r.Data.Result;
+                    if (json.length != 0) {
+                        $("#shop_around_list").css('display', 'block');
+                        $("#shopRoom_havaNoData").css('display', 'none');
+                        var html = template("aroundTemplateIndex", { list: json });
+                        $("#shop_around_list").append(html);
+                    }
+                    else {
+                        $("#shopRoom_havaNoData").css('display', 'block');
+                        $("#shop_around_list").css('display', 'none');
+                    }
+                }, function () {
+
+                });
+        }
+
+        function ticketList() {
+            
+            $("#shop_around_list").empty();
+           
+            ticketPage();
+            window.common.page.initDropLoad(ticketPage);
+            
+        }
+        //票务页面绑定
+        function ticketPage() {
+            
+            var sKeyword = $("#ticket_search_text").val();
+            var selectTime = "";
+            if ($("#demo_date3").val() == "") {
+                selectTime = "";
+            }
+            else {
+                selectTime = $("#demo_date3").val().substr(5, 10);
+            }
+            //var url = location.search.split('=')[1];
+            var url=$(".swiper-container").attr("data-id");
+            //var url = '95539652-B502-CA73-276D-08D414611DB6';
+            window.common.post("/Client/ShopHome/TicketList", { pageSize: window.common.page.pagerParam.pageSize, pageIndex: window.common.page.pagerParam.pageIndex, ID: url, sKeyword: sKeyword, selectTime: selectTime },
+                function (r) {
+                   
+                    template.config("escape", false);
+                    window.common.page.calculationPage(r.Data.MaxCount);//重新计算页码
+                    var json = r.Data.Result;
+                    if (json.length != 0) {
+                        $("#shop_around_list").css('display', 'block');
+                        $("#shopTicket_havaNoData").css('display', 'none');
+                        var html = template("aroundTemplateIndex", { list: json });
+                        $("#shop_around_list").append(html);
+                    }
+                    else {
+                       
+                        $("#shopTicket_havaNoData").css('display', 'block');
+                        $("#shop_around_list").css('display', 'none');
+                    }
+                }, function () {
+                   
+                });
+        }
+
+        function bindEvent() {
+            $("#home_index").bind('click', shophomeindex);
+            $("#room_index").bind('click', shophomeroom);
+            $("#around_index").bind('click', shoparound);
+            $("#around_search").bind('click', abroudList);
+            $("#ticket_index").bind('click', shophometicket);
+            $("#search_ticket").bind('click', ticketList);
+            $("#shop_romm_search").bind('click', hotelList);
+            $("#collext_shop_start").bind('click', collect);
+            //领取优惠券
+            $("#shop_coupon_get").bind('click', function getCoupon() {
+                common.post("/Client/ShopHome/GetShopCoupon", { sCouponID: $("#shop_coupon_id").val() }, function (res) {
+                    if (res.Data == "已领取完") {
+                        alert(res.Data);
+                    }
+                    else{
+                        alert("领取成功！可到我的个人中心-我的优惠券中查看",null,500);
+                    }
+                    window.location.reload();
+                }, function (res) {
+                    window.location.href = '/Client/ClientLogin';
+
+                });
+                $('.w-markBox').hide();
+            });
+            $(".w-MyHome").bind('click', backHome);//回到首页
+            $("#backto_client_home").bind('click', backtoshophome);//回到店铺首页
+            $("#to_client_center").bind('click', toClientHome);//个人中心
+            
+            $("#demo_date").change(function () {
+                hotelList();
+
+            });
+            $("#demo_date2").change(function () {
+                hotelList();
+                
+            });
+            $("#demo_date3").change(function () {
+                ticketList();
+
+            });
+            
+        }
+        /**
+        *回到首页
+        */
+        function backHome() {
+            window.location.href = '/Client/ClientHome';
+        }
+        /**
+       *跳转至个人中心
+        */
+
+        function backtoshophome(){
+            var url=$(".swiper-container").attr("data-id");
+            window.location.href = '/Client/ShopHome/Index?ID='+url;
+        }
+        //个人中心
+        function toClientHome()
+        {
+            window.location.href = '/Client/ClientCenter/Index';
+        }
+        //收藏
+        function collect() {
+           // var url = location.search.split('=')[1];
+            var url=$(".swiper-container").attr("data-id");
+            //var goodID='9D76163A-2FDC-C089-55E7-08D3F98175E7';
+            common.post("/Client/ShopHome/CollectionIn", { iCollectType: 0, iGoodsID: url }, function (res) {
+            }, function (res) {
+                window.location.href = '/Client/ClientLogin';
+            },false);
+            
+        }
+       
+        
+
+      //商品详情页
+        function goodsDetail(grid, gname, price) {
+          
+
+            window.common.setStorageItem("order_info", {
+                price: price,
+                gid: grid,
+                gname: gname,
+                gtype: 3,
+                gstate: 'normal'
+            });
+            window.location.href = '/Client/ShopHome/RoomDetail?ID=' + grid;
+        }
+        //更多游记
+        function getMoreTravel() {
+            //var url = location.search.split('=')[1];
+            var url=$(".swiper-container").attr("data-id");
+           // var url = '95539652-B502-CA73-276D-08D414611DB6';
+            window.location.href = '/Client/ShopHome/TravelList?ID=' + url;
+        }
+
+        //游记详情
+
+        function getDetailTravel(id) {
+            window.location.href = '/Client/ShopHome/TravelDetail?ID=' + id;
+        }
+        //住宿详情页面
+        function roomDetail(grid, gname, price) {
+            var starttime = $("#demo_date").val();
+            var endtime = $("#demo_date2").val();
+            if ($("#demo_date").val() != "" && $("#demo_date2").val() != "") {
+                if (new Date($("#demo_date").val().replace(/-/g, "/")) > new Date($("#demo_date2").val().replace(/-/g, "/"))) {
+                    return alert("入住时间不能大于退房时间,请重新进行选择");
+                }
+
+            }
+
+            window.common.setStorageItem("order_info", {
+                stime: starttime,
+                etime: endtime,
+                price: price,
+                gid: grid,
+                gname: gname,
+                gtype: 1,
+                gstate: 'normal'
+            });
+            window.location.href = '/Client/ShopHome/RoomDetail?ID=' + grid;
+        }
+        //票务详情页面
+        function ticketDetail(grid, gname, price) {
+            var time = $("#demo_date3").val();
+            window.common.setStorageItem("order_info", {
+                stime: time,
+                price: price,
+                gid: grid,
+                gname: gname,
+                gtype: 2,
+                gstate: 'normal'
+            });
+            
+            window.location.href = '/Client/ShopHome/RoomDetail?ID=' + grid;
+        }
+
+        function writeTravel() {
+            var id =$(".swiper-container").attr("data-id");
+            //var id = '9D76163A-2FDC-C089-55E7-08D3F98175E7';
+            window.location.href = '/Client/ShopHome/WriteTravel?ID=' + id;
+        }
+
+        function getShopCoupon(id, price, iUsePrice) {
+            
+            $('.w-markBox').show();
+            $("#shop_coupon_price").text(price);
+            $("#shop_coupon_id").val(id);
+            if (iUsePrice != 0) {
+                $("#shop_coupon_userprice").text("满" + iUsePrice + "元可使用");
+
+            }
+            else {
+                $("#shop_coupon_userprice").text("无使用门槛");
+            }
+
+        }
+
+        //======================= 分享 ===============================================
+
+        /**
+        * 初始化微信设置
+        */
+        function InitWeiXin () {
+
+            // 初始化微信接口配置
+            wx.config({
+                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId: '@Model.appId', // 必填，公众号的唯一标识
+                timestamp:@Model.timestamp , // 必填，生成签名的时间戳
+                nonceStr: '@Model.nonceStr', // 必填，生成签名的随机串
+                signature: '@Model.signature',// 必填，签名，见附录1
+                jsApiList:["onMenuShareTimeline","onMenuShareAppMessage"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            });
+
+            // 接口处理成功之后
+            wx.ready(function(){
+                
+                // 获取商品的店铺ID
+                var shopID=$("#shop_set_detail").attr("data-id");
+               
+                // 判断是否已注册并且成为了这件商品所在的店铺的分销客
+                common.post("/Client/ShopHome/IsShareBelong",{shopID:shopID},function(res){
+                    var imgUrl=$("#shop_index_one_photo").val();//图片地址
+                    // 返回结果
+                    // 1.【是否是这家店的分销客】 bIsShopShare 0否 1是
+                    // 2.【用户ID】      ID
+                    var title=$(".w-paddingLeftRight02.w-jianjieBox").attr("data-shopname");//标题
+                    // 获取当前域名
+                    var realmName=window.location.href.split('/')[0]+"//"+window.location.href.split('/')[2];
+                    var link=realmName+"/Client/ShopHome/Index?ID="+shopID;//链接 ?ID="+res.Data.ID
+                    var bIsShopShare=res.Data.bIsShopShare;//是否是这家店的分销客
+                    // 是这家店的分销客，则带上分销客ID
+                    if(bIsShopShare===1){
+
+                        // 链接 （带上分享客的ID）
+                        link=link+"&sUserID="+res.Data.ID;
+                        // 用户ID
+                    }
+                    // 分享商品
+                    shareGoods(title,link,imgUrl);
+                },function(res){
+                    // 弹出提示
+                    //window.location.href="/Client/ClientLogin";
+                    alert(res.Msg);
+
+                },false);
+            });
+        }
+
+        /**
+        * 分享商品
+        */
+        function shareGoods(title,link,imgUrl){
+            
+            // 分享到朋友圈
+            wx.onMenuShareTimeline({
+                title: title, // 分享标题
+                link: link, // 分享链接
+                imgUrl: imgUrl, // 分享图标
+                success: function () { 
+                    
+                },
+                cancel: function () { 
+                    // 用户取消分享后执行的回调函数
+                    
+                }
+            });
+
+            // 分享给朋友
+            wx.onMenuShareAppMessage({
+                title: title, // 分享标题
+                desc: '友客分享微信商城', // 分享描述
+                link: link, // 分享链接
+                imgUrl: imgUrl, // 分享图标
+                type: 'link', // 分享类型,music、video或link，不填默认为link
+              
+                success: function () { 
+                   
+                },
+                cancel: function () { 
+                    // 用户取消分享后执行的回调函数
+                    
+                }
+            });
+
+        }
+
+        //======================================================================
+    
+        function haveNoImage(obj){
+            
+            obj.src="/Areas/Client/Content/images/nodata.png";
+        }
+
+        return {
+            InitWeiXin:InitWeiXin,
+            init: init,
+            bindEvent: bindEvent,
+            detail_host_stoty: detail_host_stoty,
+            goodsDetail: goodsDetail,
+            getMoreTravel: getMoreTravel,
+            getDetailTravel: getDetailTravel,
+            ticketDetail: ticketDetail,
+            roomDetail: roomDetail,
+            writeTravel: writeTravel,
+            getShopCoupon: getShopCoupon,
+            haveNoImage:haveNoImage
+        }
+
+    });
+
+
+
+</script>

@@ -1,0 +1,29 @@
+﻿<link href="~/scripts/plug-in/date/laydate-master/need/laydate.css" rel="stylesheet" />
+<link href="~/scripts/plug-in/date/laydate-master/skins/molv/laydate.css" rel="stylesheet" />
+<script src="~/scripts/plug-in/date/laydate-master/laydate.dev.js"></script>
+<script src="~/Areas/Admin/Scripts/ReturnOrders/Index.js"></script>
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding:2px;">
+    <form id="return_order_manager_form" style="width:100%;height:100%;">
+        <div id="return_order_manager_grid_tool" style="padding:15px;display:none;">
+            &emsp;<!--0- 退款审核中，1 -接受申请，2 - 退款成功，3 - 拒绝退款-->
+            状态：
+            <select id="return_order_manager_iState" class="easyui-combobox" name="iState" style="width:200px;">                
+                <option value="-1">全部</option>
+                <option value="1">接受申请</option>
+                <option value="0">退款审核中</option>
+                <option value="2">退款成功</option>
+                <option value="3">拒绝退款</option>
+            </select> 
+            &emsp;
+            申请时间：
+            <input id="return_order_manager_input_startTime" onclick="modules.get('cache').getCache('laydate').laydate({ istime: true })" class="textbox" style="height:22px;" name="sTime">
+            &emsp;至&emsp;
+            <input id="return_order_manager_input_endTime" onclick="modules.get('cache').getCache('laydate').laydate({ istime: true })" class="textbox" style="height:22px;" name="eTime">
+            <a id="return_order_manager_btn_seach" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</a>
+            <br /><br />
+            @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
+        </div>
+        <table id="return_order_manager_grid"></table>
+    </form>
+</div>

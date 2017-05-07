@@ -1,0 +1,102 @@
+﻿
+
+@model Framework.DTO.EHECD_ShopSetDTO
+
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form id="hoster_message_index_form" style="width:800px;height:500px;text-align:center">
+        <table class="styletable" style="">
+            <tr>
+                <td>
+                    店主头像:
+                    <input type="hidden" id="hoster_message_Images" name="sHeadPicture" value="@Model.sHeadPicture"/>
+                </td>
+                <td>
+                    <div id="hoster_message_Images_upload" class="uploader">
+                        <div class="queueList">
+                            <div id="dndArea" class="placeholder">
+                                <div id="filePicker"></div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>店主姓名</td>
+                <td><input  class="easyui-textbox" type="text" name="sHeadName" value="@Model.sHeadName" data-options="validType:['isHtmlValidate','maxLength[200]','notEmptyCharter'],required:true,missingMessage:'不能为空'" /></td>
+            </tr>
+            <tr>
+                <td>店主简介</td>
+                <td >
+                    <input type="hidden" id="hidden_hoster_sAutograph" value="@Model.sAutograph">
+                    <textarea name="sAutograph" style="width:600px;height:300px" id="hoster_sAutograph" ></textarea>
+                    @*<input type="text" style="width:600px;height:300px"  name="sAutograph"  value="@Model.sAutograph" data-options="validType:['isHtmlValidate','maxLength[2000]','notEmptyCharter'],required:true,missingMessage:'不能为空'" />*@
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <a id="hoster_message_btn_save" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        modules.get(enums.Modules.CACHE).setMenuDomain("店主信息", new function () {
+            var eui = modules.get(enums.Modules.JQUERY_EASYUI);
+            var f = modules.get(enums.Modules.FUNC);
+            var ue = modules.get(enums.Modules.BAIDU_EDITOR);
+            var travelObj = {};
+            function init()
+            {
+                $("#hoster_sAutograph").val($("#hidden_hoster_sAutograph").val());
+                if ($("#hoster_message_Images").val() == "") {
+                    travelObj.UploadIDCardImage = new UploadImage({
+                        target: "hoster_message_Images_upload", maxFileCount: 1
+                    });
+                }
+                else {
+                    travelObj.UploadIDCardImage = new UploadImage({
+                        target: "hoster_message_Images_upload", maxFileCount: 1, imgLst: [
+                                {
+                                    filePath: $("#hoster_message_Images").val(),
+                                }
+                        ]
+                    });
+                }
+               
+            }
+            function bindEvent()
+            {
+                $("#hoster_message_btn_save").bind("click", function hoster() {
+
+                    if ($("#hoster_message_index_form").form("validate")) {
+                        if ($("#hoster_sAutograph").val() == null || $("#hoster_sAutograph").val() == "") {
+                            return eui.alertInfo("请输入名宿签名");
+                        }
+                        if (travelObj.UploadIDCardImage.imageList.length < 1) {
+                            return eui.alertInfo("请上传店主头像");
+                        }
+                        $("#hoster_message_Images").val(travelObj.UploadIDCardImage.imageList[0].filePath);
+                        f.post("/Admin/HosterMessage/UpdateHoster", $("#hoster_message_index_form").serializeObject(), function () {
+                            eui.alertInfo("保存成功");
+                        }, function () { eui.alertInfo("保存失败"); });
+
+                    }
+                   
+                })
+            }
+            try {
+                init();
+                bindEvent();
+            }
+            catch (e)
+            { }
+
+           
+        });
+    });
+</script>

@@ -1,0 +1,277 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>发表评价</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+    <style>
+        .order_pred {
+            padding-top: 0.18rem;
+            padding-left: 0.18rem;
+            background-color: white;
+            padding-bottom: 0.18rem;
+            border-bottom: 1px dashed #dddddd;
+        }
+
+        .pred_img img {
+            display: block;
+            width: 1.62rem;
+            height: 1.62rem;
+        }
+        .fabu {
+            z-index:1000;
+        }
+
+    </style>
+
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+    <script>
+    $(document).ready(function(){
+        //设置评论星星
+        var img_url = { filled: "/Areas/Client/Content/images/slice/fillStar.png", empty: "/Areas/Client/Content/images/slice/hurfStar.png" };
+        set_stars($(".starArea"), img_url, 5, 25);
+    })
+
+    </script>
+
+</head>
+<body style="background-color: #f2f2f2">
+    <div id="html" class="order_pred flex_dom flex_item_stretch">
+
+    </div>
+    <!--userHouse-->
+    <div class="userHouse">
+        <div class="starArea">
+            <input type="hidden" value="5" />
+        </div>
+        <div id="ImgList" class="upImgBox">
+            @*<div class="upImgBox-each">
+                    <img src="~/Areas/Client/Content/images/turnImgTest.jpg" alt="">
+                    <a href="javascript:void (0)"></a>
+                </div>*@
+            <div id="upload" class="upImgBox-each"></div>
+        </div>
+        <textarea id="sCommentContent" class="talkBox" placeholder="请输入评价内容，最多200字"></textarea>
+        <a href="javascript:void (0)" class="fabu">发布</a>
+    </div>
+</body>
+</html>
+@using WeiXin.Base.JsApi;
+@model jsapi_config
+<script src="~/scripts/lib/wx.js"></script>
+<script src="~/scripts/lib/client.common.js"></script>
+<script type="text/javascript">
+    $(function () {
+       var html = common.getStorageItem("order_html");
+       $('#html').html(html.html);
+       scope.InitWeiXin();
+       scope.bingEvent();
+    });
+
+    var scope = (function (obj) { return obj; })(new function () {
+
+        var localImgIds=[];//本地图片Id数组
+        var serverImgIds=[];//服务器图片Id数组
+
+        var MaxImgCount=5;//最大上传图片张数
+        var selected=0;//已选择的图片张数
+
+        var json={};
+
+
+        /**
+        * 初始化调用微信JS的API的配置
+        */
+        function InitWeiXin() {
+            wx.config({
+                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId: '@Model.appId', // 必填，公众号的唯一标识
+                timestamp:@Model.timestamp , // 必填，生成签名的时间戳
+                nonceStr: '@Model.nonceStr', // 必填，生成签名的随机串
+                signature: '@Model.signature',// 必填，签名，见附录1
+                jsApiList:["chooseImage","uploadImage"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            });
+        }
+
+        /**
+        * 选择手机上图片
+        */
+        function chooseImage(){
+            if(selected<5){
+                wx.chooseImage({
+                    count:MaxImgCount-selected, // 默认5
+                    sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+                    sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+                    success: function (res) {
+                        var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                        for(var i=0;i<localIds.length;i++)
+                        {
+                            //$('#ImgList').append('<div class="upImgBox-each"><img src="'+localIds[i]+'" alt=""><a order="'+i+'" href="javascript:void (0)"></a></div>');//预览图片
+                            $('<div class="upImgBox-each"><img src="'+localIds[i]+'" alt=""><a order="'+i+'" href="javascript:void (0)"></a></div>').insertBefore("#upload");
+                            localImgIds.push(localIds[i]);
+                            selected++;
+                        }
+                        uploadImage();
+                        //绑定图片删除事件
+                        $('#ImgList').on("click",'a',function(){
+                            var order=Number($(this).attr("order"));
+                            $(this).parent().remove();
+                            serverImgIds.splice(order,1);//删除图片的本地资源的Id
+                            localImgIds.splice(order,1);
+                            selected--;
+                        });
+                    }
+                });
+            }
+            else{
+                alert("最多只能上传5张图片");
+            }
+        }
+
+        /**
+        * 上传图片到微信服务器
+        */
+        function uploadImage(){
+            (function (localImgIds) {//异步闭包 
+                //解决IOS无法上传的坑
+                if (localImgIds.indexOf("wxlocalresource") != -1) {
+                    localImgIds = localImgIds.replace("wxlocalresource", "wxLocalResource");
+                }
+                wx.uploadImage({ //图片上传至微信服务器
+                    localId: localImgIds,
+                    isShowProgressTips: 1,
+                    success: function (res) {
+                        serverImgIds.push(res.serverId); // 返回图片的服务器端ID
+                        if (serverImgIds.length != localImgIds.length) {
+                            uploadImage();
+                        }
+                    }
+                });
+            })(localImgIds[serverImgIds.length]);
+		    //   alert(localImgIds.join(),null,5000);
+			//   for(var i=0;i<localImgIds.length;i++){
+            //    wx.uploadImage({
+            //        localId:localImgIds[i], // 需要上传的图片的本地ID，由chooseImage接口获得
+            //        isShowProgressTips: 1, // 默认为1，显示进度提示
+            //        success: function (res) {
+            //             // 返回图片的服务器端ID
+            //            serverImgIds.push(res.serverId);
+			//			var id=localImgIds[i];
+			//			localImgIds.splice(id,1);
+            //        }
+            //    });
+            //}
+        }
+
+        /**
+        * 从微信服务器上下载图片
+        */
+        function loadImage(){
+           // alert(serverImgIds.join(),null,5000);
+            if(Valiate()){
+                if(serverImgIds.length>0)
+                {//有图片的评价
+                    common.post("/Client/ClientCenter/LoadImageByWX",{serverId: serverImgIds.join()},
+                        function(r){
+                            //返回本地图片地址
+                            var sCommentImgPath=r.Data;
+                            //评价
+                            Appraise(sCommentImgPath);
+                        });
+                }
+                else
+                {//不传图片的评价
+                    Appraise("");
+                }
+            }
+        }
+
+        /**
+        * 发表评论
+        */
+        function Appraise(sCommentImgPath){
+            common.post("/Client/ClientCenter/Appraise",
+                {
+                    sCommentImgPath:sCommentImgPath,
+                    sOrderID:$('#html a').attr("sOrder"),
+                    sCommentContent:json.sCommentContent,
+                    iCommentScore:json.iCommentScore,
+                },
+                    function(r){
+                        alert('评价成功!',null,1000);
+                        setTimeout(function(){
+                            history.back();
+                        },1000);
+
+                    });
+        }
+
+        //绑定事件
+        function bingEvent() {
+
+            $('#upload').on("click", chooseImage);
+            $('.fabu').on("click",loadImage);
+        }
+
+        //验证字段
+        function Valiate(){
+            json.sCommentContent=$('#sCommentContent').val();
+            json.iCommentScore=$('.starArea :hidden').val();//评价星星个数
+            if(json.sCommentContent.length==0)
+            {
+                alert("请输入评价内容!");
+                return false;
+            }
+            if(json.sCommentContent.length>200)
+            {
+                alert("评价内容,最多200字!");
+                return false;
+            }
+            return true;
+        }
+
+
+
+        return {
+
+            InitWeiXin:InitWeiXin,
+            bingEvent:bingEvent
+        }
+
+    });
+</script>

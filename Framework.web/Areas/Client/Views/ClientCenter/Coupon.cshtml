@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>我的优惠券</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/my_css.6.21.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/template.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/NumberBank.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/goujia.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/wangqixin.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/qinliang.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/malong.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/maoyuhao.css" />
+    <link rel="stylesheet" type="text/css" href="~/Areas/Client/Content/css/luzhongxiang.css" />
+    <link href="~/Content/home.css" rel="stylesheet" />
+    <link href="~/Content/dropload.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/jquery.1.11.3.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/con_js.6.23.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/date-choice.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/judge.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/pinchzoom.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/swiper.min.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/lib/uploadPreview.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/page.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/malong.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/maoyuhao.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/goujia.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/qinliang.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/wangqixin.js"></script>
+    <script type="text/javascript" src="~/Areas/Client/Content/script/luzhongxiang.js"></script>
+</head>
+<body class="bg-f2f2f2">
+    <div id="coupons">
+        <div class="title df bg-fff">
+            <a data-bIsUsed="0" href="javascript:;" class="df1 text-center active"><p class="border-r">可用</p><b class="l50"></b></a>
+            <a data-bIsUsed="1" href="javascript:;" class="df1 text-center"><p>已过期</p><b class="l50"></b></a>
+        </div>
+        <!--可用-->
+        <div id="UseCouponList" class="bigbox mt2r available">
+            <script type="text/html" id="UseCoupon">
+           {{each list as m index}}
+            <div class="box bg-fff mb1r">
+                <div class="top clearfix fc-fff">
+                    <div class="fl"><p class="fs-12">{{m.iUsePrice}}</p><p class="fs-24">&yen;<span class="ml1r">{{m.iCoiCouponPrice}}</span></p></div>
+                    <div class="fr"><p class="fs-14">使用期限</p><p class="fs-14 mt1r">{{m.dValidDateStart}}至{{m.dValidDateEnd}}</p></div>
+                </div>
+                <div class="middle">
+                    <span class="fc-666">{{m.sShopName}}</span>
+                </div>
+            </div>
+            {{/each}}
+           </script>
+        </div>
+        <!--已过期-->
+        <div id="UsedCouponList" class="bigbox mt2r expired">
+            <script type="text/html" id="UsedCoupon">
+                {{each list as m index}}
+                <div class="box bg-fff mb1r">
+                    <div class="top clearfix fc-fff">
+                        <div class="fl"><p class="fs-12">{{m.iUsePrice}}</p><p class="fs-24">&yen;<span class="ml1r">{{m.iCoiCouponPrice}}</span></p></div>
+                        <div class="fr"><p class="fs-14">使用期限</p><p class="fs-14 mt1r">{{m.dValidDateStart}}至{{m.dValidDateEnd}}</p></div>
+                    </div>
+                    <div class="middle" style="border-bottom:1px dotted #eee">
+                        <span class="fc-666">{{m.sShopName}}</span>
+                    </div>
+                    {{if m.bIsUsed==1}}
+                    <a href="javascript:;" class="bottom fc-ccc">已使用</a>
+                    {{/if}}
+                    {{if m.bIsUsed==0}}
+                    <a href="javascript:;" class="bottom fc-ccc"></a>
+                    {{/if}}
+                </div>
+                {{/each}}
+           </script>
+        </div>
+    </div>
+</body>
+</html>
+<script src="~/scripts/lib/template.js"></script>
+<script src="~/scripts/lib/client.common.js"></script>
+<script type="text/javascript">
+    $(function () {
+        scope.InitCouponData();
+        scope.bingPage();
+        scope.bingEvent();
+    });
+
+    var scope = (function (obj) { return obj; })(new function () {
+
+        var bIsUsed = 0;//可用
+
+        var state = false;
+
+        /*!
+        * 绑定滑动分页
+        */
+        function bingPage() {
+            common.page.initDropLoad(InitCouponData);
+        }
+
+        /*!
+        * 初始化订单数据列表
+        */
+        function InitCouponData() {
+            common.post("/Client/ClientCenter/GetCouponList",
+                {
+                    pageIndex: common.page.pagerParam.pageIndex,
+                    pageSize: common.page.pagerParam.pageSize,
+                    bIsUsed: bIsUsed  // 0-可用,1-已使用
+                }, function (r) {
+                    var json = r.Data.Result;
+                    $(json).each(function () {
+                        this.iUsePrice = this.iUsePrice == 0 ? "无使用门槛" :"满"+this.iUsePrice+"可用";
+                        this.sShopName = this.sShopName == null ? "全平台通用，不可叠加使用。" : "仅限[" + this.sShopName + "] 民宿使用，不可叠加。";
+                        this.dValidDateStart = new Date(this.dValidDateStart.replace(/-/g, "/")).Format("yyyy-MM-dd");
+                        this.dValidDateEnd = new Date(this.dValidDateEnd.replace(/-/g, "/")).Format("yyyy-MM-dd");
+                    });
+                    if (bIsUsed == 0) {
+                        var html = template("UseCoupon", { list: json });
+                        if (state) {
+                            $('#UseCouponList').html(html);
+                        }
+                        else {
+                            $('#UseCouponList').append(html);
+                        }
+
+                        //没有数据展示
+                        if ($('#UseCouponList div').length == 0) {
+                            window.noData('#UseCouponList');
+                        }
+                    }
+                    else {
+                        var html = template("UsedCoupon", { list: json });
+                        if (state) {
+                            $('#UsedCouponList').html(html);
+                        }
+                        else {
+                            $('#UsedCouponList').append(html);
+                        }
+
+                        //没有数据展示
+                        if ($('#UsedCouponList div').length == 0) {
+                            window.noData('#UsedCouponList');
+                        }
+                    }
+                    common.page.calculationPage(r.Data.MaxCount);
+                });
+        }
+
+        /**!
+        * 绑定事件
+        */
+        function bingEvent() {
+
+            $('.title a').on("click", function () {
+                state = true;
+                bIsUsed = Number($(this).attr("data-bIsUsed"));
+                common.page.pagerParam.pageIndex = 1;
+                common.page.pagerParam.pageSize = 10;
+                InitCouponData();
+
+            });
+        }
+
+
+        return {
+            InitCouponData: InitCouponData,
+            bingPage: bingPage,
+            bingEvent: bingEvent
+        }
+
+    });
+
+
+</script>

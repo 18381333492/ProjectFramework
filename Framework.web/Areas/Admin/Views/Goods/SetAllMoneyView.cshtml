@@ -1,0 +1,20 @@
+﻿
+
+<link href="~/Areas/Admin/Content/gridtable.css" rel="stylesheet" />
+<div class="easyui-panel" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false,border:false,fit:true" style="padding-left:2px; padding-top:1px;margin:1px">
+    <form style="width:99%;height:99%;" id="set_allMoney_form">
+        <table class="styletable">
+            <tr>
+                <td>统一设置商品分销金：</td>
+                <td>
+                    <label><input type="radio" name="iCommissionType" value="1" checked="checked" />固定金额</label>
+                    <input class="easyui-numberbox" id="first_dMoney" name="dMoney"
+                           data-options="missingMessage:'固定金额',min:0,precision:2,required:true" />元&nbsp;&nbsp;&nbsp;
+                    <label><input type="radio" name="iCommissionType" value="2" />商品金额比例</label>
+                    <input class="easyui-numberbox" id="sec_dMoney" name="dMoney"
+                           data-options="missingMessage:'请输入金额比例',min:0,precision:2,max:100" />%
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
